@@ -1,758 +1,1533 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>Saturday Lines</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
-
     * {
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #080b12;
+      --card: #111722;
+      --card2: #151c29;
+      --border: #263044;
+      --text: #f5f7fb;
+      --muted: #8f9bb0;
+      --accent: #35d07f;
+      --accent2: #1ca866;
+      --danger: #ff5c69;
+      --gold: #f4c95d;
     }
 
     body {
-      margin: 0;
       font-family: Arial, Helvetica, sans-serif;
-      background: #f3f4f6;
-      color: #111827;
+      background:
+        radial-gradient(circle at top right, #15283a 0%, transparent 35%),
+        radial-gradient(circle at top left, #10251d 0%, transparent 30%),
+        var(--bg);
+      color: var(--text);
+      min-height: 100vh;
     }
 
-    header {
-      background: #111827;
-      color: white;
-      padding: 25px 20px;
-      text-align: center;
-    }
-
-    header h1 {
-      margin: 0;
-      font-size: 32px;
-    }
-
-    header p {
-      margin: 8px 0 0;
-      color: #d1d5db;
-    }
-
-    .container {
-      max-width: 850px;
-      margin: 30px auto;
-      padding: 0 20px;
-    }
-
-    .auth-box {
-      background: white;
-      border-radius: 12px;
-      padding: 25px;
-      margin-bottom: 25px;
-      box-shadow: 0 2px 8px rgba(0,0,0,.08);
-    }
-
-    .auth-box h2 {
-      margin-top: 0;
-    }
-
+    button,
     input {
-      width: 100%;
-      padding: 13px;
-      margin-bottom: 12px;
-      border: 1px solid #d1d5db;
-      border-radius: 8px;
-      font-size: 16px;
+      font: inherit;
     }
 
     button {
       cursor: pointer;
     }
 
-    .auth-button {
-      width: 100%;
-      padding: 13px;
+    .container {
+      width: min(1150px, 92%);
+      margin: auto;
+    }
+
+    /* NAVIGATION */
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(8, 11, 18, 0.94);
+      backdrop-filter: blur(15px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 900;
+      letter-spacing: -1px;
+    }
+
+    .logo span {
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 8px;
+    }
+
+    .nav-links button {
+      background: transparent;
       border: none;
+      color: var(--muted);
+      padding: 10px 13px;
       border-radius: 8px;
-      background: #111827;
+    }
+
+    .nav-links button:hover,
+    .nav-links button.active {
       color: white;
-      font-size: 16px;
-      font-weight: bold;
-      margin-bottom: 10px;
+      background: var(--card2);
     }
 
-    .auth-button:hover {
-      background: #374151;
+    /* HERO */
+
+    .hero {
+      padding: 70px 0 35px;
     }
 
-    .logout {
-      background: #dc2626;
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 30px;
+      align-items: center;
     }
 
-    .user-info {
-      text-align: center;
-      margin-bottom: 15px;
-      font-weight: bold;
+    .eyebrow {
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
     }
 
-    .hidden {
-      display: none;
+    h1 {
+      font-size: clamp(44px, 7vw, 76px);
+      line-height: .95;
+      letter-spacing: -4px;
+      margin-bottom: 22px;
     }
 
-    .info {
-      background: white;
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 25px;
-      text-align: center;
-      box-shadow: 0 2px 8px rgba(0,0,0,.08);
+    .hero p {
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.6;
+      max-width: 650px;
     }
 
-    .info h2 {
-      margin-top: 0;
+    .hero-card {
+      background: linear-gradient(145deg, #182332, #0e141e);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 26px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.25);
     }
 
-    .counter {
-      font-size: 28px;
-      font-weight: bold;
-      margin-top: 10px;
+    .hero-card-title {
+      color: var(--muted);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
     }
 
-    .game {
-      background: white;
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 18px;
-      box-shadow: 0 2px 8px rgba(0,0,0,.08);
+    .pot {
+      font-size: 48px;
+      font-weight: 900;
+      margin-bottom: 8px;
     }
 
-    .game-top {
+    .pot-sub {
+      color: var(--muted);
+    }
+
+    /* BUTTONS */
+
+    .primary {
+      background: var(--accent);
+      color: #06110b;
+      border: none;
+      padding: 14px 22px;
+      border-radius: 10px;
+      font-weight: 900;
+      margin-top: 24px;
+    }
+
+    .primary:hover {
+      background: #48e48e;
+    }
+
+    .secondary {
+      background: var(--card2);
+      color: white;
+      border: 1px solid var(--border);
+      padding: 13px 20px;
+      border-radius: 10px;
+      font-weight: 700;
+    }
+
+    /* SECTIONS */
+
+    section {
+      padding: 35px 0 70px;
+    }
+
+    .section-header {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-      margin-bottom: 10px;
+      align-items: end;
+      gap: 20px;
+      margin-bottom: 22px;
     }
 
-    .matchup {
-      font-size: 20px;
-      font-weight: bold;
+    .section-header h2 {
+      font-size: 30px;
     }
 
-    .value {
-      background: #e5e7eb;
-      padding: 7px 12px;
-      border-radius: 20px;
-      font-weight: bold;
-      white-space: nowrap;
+    .section-header p {
+      color: var(--muted);
+      margin-top: 7px;
     }
 
-    .spread {
-      text-align: center;
-      color: #6b7280;
-      margin-bottom: 15px;
+    /* STATS */
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin: 25px 0;
     }
 
-    .teams {
-      display: flex;
+    .stat {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      padding: 20px;
+    }
+
+    .stat-label {
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 7px;
+    }
+
+    .stat-value {
+      font-size: 28px;
+      font-weight: 900;
+    }
+
+    /* GAMES */
+
+    .games {
+      display: grid;
       gap: 12px;
     }
 
+    .game {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      display: grid;
+      grid-template-columns: 45px 1fr auto;
+      align-items: center;
+      gap: 15px;
+      transition: .15s ease;
+    }
+
+    .game:hover {
+      transform: translateY(-1px);
+      border-color: #3a4963;
+    }
+
+    .game-number {
+      color: var(--muted);
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .matchup {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+
     .team {
-      flex: 1;
-      padding: 15px;
-      border: 2px solid #d1d5db;
-      border-radius: 8px;
-      background: white;
-      font-size: 16px;
-      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      font-weight: 800;
     }
 
-    .team:hover {
-      border-color: #111827;
+    .spread {
+      color: var(--muted);
+      font-weight: 700;
     }
 
-    .team.selected {
-      background: #111827;
+    .pick-buttons {
+      display: flex;
+      gap: 8px;
+    }
+
+    .pick-btn {
+      min-width: 100px;
+      background: #0c111a;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 11px 12px;
+      border-radius: 9px;
+      font-weight: 800;
+    }
+
+    .pick-btn:hover {
+      border-color: var(--accent);
       color: white;
-      border-color: #111827;
     }
 
-    .submit {
+    .pick-btn.selected {
+      background: var(--accent);
+      color: #06110b;
+      border-color: var(--accent);
+    }
+
+    /* BUY IN */
+
+    .buyin-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .buy-card {
+      background: var(--card);
+      border: 2px solid var(--border);
+      border-radius: 17px;
+      padding: 25px;
+      cursor: pointer;
+      transition: .15s ease;
+    }
+
+    .buy-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .buy-card.selected {
+      border-color: var(--accent);
+      background: #102319;
+    }
+
+    .buy-amount {
+      font-size: 38px;
+      font-weight: 900;
+    }
+
+    .buy-title {
+      font-weight: 800;
+      margin: 4px 0 8px;
+    }
+
+    .buy-description {
+      color: var(--muted);
+      line-height: 1.4;
+      font-size: 14px;
+    }
+
+    /* PAYOUT */
+
+    .payout-box {
+      margin-top: 20px;
+      background: linear-gradient(145deg, #132319, #101720);
+      border: 1px solid #235d3c;
+      border-radius: 18px;
+      padding: 25px;
+    }
+
+    .payout-title {
+      font-size: 13px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .payout-amount {
+      font-size: 42px;
+      font-weight: 900;
+      color: var(--accent);
+      margin: 5px 0;
+    }
+
+    .payout-note {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    /* LEADERBOARD */
+
+    .leaderboard {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 17px;
+      overflow: hidden;
+    }
+
+    .leader-row {
+      display: grid;
+      grid-template-columns: 55px 1fr 100px 100px;
+      align-items: center;
+      padding: 17px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .leader-row:last-child {
+      border-bottom: none;
+    }
+
+    .rank {
+      font-weight: 900;
+      color: var(--gold);
+    }
+
+    .player {
+      font-weight: 800;
+    }
+
+    .leader-muted {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    /* AUTH */
+
+    .auth-wrap {
+      min-height: calc(100vh - 72px);
+      display: grid;
+      place-items: center;
+      padding: 50px 0;
+    }
+
+    .auth-card {
+      width: min(430px, 100%);
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 30px;
+    }
+
+    .auth-card h2 {
+      font-size: 30px;
+      margin-bottom: 8px;
+    }
+
+    .auth-card p {
+      color: var(--muted);
+      margin-bottom: 25px;
+    }
+
+    .input {
       width: 100%;
-      padding: 17px;
-      border: none;
-      border-radius: 10px;
-      background: #111827;
+      background: #0b1018;
       color: white;
-      font-size: 18px;
-      font-weight: bold;
-      margin-top: 5px;
+      border: 1px solid var(--border);
+      padding: 14px;
+      border-radius: 9px;
+      margin-bottom: 12px;
+      outline: none;
+    }
+
+    .input:focus {
+      border-color: var(--accent);
+    }
+
+    .auth-buttons {
+      display: grid;
+      gap: 10px;
+      margin-top: 8px;
     }
 
     .message {
-      text-align: center;
-      font-weight: bold;
-      margin: 18px 0;
+      margin-top: 15px;
+      color: var(--muted);
+      line-height: 1.5;
+      font-size: 14px;
     }
 
-    @media (max-width: 600px) {
+    /* MOBILE */
 
-      .game-top {
-        flex-direction: column;
-        align-items: flex-start;
+    @media (max-width: 800px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
       }
 
-      .teams {
-        flex-direction: column;
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
       }
 
+      .game {
+        grid-template-columns: 35px 1fr;
+      }
+
+      .pick-buttons {
+        grid-column: 2;
+      }
+
+      .pick-btn {
+        flex: 1;
+      }
+
+      .leader-row {
+        grid-template-columns: 45px 1fr 70px;
+      }
+
+      .leader-row .leader-buyin {
+        display: none;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      h1 {
+        letter-spacing: -2px;
+      }
     }
 
+    @media (max-width: 500px) {
+      .buyin-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stats {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .game {
+        padding: 14px;
+      }
+
+      .team {
+        font-size: 14px;
+      }
+
+      .pick-btn {
+        min-width: 0;
+        font-size: 12px;
+      }
+    }
+
+    .hidden {
+      display: none !important;
+    }
   </style>
-
 </head>
 
 <body>
 
-  <header>
+  <!-- NAVIGATION -->
 
-    <h1>Saturday Lines</h1>
+  <nav>
+    <div class="container nav-inner">
 
-    <p>
-      Pick 10 games against the spread.
-    </p>
+      <div class="logo">
+        Saturday<span>Lines</span>
+      </div>
 
-  </header>
+      <div class="nav-links">
+        <button onclick="showPage('home')" id="nav-home">
+          Home
+        </button>
 
+        <button onclick="showPage('picks')" id="nav-picks">
+          Pick Games
+        </button>
 
-  <main class="container">
+        <button onclick="showPage('leaderboard')" id="nav-leaderboard">
+          Leaderboard
+        </button>
 
-
-    <!-- AUTHENTICATION -->
-
-    <div id="authBox" class="auth-box">
-
-      <h2>Sign In</h2>
-
-      <input
-        type="email"
-        id="email"
-        placeholder="Email address"
-      >
-
-      <input
-        type="password"
-        id="password"
-        placeholder="Password"
-      >
-
-      <button
-        class="auth-button"
-        onclick="signIn()">
-        Sign In
-      </button>
-
-      <button
-        class="auth-button"
-        onclick="signUp()">
-        Create Account
-      </button>
-
-      <div
-        id="authMessage"
-        class="message">
+        <button onclick="showPage('account')" id="nav-account">
+          Account
+        </button>
       </div>
 
     </div>
+  </nav>
 
 
-    <!-- LOGGED IN -->
+  <!-- HOME -->
 
-    <div
-      id="loggedInBox"
-      class="auth-box hidden">
+  <main id="page-home">
 
-      <div
-        id="userInfo"
-        class="user-info">
-      </div>
+    <div class="container">
 
-      <button
-        class="auth-button logout"
-        onclick="signOut()">
-        Log Out
-      </button>
+      <section class="hero">
 
-    </div>
+        <div class="hero-grid">
+
+          <div>
+            <div class="eyebrow">
+              College Football Picks
+            </div>
+
+            <h1>
+              Pick.<br>
+              Compete.<br>
+              Win.
+            </h1>
+
+            <p>
+              Saturday Lines is a weekly against-the-spread
+              competition. Pick 10 games, climb the leaderboard,
+              and compete for the pot.
+            </p>
+
+            <button
+              class="primary"
+              onclick="showPage('picks')"
+            >
+              Make Your Picks →
+            </button>
+          </div>
 
 
-    <!-- PICKS -->
+          <div class="hero-card">
 
-    <div
-      id="pickArea"
-      class="hidden">
+            <div class="hero-card-title">
+              This Week's Potential Pot
+            </div>
 
-      <div class="info">
+            <div class="pot" id="homePot">
+              $0
+            </div>
 
-        <h2>Your Picks</h2>
+            <div class="pot-sub">
+              Based on current entries
+            </div>
 
-        <div class="counter">
+            <div class="stats">
 
-          <span id="selectedCount">
-            0
-          </span>
+              <div class="stat">
+                <div class="stat-label">
+                  Games
+                </div>
+                <div class="stat-value">
+                  20
+                </div>
+              </div>
 
-          / 10
+              <div class="stat">
+                <div class="stat-label">
+                  Picks
+                </div>
+                <div class="stat-value">
+                  10
+                </div>
+              </div>
+
+            </div>
+
+          </div>
 
         </div>
 
-        <p>
-          Select exactly 10 games.
-        </p>
-
-      </div>
+      </section>
 
 
-      <div id="games"></div>
+      <section>
 
+        <div class="section-header">
 
-      <button
-        class="submit"
-        onclick="submitPicks()">
+          <div>
+            <h2>
+              How It Works
+            </h2>
 
-        Submit Picks
+            <p>
+              Simple rules. No complicated scoring.
+            </p>
+          </div>
 
-      </button>
+        </div>
 
+        <div class="stats">
 
-      <div
-        id="message"
-        class="message">
-      </div>
+          <div class="stat">
+            <div class="stat-label">
+              01
+            </div>
+
+            <div class="stat-value">
+              Pick 10
+            </div>
+          </div>
+
+          <div class="stat">
+            <div class="stat-label">
+              02
+            </div>
+
+            <div class="stat-value">
+              ATS
+            </div>
+          </div>
+
+          <div class="stat">
+            <div class="stat-label">
+              03
+            </div>
+
+            <div class="stat-value">
+              1 Point
+            </div>
+          </div>
+
+          <div class="stat">
+            <div class="stat-label">
+              04
+            </div>
+
+            <div class="stat-value">
+              Highest Score
+            </div>
+          </div>
+
+        </div>
+
+      </section>
 
     </div>
-
 
   </main>
 
 
-  <script>
+  <!-- PICKS -->
 
-    /* =====================================
-       PUT YOUR SUPABASE VALUES HERE
-       ===================================== */
+  <main id="page-picks" class="hidden">
 
-    const SUPABASE_URL =
-      "https://ffzlgkaenvivlsrhxvcs.supabase.co";
+    <div class="container">
 
-    const SUPABASE_KEY =
-      "sb_publishable_pILr3XbyWT721ABLUMVwVA_8_IiVXKg";
+      <section>
 
+        <div class="section-header">
 
-    const supabaseClient =
-      window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY
-      );
+          <div>
+            <div class="eyebrow">
+              Week 1
+            </div>
 
+            <h2>
+              Make Your Picks
+            </h2>
 
-    /* =====================================
-       TEMPORARY GAMES
-       ===================================== */
+            <p>
+              Select exactly 10 games against the spread.
+            </p>
+          </div>
 
-    const games = [
+          <div>
+            <strong id="pickCounter">
+              0 / 10
+            </strong>
+          </div>
 
-      {
-        id: 1,
-        away: "Michigan",
-        awaySpread: "+3.5",
-        home: "Oklahoma",
-        homeSpread: "-3.5"
-      },
+        </div>
 
-      {
-        id: 2,
-        away: "Alabama",
-        awaySpread: "+6.5",
-        home: "Georgia",
-        homeSpread: "-6.5"
-      },
 
-      {
-        id: 3,
-        away: "LSU",
-        awaySpread: "+2.5",
-        home: "Texas",
-        homeSpread: "-2.5"
-      },
+        <!-- BUY IN -->
 
-      {
-        id: 4,
-        away: "Clemson",
-        awaySpread: "+4.5",
-        home: "Florida State",
-        homeSpread: "-4.5"
-      },
+        <div class="section-header">
 
-      {
-        id: 5,
-        away: "Ohio State",
-        awaySpread: "-7.5",
-        home: "Penn State",
-        homeSpread: "+7.5"
-      }
+          <div>
+            <h2>
+              Choose Your Buy-In
+            </h2>
 
-    ];
+            <p>
+              Your buy-in determines your maximum payout.
+            </p>
+          </div>
 
+        </div>
 
-    const selectedGames =
-      new Map();
 
+        <div class="buyin-grid">
 
-    /* =====================================
-       SIGN UP
-       ===================================== */
+          <div
+            class="buy-card"
+            id="buy10"
+            onclick="selectBuyIn(10)"
+          >
 
-    async function signUp() {
+            <div class="buy-amount">
+              $10
+            </div>
 
-      const email =
-        document.getElementById("email").value;
+            <div class="buy-title">
+              $10 Entry
+            </div>
 
-      const password =
-        document.getElementById("password").value;
+            <div class="buy-description">
+              A $10 player can win $10 from every
+              player in the pool.
+            </div>
 
-      const message =
-        document.getElementById("authMessage");
+          </div>
 
 
-      if (!email || !password) {
+          <div
+            class="buy-card"
+            id="buy20"
+            onclick="selectBuyIn(20)"
+          >
 
-        message.innerText =
-          "Enter an email and password.";
+            <div class="buy-amount">
+              $20
+            </div>
 
-        return;
+            <div class="buy-title">
+              $20 Entry
+            </div>
 
-      }
+            <div class="buy-description">
+              A $20 player who finishes first wins
+              the entire pot.
+            </div>
 
+          </div>
 
-      const { error } =
-        await supabaseClient.auth.signUp({
+        </div>
 
-          email: email,
 
-          password: password
+        <div class="payout-box">
 
-        });
+          <div class="payout-title">
+            Your Potential Payout
+          </div>
 
+          <div
+            class="payout-amount"
+            id="potentialPayout"
+          >
+            $0
+          </div>
 
-      if (error) {
+          <div
+            class="payout-note"
+            id="payoutExplanation"
+          >
+            Choose a buy-in to see your potential payout.
+          </div>
 
-        message.innerText =
-          error.message;
+        </div>
 
-        return;
 
-      }
+        <!-- GAMES -->
 
+        <div style="margin-top:40px">
 
-      message.innerText =
-        "Account created! Check your email to confirm your account.";
+          <div class="section-header">
 
-    }
+            <div>
+              <h2>
+                Saturday's Games
+              </h2>
 
+              <p>
+                Click the team you want against the spread.
+              </p>
+            </div>
 
-    /* =====================================
-       SIGN IN
-       ===================================== */
+          </div>
 
-    async function signIn() {
+          <div
+            class="games"
+            id="gamesContainer"
+          ></div>
 
-      const email =
-        document.getElementById("email").value;
+        </div>
 
-      const password =
-        document.getElementById("password").value;
 
-      const message =
-        document.getElementById("authMessage");
+        <button
+          class="primary"
+          onclick="submitPicks()"
+        >
+          Submit My Picks
+        </button>
 
+        <div
+          class="message"
+          id="message"
+        ></div>
 
-      const { error } =
-        await supabaseClient.auth.signInWithPassword({
+      </section>
 
-          email: email,
+    </div>
 
-          password: password
+  </main>
 
-        });
 
+  <!-- LEADERBOARD -->
 
-      if (error) {
+  <main id="page-leaderboard" class="hidden">
 
-        message.innerText =
-          error.message;
+    <div class="container">
 
-        return;
+      <section>
 
-      }
+        <div class="section-header">
 
+          <div>
 
-      message.innerText = "";
+            <div class="eyebrow">
+              Week 1
+            </div>
 
-    }
+            <h2>
+              Leaderboard
+            </h2>
 
+            <p>
+              Every correct pick is worth 1 point.
+            </p>
 
-    /* =====================================
-       SIGN OUT
-       ===================================== */
+          </div>
 
-    async function signOut() {
+        </div>
 
-      await supabaseClient.auth.signOut();
 
-    }
+        <div class="leaderboard">
 
+          <div class="leader-row">
 
-    /* =====================================
-       AUTH STATE
-       ===================================== */
+            <div class="leader-muted">
+              #
+            </div>
 
-    supabaseClient.auth.onAuthStateChange(
+            <div class="leader-muted">
+              PLAYER
+            </div>
 
-      (event, session) => {
+            <div class="leader-muted">
+              POINTS
+            </div>
 
-        updateAuthUI(session);
+            <div class="leader-muted leader-buyin">
+              BUY-IN
+            </div>
 
-      }
+          </div>
 
+
+          <div
+            id="leaderboardRows"
+          >
+
+            <div class="leader-row">
+
+              <div class="rank">
+                —
+              </div>
+
+              <div class="player">
+                No results yet
+              </div>
+
+              <div>
+                —
+              </div>
+
+              <div class="leader-buyin">
+                —
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+    </div>
+
+  </main>
+
+
+  <!-- ACCOUNT -->
+
+  <main id="page-account" class="hidden">
+
+    <div class="container">
+
+      <div class="auth-wrap">
+
+        <div class="auth-card">
+
+          <div class="eyebrow">
+            Saturday Lines
+          </div>
+
+          <h2 id="authTitle">
+            Welcome Back
+          </h2>
+
+          <p id="authDescription">
+            Sign in to make your weekly picks.
+          </p>
+
+
+          <div id="authForm">
+
+            <input
+              class="input"
+              type="email"
+              id="email"
+              placeholder="Email address"
+            />
+
+            <input
+              class="input"
+              type="password"
+              id="password"
+              placeholder="Password"
+            />
+
+            <div class="auth-buttons">
+
+              <button
+                class="primary"
+                onclick="signIn()"
+              >
+                Sign In
+              </button>
+
+              <button
+                class="secondary"
+                onclick="signUp()"
+              >
+                Create Account
+              </button>
+
+            </div>
+
+          </div>
+
+
+          <div id="loggedIn" class="hidden">
+
+            <p>
+              You are signed in.
+            </p>
+
+            <button
+              class="secondary"
+              onclick="signOut()"
+            >
+              Log Out
+            </button>
+
+          </div>
+
+
+          <div
+            class="message"
+            id="authMessage"
+          ></div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+
+<script>
+
+  /* =====================================================
+     SUPABASE CONNECTION
+     ===================================================== */
+
+  const SUPABASE_URL =
+    "https://ffzlgkaenvivlsrhxvcs.supabase.co";
+
+  const SUPABASE_KEY =
+    "sb_publishable_pILr3XbyWT721ABLUMVwVA_8_IiVXKg";
+
+
+  const supabaseClient =
+    window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
     );
 
 
-    async function checkUser() {
+  /* =====================================================
+     GAME DATA
+     ===================================================== */
 
-      const {
-        data: {
-          session
-        }
-      } =
-        await supabaseClient.auth.getSession();
+  /*
+    These are currently placeholder games.
 
+    Later we will replace these with the actual
+    week's games and spreads automatically.
+  */
 
-      updateAuthUI(session);
+  const games = [
 
+    {
+      id: 1,
+      away: "Michigan",
+      awaySpread: "+3.5",
+      home: "Oklahoma",
+      homeSpread: "-3.5"
+    },
+
+    {
+      id: 2,
+      away: "Alabama",
+      awaySpread: "+6.5",
+      home: "Georgia",
+      homeSpread: "-6.5"
+    },
+
+    {
+      id: 3,
+      away: "LSU",
+      awaySpread: "+2.5",
+      home: "Texas",
+      homeSpread: "-2.5"
+    },
+
+    {
+      id: 4,
+      away: "Clemson",
+      awaySpread: "+4.5",
+      home: "Florida State",
+      homeSpread: "-4.5"
+    },
+
+    {
+      id: 5,
+      away: "Ohio State",
+      awaySpread: "-7.5",
+      home: "Penn State",
+      homeSpread: "+7.5"
+    },
+
+    {
+      id: 6,
+      away: "Tennessee",
+      awaySpread: "+3.5",
+      home: "Florida",
+      homeSpread: "-3.5"
+    },
+
+    {
+      id: 7,
+      away: "Oregon",
+      awaySpread: "-4.5",
+      home: "USC",
+      homeSpread: "+4.5"
+    },
+
+    {
+      id: 8,
+      away: "Notre Dame",
+      awaySpread: "-2.5",
+      home: "Miami",
+      homeSpread: "+2.5"
+    },
+
+    {
+      id: 9,
+      away: "Texas A&M",
+      awaySpread: "+5.5",
+      home: "LSU",
+      homeSpread: "-5.5"
+    },
+
+    {
+      id: 10,
+      away: "Penn State",
+      awaySpread: "+3.5",
+      home: "Michigan State",
+      homeSpread: "-3.5"
+    },
+
+    {
+      id: 11,
+      away: "Auburn",
+      awaySpread: "+7.5",
+      home: "Ole Miss",
+      homeSpread: "-7.5"
+    },
+
+    {
+      id: 12,
+      away: "Wisconsin",
+      awaySpread: "+6.5",
+      home: "Iowa",
+      homeSpread: "-6.5"
+    },
+
+    {
+      id: 13,
+      away: "Utah",
+      awaySpread: "+2.5",
+      home: "BYU",
+      homeSpread: "-2.5"
+    },
+
+    {
+      id: 14,
+      away: "South Carolina",
+      awaySpread: "+3.5",
+      home: "Kentucky",
+      homeSpread: "-3.5"
+    },
+
+    {
+      id: 15,
+      away: "Ole Miss",
+      awaySpread: "+4.5",
+      home: "Alabama",
+      homeSpread: "-4.5"
+    },
+
+    {
+      id: 16,
+      away: "Florida",
+      awaySpread: "+6.5",
+      home: "Georgia",
+      homeSpread: "-6.5"
+    },
+
+    {
+      id: 17,
+      away: "Miami",
+      awaySpread: "+3.5",
+      home: "Florida State",
+      homeSpread: "-3.5"
+    },
+
+    {
+      id: 18,
+      away: "USC",
+      awaySpread: "+2.5",
+      home: "UCLA",
+      homeSpread: "-2.5"
+    },
+
+    {
+      id: 19,
+      away: "Oklahoma State",
+      awaySpread: "+5.5",
+      home: "Texas Tech",
+      homeSpread: "-5.5"
+    },
+
+    {
+      id: 20,
+      away: "Kansas",
+      awaySpread: "+7.5",
+      home: "Kansas State",
+      homeSpread: "-7.5"
     }
 
-
-    function updateAuthUI(session) {
-
-      const authBox =
-        document.getElementById("authBox");
-
-      const loggedInBox =
-        document.getElementById("loggedInBox");
-
-      const pickArea =
-        document.getElementById("pickArea");
-
-      const userInfo =
-        document.getElementById("userInfo");
+  ];
 
 
-      if (session) {
+  /* =====================================================
+     PLAYER STATE
+     ===================================================== */
 
-        authBox.classList.add("hidden");
+  let selectedGames = new Map();
 
-        loggedInBox.classList.remove("hidden");
-
-        pickArea.classList.remove("hidden");
-
-
-        userInfo.innerText =
-          "Logged in as " +
-          session.user.email;
+  let selectedBuyIn = null;
 
 
-        displayGames();
+  /* =====================================================
+     NAVIGATION
+     ===================================================== */
 
+  function showPage(page) {
+
+    const pages = [
+      "home",
+      "picks",
+      "leaderboard",
+      "account"
+    ];
+
+    pages.forEach(name => {
+
+      const element =
+        document.getElementById(
+          "page-" + name
+        );
+
+      if (element) {
+        element.classList.add("hidden");
       }
 
-      else {
+      const nav =
+        document.getElementById(
+          "nav-" + name
+        );
 
-        authBox.classList.remove("hidden");
-
-        loggedInBox.classList.add("hidden");
-
-        pickArea.classList.add("hidden");
-
+      if (nav) {
+        nav.classList.remove("active");
       }
 
+    });
+
+
+    document
+      .getElementById("page-" + page)
+      .classList.remove("hidden");
+
+
+    const nav =
+      document.getElementById(
+        "nav-" + page
+      );
+
+    if (nav) {
+      nav.classList.add("active");
     }
 
 
-    /* =====================================
-       DISPLAY GAMES
-       ===================================== */
-
-    function displayGames() {
-
-      const container =
-        document.getElementById("games");
-
-
-      container.innerHTML = "";
-
-
-      games.forEach(game => {
-
-        const card =
-          document.createElement("div");
-
-
-        card.className =
-          "game";
-
-
-        card.innerHTML = `
-
-          <div class="game-top">
-
-            <div class="matchup">
-
-              ${game.away}
-              @
-              ${game.home}
-
-            </div>
-
-            <div class="value">
-
-              1 Point
-
-            </div>
-
-          </div>
-
-
-          <div class="spread">
-
-            Pick against the spread
-
-          </div>
-
-
-          <div class="teams">
-
-
-            <button
-              class="team"
-              onclick="selectTeam(
-                ${game.id},
-                'away',
-                this
-              )">
-
-              ${game.away}
-              ${game.awaySpread}
-
-            </button>
-
-
-            <button
-              class="team"
-              onclick="selectTeam(
-                ${game.id},
-                'home',
-                this
-              )">
-
-              ${game.home}
-              ${game.homeSpread}
-
-            </button>
-
-
-          </div>
-
-        `;
-
-
-        container.appendChild(card);
-
-      });
-
+    if (page === "picks") {
+      renderGames();
     }
 
+  }
 
-    /* =====================================
-       SELECT TEAM
-       ===================================== */
 
-    function selectTeam(
-      gameId,
-      team,
-      button
-    ) {
+  /* =====================================================
+     RENDER GAMES
+     ===================================================== */
 
-      const card =
-        button.closest(".game");
+  function renderGames() {
+
+    const container =
+      document.getElementById(
+        "gamesContainer"
+      );
+
+    container.innerHTML = "";
+
+
+    games.forEach(game => {
+
+      const wrapper =
+        document.createElement("div");
+
+      wrapper.className = "game";
+
+
+      const number =
+        document.createElement("div");
+
+      number.className = "game-number";
+
+      number.innerText =
+        String(game.id).padStart(2, "0");
+
+
+      const matchup =
+        document.createElement("div");
+
+      matchup.className = "matchup";
+
+
+      const away =
+        document.createElement("div");
+
+      away.className = "team";
+
+      away.innerHTML = `
+        <span>${game.away}</span>
+        <span class="spread">${game.awaySpread}</span>
+      `;
+
+
+      const home =
+        document.createElement("div");
+
+      home.className = "team";
+
+      home.innerHTML = `
+        <span>${game.home}</span>
+        <span class="spread">${game.homeSpread}</span>
+      `;
+
+
+      matchup.appendChild(away);
+      matchup.appendChild(home);
 
 
       const buttons =
-        card.querySelectorAll(".team");
+        document.createElement("div");
+
+      buttons.className =
+        "pick-buttons";
 
 
-      buttons.forEach(btn => {
+      const awayButton =
+        document.createElement("button");
 
-        btn.classList.remove("selected");
+      awayButton.className =
+        "pick-btn";
 
-      });
+      awayButton.innerText =
+        game.away + " " + game.awaySpread;
+
+
+      const homeButton =
+        document.createElement("button");
+
+      homeButton.className =
+        "pick-btn";
+
+      homeButton.innerText =
+        game.home + " " + game.homeSpread;
 
 
       if (
-        selectedGames.has(gameId) &&
-        selectedGames.get(gameId) === team
+        selectedGames.get(game.id) ===
+        "away"
       ) {
 
-        selectedGames.delete(gameId);
-
-      }
-
-      else {
-
-        if (
-          !selectedGames.has(gameId) &&
-          selectedGames.size >= 10
-        ) {
-
-          document.getElementById(
-            "message"
-          ).innerText =
-            "You can only select 10 games.";
-
-          return;
-
-        }
-
-
-        selectedGames.set(
-          gameId,
-          team
-        );
-
-
-        button.classList.add(
+        awayButton.classList.add(
           "selected"
         );
 
       }
 
 
-      document.getElementById(
-        "selectedCount"
-      ).innerText =
-        selectedGames.size;
+      if (
+        selectedGames.get(game.id) ===
+        "home"
+      ) {
 
+        homeButton.classList.add(
+          "selected"
+        );
+
+      }
+
+
+      awayButton.onclick = () => {
+
+        selectGame(
+          game.id,
+          "away"
+        );
+
+      };
+
+
+      homeButton.onclick = () => {
+
+        selectGame(
+          game.id,
+          "home"
+        );
+
+      };
+
+
+      buttons.appendChild(
+        awayButton
+      );
+
+      buttons.appendChild(
+        homeButton
+      );
+
+
+      wrapper.appendChild(number);
+      wrapper.appendChild(matchup);
+      wrapper.appendChild(buttons);
+
+
+      container.appendChild(wrapper);
+
+    });
+
+
+    updatePickCounter();
+
+  }
+
+
+  /* =====================================================
+     SELECT GAME
+     ===================================================== */
+
+  function selectGame(
+    gameId,
+    side
+  ) {
+
+    if (
+      selectedGames.has(gameId) &&
+      selectedGames.get(gameId) === side
+    ) {
+
+      selectedGames.delete(gameId);
+
+    } else {
+
+      selectedGames.set(
+        gameId,
+        side
+      );
+
+    }
+
+
+    /*
+      Never allow more than 10 picks.
+    */
+
+    if (selectedGames.size > 10) {
+
+      selectedGames.delete(gameId);
+
+      document.getElementById(
+        "message"
+      ).innerText =
+        "You can only select 10 games.";
+
+    } else {
 
       document.getElementById(
         "message"
@@ -761,37 +1536,508 @@
     }
 
 
-    /* =====================================
-       SUBMIT PICKS
-       ===================================== */
+    renderGames();
 
-    async function submitPicks() {
-
-      const message =
-        document.getElementById(
-          "message"
-        );
+  }
 
 
-      if (selectedGames.size !== 10) {
+  /* =====================================================
+     PICK COUNTER
+     ===================================================== */
 
-        message.innerText =
-          "You must select exactly 10 games.";
+  function updatePickCounter() {
 
-        return;
+    document.getElementById(
+      "pickCounter"
+    ).innerText =
+      selectedGames.size +
+      " / 10";
 
-      }
+  }
 
 
-      message.innerText =
-        "Picks submitted successfully!";
+  /* =====================================================
+     BUY-IN
+     ===================================================== */
+
+  function selectBuyIn(amount) {
+
+    selectedBuyIn = amount;
+
+
+    document
+      .getElementById("buy10")
+      .classList.remove("selected");
+
+    document
+      .getElementById("buy20")
+      .classList.remove("selected");
+
+
+    document
+      .getElementById(
+        "buy" + amount
+      )
+      .classList.add("selected");
+
+
+    updatePayout();
+
+  }
+
+
+  /* =====================================================
+     POTENTIAL PAYOUT
+     ===================================================== */
+
+  function updatePayout() {
+
+    const payout =
+      document.getElementById(
+        "potentialPayout"
+      );
+
+    const explanation =
+      document.getElementById(
+        "payoutExplanation"
+      );
+
+
+    /*
+      Until we have the actual number of
+      registered players, display the
+      formula instead of pretending to
+      know the final payout.
+    */
+
+    if (!selectedBuyIn) {
+
+      payout.innerText =
+        "$0";
+
+      explanation.innerText =
+        "Choose a buy-in to see your potential payout.";
+
+      return;
 
     }
 
 
-    checkUser();
+    if (selectedBuyIn === 20) {
 
-  </script>
+      payout.innerText =
+        "ENTIRE POT";
+
+      explanation.innerText =
+        "If a $20 player finishes first, they receive the entire pool.";
+
+    }
+
+
+    if (selectedBuyIn === 10) {
+
+      payout.innerText =
+        "$10 × PLAYERS";
+
+      explanation.innerText =
+        "A $10 player can win $10 from every player. Any remaining pot goes to 2nd place.";
+
+    }
+
+  }
+
+
+  /* =====================================================
+     SUBMIT PICKS
+     ===================================================== */
+
+  async function submitPicks() {
+
+    const message =
+      document.getElementById(
+        "message"
+      );
+
+
+    if (selectedGames.size !== 10) {
+
+      message.innerText =
+        "You must select exactly 10 games.";
+
+      return;
+
+    }
+
+
+    if (!selectedBuyIn) {
+
+      message.innerText =
+        "Please choose a $10 or $20 buy-in.";
+
+      return;
+
+    }
+
+
+    const {
+      data: {
+        user
+      },
+      error: userError
+    } =
+      await supabaseClient
+        .auth
+        .getUser();
+
+
+    if (
+      userError ||
+      !user
+    ) {
+
+      message.innerText =
+        "Please log in before submitting your picks.";
+
+      showPage("account");
+
+      return;
+
+    }
+
+
+    const picksToSave =
+      Array.from(
+        selectedGames.entries()
+      ).map(
+        ([gameId, side]) => {
+
+          const game =
+            games.find(
+              g => g.id === gameId
+            );
+
+
+          let team;
+
+          let spread;
+
+
+          if (side === "away") {
+
+            team = game.away;
+            spread = game.awaySpread;
+
+          } else {
+
+            team = game.home;
+            spread = game.homeSpread;
+
+          }
+
+
+          return {
+
+            user_id: user.id,
+
+            game_id: gameId,
+
+            pick:
+              team +
+              " " +
+              spread +
+              " | BUYIN:" +
+              selectedBuyIn
+
+          };
+
+        }
+      );
+
+
+    const {
+      error
+    } =
+      await supabaseClient
+        .from("picks")
+        .upsert(
+          picksToSave,
+          {
+            onConflict:
+              "user_id,game_id"
+          }
+        );
+
+
+    if (error) {
+
+      console.error(error);
+
+      message.innerText =
+        "There was a problem saving your picks: " +
+        error.message;
+
+      return;
+
+    }
+
+
+    message.innerText =
+      "✓ Your 10 picks have been submitted successfully!";
+
+  }
+
+
+  /* =====================================================
+     AUTHENTICATION
+     ===================================================== */
+
+  async function signUp() {
+
+    const email =
+      document
+        .getElementById("email")
+        .value
+        .trim();
+
+    const password =
+      document
+        .getElementById("password")
+        .value;
+
+
+    const message =
+      document.getElementById(
+        "authMessage"
+      );
+
+
+    if (!email || !password) {
+
+      message.innerText =
+        "Enter an email and password.";
+
+      return;
+
+    }
+
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient
+        .auth
+        .signUp({
+          email,
+          password
+        });
+
+
+    if (error) {
+
+      message.innerText =
+        error.message;
+
+      return;
+
+    }
+
+
+    if (
+      data.user &&
+      !data.session
+    ) {
+
+      message.innerText =
+        "Account created! Check your email to confirm your account.";
+
+    } else {
+
+      message.innerText =
+        "Account created successfully!";
+
+    }
+
+  }
+
+
+  async function signIn() {
+
+    const email =
+      document
+        .getElementById("email")
+        .value
+        .trim();
+
+    const password =
+      document
+        .getElementById("password")
+        .value;
+
+
+    const message =
+      document.getElementById(
+        "authMessage"
+      );
+
+
+    if (!email || !password) {
+
+      message.innerText =
+        "Enter an email and password.";
+
+      return;
+
+    }
+
+
+    const {
+      error
+    } =
+      await supabaseClient
+        .auth
+        .signInWithPassword({
+
+          email,
+
+          password
+
+        });
+
+
+    if (error) {
+
+      message.innerText =
+        error.message;
+
+      return;
+
+    }
+
+
+    message.innerText =
+      "✓ Signed in successfully.";
+
+    updateAuthUI();
+
+  }
+
+
+  async function signOut() {
+
+    await supabaseClient
+      .auth
+      .signOut();
+
+
+    updateAuthUI();
+
+  }
+
+
+  /* =====================================================
+     AUTH UI
+     ===================================================== */
+
+  async function updateAuthUI() {
+
+    const {
+      data: {
+        session
+      }
+    } =
+      await supabaseClient
+        .auth
+        .getSession();
+
+
+    const authForm =
+      document.getElementById(
+        "authForm"
+      );
+
+    const loggedIn =
+      document.getElementById(
+        "loggedIn"
+      );
+
+
+    if (session) {
+
+      authForm.classList.add(
+        "hidden"
+      );
+
+      loggedIn.classList.remove(
+        "hidden"
+      );
+
+      document.getElementById(
+        "authTitle"
+      ).innerText =
+        "You're In";
+
+      document.getElementById(
+        "authDescription"
+      ).innerText =
+        "Your Saturday Lines account is active.";
+
+    } else {
+
+      authForm.classList.remove(
+        "hidden"
+      );
+
+      loggedIn.classList.add(
+        "hidden"
+      );
+
+      document.getElementById(
+        "authTitle"
+      ).innerText =
+        "Welcome Back";
+
+      document.getElementById(
+        "authDescription"
+      ).innerText =
+        "Sign in to make your weekly picks.";
+
+    }
+
+  }
+
+
+  /* =====================================================
+     STARTUP
+     ===================================================== */
+
+  document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+      renderGames();
+
+      updatePayout();
+
+      updateAuthUI();
+
+      showPage("home");
+
+    }
+  );
+
+
+  supabaseClient
+    .auth
+    .onAuthStateChange(
+      () => {
+
+        updateAuthUI();
+
+      }
+    );
+
+</script>
 
 </body>
-</html>
+</html> 
