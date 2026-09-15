@@ -3,9 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Saturday Lines</title>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <style>
+
     * {
       box-sizing: border-box;
     }
@@ -38,6 +42,61 @@
       max-width: 850px;
       margin: 30px auto;
       padding: 0 20px;
+    }
+
+    .auth-box {
+      background: white;
+      border-radius: 12px;
+      padding: 25px;
+      margin-bottom: 25px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.08);
+    }
+
+    .auth-box h2 {
+      margin-top: 0;
+    }
+
+    input {
+      width: 100%;
+      padding: 13px;
+      margin-bottom: 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .auth-button {
+      width: 100%;
+      padding: 13px;
+      border: none;
+      border-radius: 8px;
+      background: #111827;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .auth-button:hover {
+      background: #374151;
+    }
+
+    .logout {
+      background: #dc2626;
+    }
+
+    .user-info {
+      text-align: center;
+      margin-bottom: 15px;
+      font-weight: bold;
+    }
+
+    .hidden {
+      display: none;
     }
 
     .info {
@@ -105,7 +164,6 @@
       border: 2px solid #d1d5db;
       border-radius: 8px;
       background: white;
-      cursor: pointer;
       font-size: 16px;
       font-weight: bold;
     }
@@ -129,21 +187,17 @@
       color: white;
       font-size: 18px;
       font-weight: bold;
-      cursor: pointer;
       margin-top: 5px;
     }
 
-    .submit:hover {
-      background: #374151;
-    }
-
-    #message {
+    .message {
       text-align: center;
       font-weight: bold;
       margin: 18px 0;
     }
 
     @media (max-width: 600px) {
+
       .game-top {
         flex-direction: column;
         align-items: flex-start;
@@ -152,40 +206,163 @@
       .teams {
         flex-direction: column;
       }
+
     }
+
   </style>
+
 </head>
 
 <body>
 
   <header>
+
     <h1>Saturday Lines</h1>
-    <p>Pick 10 games against the spread.</p>
+
+    <p>
+      Pick 10 games against the spread.
+    </p>
+
   </header>
+
 
   <main class="container">
 
-    <div class="info">
-      <h2>Your Picks</h2>
-      <div class="counter">
-        <span id="selectedCount">0</span> / 10
+
+    <!-- AUTHENTICATION -->
+
+    <div id="authBox" class="auth-box">
+
+      <h2>Sign In</h2>
+
+      <input
+        type="email"
+        id="email"
+        placeholder="Email address"
+      >
+
+      <input
+        type="password"
+        id="password"
+        placeholder="Password"
+      >
+
+      <button
+        class="auth-button"
+        onclick="signIn()">
+        Sign In
+      </button>
+
+      <button
+        class="auth-button"
+        onclick="signUp()">
+        Create Account
+      </button>
+
+      <div
+        id="authMessage"
+        class="message">
       </div>
-      <p>Select exactly 10 games.</p>
+
     </div>
 
-    <div id="games"></div>
 
-    <button class="submit" onclick="submitPicks()">
-      Submit Picks
-    </button>
+    <!-- LOGGED IN -->
 
-    <div id="message"></div>
+    <div
+      id="loggedInBox"
+      class="auth-box hidden">
+
+      <div
+        id="userInfo"
+        class="user-info">
+      </div>
+
+      <button
+        class="auth-button logout"
+        onclick="signOut()">
+        Log Out
+      </button>
+
+    </div>
+
+
+    <!-- PICKS -->
+
+    <div
+      id="pickArea"
+      class="hidden">
+
+      <div class="info">
+
+        <h2>Your Picks</h2>
+
+        <div class="counter">
+
+          <span id="selectedCount">
+            0
+          </span>
+
+          / 10
+
+        </div>
+
+        <p>
+          Select exactly 10 games.
+        </p>
+
+      </div>
+
+
+      <div id="games"></div>
+
+
+      <button
+        class="submit"
+        onclick="submitPicks()">
+
+        Submit Picks
+
+      </button>
+
+
+      <div
+        id="message"
+        class="message">
+      </div>
+
+    </div>
+
 
   </main>
 
+
   <script>
 
+    /* =====================================
+       PUT YOUR SUPABASE VALUES HERE
+       ===================================== */
+
+    const SUPABASE_URL =
+      "https://ffzlgkaenvivlsrhxvcs.supabase.co/rest/v1/";
+
+    const SUPABASE_KEY =
+      "sb_publishable_pILr3XbyWT721ABLUMVwVA_8_IiVXKg";
+
+
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+      );
+
+
+    /* =====================================
+       TEMPORARY GAMES
+       ===================================== */
+
     const games = [
+
       {
         id: 1,
         away: "Michigan",
@@ -193,6 +370,7 @@
         home: "Oklahoma",
         homeSpread: "-3.5"
       },
+
       {
         id: 2,
         away: "Alabama",
@@ -200,6 +378,7 @@
         home: "Georgia",
         homeSpread: "-6.5"
       },
+
       {
         id: 3,
         away: "LSU",
@@ -207,6 +386,7 @@
         home: "Texas",
         homeSpread: "-2.5"
       },
+
       {
         id: 4,
         away: "Clemson",
@@ -214,6 +394,7 @@
         home: "Florida State",
         homeSpread: "-4.5"
       },
+
       {
         id: 5,
         away: "Ohio State",
@@ -221,100 +402,376 @@
         home: "Penn State",
         homeSpread: "+7.5"
       }
+
     ];
 
-    const selectedGames = new Set();
+
+    const selectedGames =
+      new Map();
+
+
+    /* =====================================
+       SIGN UP
+       ===================================== */
+
+    async function signUp() {
+
+      const email =
+        document.getElementById("email").value;
+
+      const password =
+        document.getElementById("password").value;
+
+      const message =
+        document.getElementById("authMessage");
+
+
+      if (!email || !password) {
+
+        message.innerText =
+          "Enter an email and password.";
+
+        return;
+
+      }
+
+
+      const { error } =
+        await supabaseClient.auth.signUp({
+
+          email: email,
+
+          password: password
+
+        });
+
+
+      if (error) {
+
+        message.innerText =
+          error.message;
+
+        return;
+
+      }
+
+
+      message.innerText =
+        "Account created! Check your email to confirm your account.";
+
+    }
+
+
+    /* =====================================
+       SIGN IN
+       ===================================== */
+
+    async function signIn() {
+
+      const email =
+        document.getElementById("email").value;
+
+      const password =
+        document.getElementById("password").value;
+
+      const message =
+        document.getElementById("authMessage");
+
+
+      const { error } =
+        await supabaseClient.auth.signInWithPassword({
+
+          email: email,
+
+          password: password
+
+        });
+
+
+      if (error) {
+
+        message.innerText =
+          error.message;
+
+        return;
+
+      }
+
+
+      message.innerText = "";
+
+    }
+
+
+    /* =====================================
+       SIGN OUT
+       ===================================== */
+
+    async function signOut() {
+
+      await supabaseClient.auth.signOut();
+
+    }
+
+
+    /* =====================================
+       AUTH STATE
+       ===================================== */
+
+    supabaseClient.auth.onAuthStateChange(
+
+      (event, session) => {
+
+        updateAuthUI(session);
+
+      }
+
+    );
+
+
+    async function checkUser() {
+
+      const {
+        data: {
+          session
+        }
+      } =
+        await supabaseClient.auth.getSession();
+
+
+      updateAuthUI(session);
+
+    }
+
+
+    function updateAuthUI(session) {
+
+      const authBox =
+        document.getElementById("authBox");
+
+      const loggedInBox =
+        document.getElementById("loggedInBox");
+
+      const pickArea =
+        document.getElementById("pickArea");
+
+      const userInfo =
+        document.getElementById("userInfo");
+
+
+      if (session) {
+
+        authBox.classList.add("hidden");
+
+        loggedInBox.classList.remove("hidden");
+
+        pickArea.classList.remove("hidden");
+
+
+        userInfo.innerText =
+          "Logged in as " +
+          session.user.email;
+
+
+        displayGames();
+
+      }
+
+      else {
+
+        authBox.classList.remove("hidden");
+
+        loggedInBox.classList.add("hidden");
+
+        pickArea.classList.add("hidden");
+
+      }
+
+    }
+
+
+    /* =====================================
+       DISPLAY GAMES
+       ===================================== */
 
     function displayGames() {
 
-      const container = document.getElementById("games");
+      const container =
+        document.getElementById("games");
+
 
       container.innerHTML = "";
 
+
       games.forEach(game => {
 
-        const card = document.createElement("div");
+        const card =
+          document.createElement("div");
 
-        card.className = "game";
+
+        card.className =
+          "game";
+
 
         card.innerHTML = `
+
           <div class="game-top">
+
             <div class="matchup">
-              ${game.away} @ ${game.home}
+
+              ${game.away}
+              @
+              ${game.home}
+
             </div>
 
             <div class="value">
+
               1 Point
+
             </div>
+
           </div>
 
+
           <div class="spread">
+
             Pick against the spread
+
           </div>
+
 
           <div class="teams">
 
-            <button
-              class="team"
-              onclick="selectTeam(${game.id}, 'away', this)">
-              ${game.away} ${game.awaySpread}
-            </button>
 
             <button
               class="team"
-              onclick="selectTeam(${game.id}, 'home', this)">
-              ${game.home} ${game.homeSpread}
+              onclick="selectTeam(
+                ${game.id},
+                'away',
+                this
+              )">
+
+              ${game.away}
+              ${game.awaySpread}
+
             </button>
+
+
+            <button
+              class="team"
+              onclick="selectTeam(
+                ${game.id},
+                'home',
+                this
+              )">
+
+              ${game.home}
+              ${game.homeSpread}
+
+            </button>
+
 
           </div>
+
         `;
 
+
         container.appendChild(card);
+
       });
+
     }
 
-    function selectTeam(gameId, team, button) {
 
-      const game = games.find(g => g.id === gameId);
+    /* =====================================
+       SELECT TEAM
+       ===================================== */
 
-      if (!game) return;
+    function selectTeam(
+      gameId,
+      team,
+      button
+    ) {
 
-      const card = button.closest(".game");
+      const card =
+        button.closest(".game");
 
-      const buttons = card.querySelectorAll(".team");
+
+      const buttons =
+        card.querySelectorAll(".team");
+
 
       buttons.forEach(btn => {
+
         btn.classList.remove("selected");
+
       });
 
-      if (selectedGames.has(gameId)) {
+
+      if (
+        selectedGames.has(gameId) &&
+        selectedGames.get(gameId) === team
+      ) {
 
         selectedGames.delete(gameId);
 
-      } else {
+      }
 
-        if (selectedGames.size >= 10) {
+      else {
 
-          document.getElementById("message").innerText =
+        if (
+          !selectedGames.has(gameId) &&
+          selectedGames.size >= 10
+        ) {
+
+          document.getElementById(
+            "message"
+          ).innerText =
             "You can only select 10 games.";
 
           return;
+
         }
 
-        selectedGames.add(gameId);
+
+        selectedGames.set(
+          gameId,
+          team
+        );
+
+
+        button.classList.add(
+          "selected"
+        );
+
       }
 
-      button.classList.add("selected");
 
-      document.getElementById("selectedCount").innerText =
+      document.getElementById(
+        "selectedCount"
+      ).innerText =
         selectedGames.size;
 
-      document.getElementById("message").innerText = "";
+
+      document.getElementById(
+        "message"
+      ).innerText = "";
+
     }
 
-    function submitPicks() {
 
-      const message = document.getElementById("message");
+    /* =====================================
+       SUBMIT PICKS
+       ===================================== */
+
+    async function submitPicks() {
+
+      const message =
+        document.getElementById(
+          "message"
+        );
+
 
       if (selectedGames.size !== 10) {
 
@@ -322,14 +779,17 @@
           "You must select exactly 10 games.";
 
         return;
+
       }
+
 
       message.innerText =
         "Picks submitted successfully!";
 
     }
 
-    displayGames();
+
+    checkUser();
 
   </script>
 
