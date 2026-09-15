@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -432,6 +433,91 @@
       text-align: center;
     }
 
+    .tiebreaker-panel {
+      margin-top: 28px;
+      padding: 24px;
+      border: 1px solid var(--border);
+      background:
+        linear-gradient(135deg, rgba(255, 106, 0, 0.07), transparent 55%),
+        var(--panel);
+    }
+
+    .tiebreaker-title {
+      font-size: 22px;
+      font-weight: 950;
+      margin-bottom: 7px;
+    }
+
+    .tiebreaker-description {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+      margin-bottom: 18px;
+    }
+
+    .tiebreaker-game {
+      padding: 15px;
+      border: 1px solid var(--border);
+      background: #0c0c0c;
+      margin-bottom: 16px;
+    }
+
+    .tiebreaker-label {
+      color: var(--orange);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 900;
+      margin-bottom: 7px;
+    }
+
+    .tiebreaker-matchup {
+      font-size: 18px;
+      font-weight: 900;
+    }
+
+    .tiebreaker-input-wrap {
+      max-width: 260px;
+    }
+
+    .tiebreaker-input-wrap label {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 7px;
+    }
+
+    #tiebreakerInput {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid var(--border);
+      background: #0b0b0b;
+      color: white;
+      outline: none;
+      border-radius: 5px;
+      font-size: 18px;
+      font-weight: 900;
+    }
+
+    #tiebreakerInput:focus {
+      border-color: var(--orange);
+    }
+
+    #tiebreakerInput:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .tiebreaker-save-status {
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: 11px;
+      min-height: 15px;
+    }
+
     .submit-panel {
       margin-top: 22px;
       padding: 22px;
@@ -584,8 +670,13 @@
       .auth-buttons {
         flex-direction: column;
       }
+
+      .tiebreaker-input-wrap {
+        max-width: none;
+      }
     }
   </style>
+
 </head>
 
 <body>
@@ -593,314 +684,360 @@
 <header>
   <div class="container header-inner">
 
-    <div class="logo">
-      SATURDAY<span>LINES</span>
-    </div>
+```
+<div class="logo">
+  SATURDAY<span>LINES</span>
+</div>
 
-    <div class="header-right">
-      <div id="userEmail" class="user-email"></div>
+<div class="header-right">
+  <div id="userEmail" class="user-email"></div>
 
-      <button id="logoutBtn" class="small-btn hidden">
-        Log Out
-      </button>
-    </div>
+  <button id="logoutBtn" class="small-btn hidden">
+    Log Out
+  </button>
+</div>
+```
 
   </div>
 </header>
-
 
 <section class="hero">
 
   <div class="container">
 
-    <div class="eyebrow">
-      College Football • Weekly ATS Competition
+```
+<div class="eyebrow">
+  College Football • Weekly ATS Competition
+</div>
+
+<h1>
+  PICK.<br />
+  PLAY.<br />
+  WIN.
+</h1>
+
+<p class="hero-copy">
+  Choose 10 games against the spread, lock your picks,
+  and compete for the weekly pot.
+</p>
+
+<div class="stats">
+
+  <div class="stat">
+    <div class="stat-label">
+      This Week's Pot
     </div>
 
-    <h1>
-      PICK.<br />
-      PLAY.<br />
-      WIN.
-    </h1>
-
-    <p class="hero-copy">
-      Choose 10 games against the spread, lock your picks,
-      and compete for the weekly pot.
-    </p>
-
-    <div class="stats">
-
-      <div class="stat">
-        <div class="stat-label">
-          This Week's Pot
-        </div>
-
-        <div id="potValue" class="stat-value">
-          $0
-        </div>
-      </div>
-
-      <div class="stat">
-        <div class="stat-label">
-          Players
-        </div>
-
-        <div id="playerCount" class="stat-value">
-          0
-        </div>
-      </div>
-
-      <div class="stat">
-        <div class="stat-label">
-          Your Picks
-        </div>
-
-        <div id="yourPickCount" class="stat-value">
-          0 / 10
-        </div>
-      </div>
-
+    <div id="potValue" class="stat-value">
+      $0
     </div>
+  </div>
+
+  <div class="stat">
+    <div class="stat-label">
+      Players
+    </div>
+
+    <div id="playerCount" class="stat-value">
+      0
+    </div>
+  </div>
+
+  <div class="stat">
+    <div class="stat-label">
+      Your Picks
+    </div>
+
+    <div id="yourPickCount" class="stat-value">
+      0 / 10
+    </div>
+  </div>
+
+</div>
+```
 
   </div>
 
 </section>
-
 
 <section id="authSection" class="auth-wrap">
 
   <div class="container">
 
-    <div class="auth-card">
+```
+<div class="auth-card">
 
-      <h2>Enter Saturday Lines</h2>
+  <h2>Enter Saturday Lines</h2>
 
-      <p>
-        Sign in or create an account to make your weekly picks.
-      </p>
+  <p>
+    Sign in or create an account to make your weekly picks.
+  </p>
 
-      <div class="field">
+  <div class="field">
 
-        <label for="email">
-          Email
-        </label>
+    <label for="email">
+      Email
+    </label>
 
-        <input
-          id="email"
-          type="email"
-          autocomplete="email"
-          placeholder="you@example.com"
-        />
+    <input
+      id="email"
+      type="email"
+      autocomplete="email"
+      placeholder="you@example.com"
+    />
 
-      </div>
+  </div>
 
-      <div class="field">
+  <div class="field">
 
-        <label for="password">
-          Password
-        </label>
+    <label for="password">
+      Password
+    </label>
 
-        <input
-          id="password"
-          type="password"
-          autocomplete="current-password"
-          placeholder="Password"
-        />
+    <input
+      id="password"
+      type="password"
+      autocomplete="current-password"
+      placeholder="Password"
+    />
 
-      </div>
+  </div>
 
-      <div class="auth-buttons">
+  <div class="auth-buttons">
 
-        <button id="loginBtn" class="primary-btn">
-          Sign In
-        </button>
+    <button id="loginBtn" class="primary-btn">
+      Sign In
+    </button>
 
-        <button id="signupBtn" class="secondary-btn">
-          Create Account
-        </button>
+    <button id="signupBtn" class="secondary-btn">
+      Create Account
+    </button>
 
-      </div>
+  </div>
 
-      <div id="authMessage" class="status-message hidden"></div>
+  <div id="authMessage" class="status-message hidden"></div>
 
-    </div>
+</div>
+```
 
   </div>
 
 </section>
 
-
 <main id="mainContent" class="hidden">
 
   <div class="container">
 
-    <div id="pageMessage" class="status-message hidden"></div>
+```
+<div id="pageMessage" class="status-message hidden"></div>
 
 
-    <div class="section-title">
+<div class="section-title">
+
+  <div>
+
+    <h2>
+      Weekly Entry
+    </h2>
+
+    <p>
+      Choose your buy-in before submitting your picks.
+    </p>
+
+  </div>
+
+</div>
+
+
+<div id="buyinGrid" class="buyin-grid">
+
+  <div
+    id="buyin10"
+    class="buyin-card"
+    data-buyin="10"
+  >
+
+    <div class="buyin-amount">
+      $10
+    </div>
+
+    <div class="buyin-description">
+      $10 entry
+    </div>
+
+  </div>
+
+
+  <div
+    id="buyin20"
+    class="buyin-card"
+    data-buyin="20"
+  >
+
+    <div class="buyin-amount">
+      $20
+    </div>
+
+    <div class="buyin-description">
+      $20 entry
+    </div>
+
+  </div>
+
+</div>
+
+
+<div class="section-title">
+
+  <div>
+
+    <h2>
+      This Week's Games
+    </h2>
+
+    <p>
+      Select exactly 10 games against the stored spread.
+    </p>
+
+  </div>
+
+</div>
+
+
+<div id="gamesGrid" class="games-grid"></div>
+
+
+<!-- ======================================================
+     TIEBREAKER
+     ====================================================== -->
+
+<div id="tiebreakerPanel" class="tiebreaker-panel hidden">
+
+  <div class="tiebreaker-title">
+    Tiebreaker
+  </div>
+
+  <div class="tiebreaker-description">
+    Predict the total combined score of the highest-ranked game of the week.
+    The tiebreaker is used to break ties in the weekly standings.
+  </div>
+
+  <div id="tiebreakerGame" class="tiebreaker-game"></div>
+
+  <div class="tiebreaker-input-wrap">
+
+    <label for="tiebreakerInput">
+      Your Predicted Total Score
+    </label>
+
+    <input
+      id="tiebreakerInput"
+      type="number"
+      min="1"
+      step="1"
+      inputmode="numeric"
+      placeholder="Example: 54"
+    />
+
+    <div
+      id="tiebreakerSaveStatus"
+      class="tiebreaker-save-status"
+    ></div>
+
+  </div>
+
+</div>
+
+
+<div id="submitPanel" class="submit-panel">
+
+  <div>
+
+    <div class="pick-count">
+      Picks Selected:
+      <span id="selectedCount">0</span> / 10
+    </div>
+
+    <div class="submit-help">
+      Your picks and tiebreaker save automatically. Once submitted, they cannot be changed.
+    </div>
+
+  </div>
+
+
+  <button
+    id="submitBtn"
+    class="primary-btn"
+    disabled
+  >
+    Submit Picks
+  </button>
+
+</div>
+
+
+<div id="submittedBox" class="submitted-box hidden">
+
+  <div class="submitted-title">
+    ✓ PICKS SUBMITTED — LOCKED
+  </div>
+
+  <div class="submitted-copy">
+    Your 10 picks and tiebreaker are permanently locked and cannot be changed.
+  </div>
+
+</div>
+
+
+<section class="leaderboard">
+
+  <div class="section-title">
+
+    <div>
+
+      <h2>
+        Leaderboard
+      </h2>
+
+      <p>
+        Weekly standings.
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <div class="leaderboard-card">
+
+    <div class="leaderboard-row leaderboard-header">
+
+      <div>#</div>
 
       <div>
+        Player
+      </div>
 
-        <h2>
-          Weekly Entry
-        </h2>
+      <div class="entry">
+        Entry
+      </div>
 
-        <p>
-          Choose your buy-in before submitting your picks.
-        </p>
-
+      <div class="points">
+        Points
       </div>
 
     </div>
 
+    <div id="leaderboardRows"></div>
 
-    <div id="buyinGrid" class="buyin-grid">
+  </div>
 
-      <div
-        id="buyin10"
-        class="buyin-card"
-        data-buyin="10"
-      >
-
-        <div class="buyin-amount">
-          $10
-        </div>
-
-        <div class="buyin-description">
-          $10 entry
-        </div>
-
-      </div>
-
-
-      <div
-        id="buyin20"
-        class="buyin-card"
-        data-buyin="20"
-      >
-
-        <div class="buyin-amount">
-          $20
-        </div>
-
-        <div class="buyin-description">
-          $20 entry
-        </div>
-
-      </div>
-
-    </div>
-
-
-    <div class="section-title">
-
-      <div>
-
-        <h2>
-          This Week's Games
-        </h2>
-
-        <p>
-          Select exactly 10 games against the stored spread.
-        </p>
-
-      </div>
-
-    </div>
-
-
-    <div id="gamesGrid" class="games-grid"></div>
-
-
-    <div id="submitPanel" class="submit-panel">
-
-      <div>
-
-        <div class="pick-count">
-          Picks Selected:
-          <span id="selectedCount">0</span> / 10
-        </div>
-
-        <div class="submit-help">
-          Your picks save automatically. Once submitted, they cannot be changed.
-        </div>
-
-      </div>
-
-
-      <button
-        id="submitBtn"
-        class="primary-btn"
-        disabled
-      >
-        Submit Picks
-      </button>
-
-    </div>
-
-
-    <div id="submittedBox" class="submitted-box hidden">
-
-      <div class="submitted-title">
-        ✓ PICKS SUBMITTED — LOCKED
-      </div>
-
-      <div class="submitted-copy">
-        Your 10 picks are permanently locked and cannot be changed.
-      </div>
-
-    </div>
-
-
-    <section class="leaderboard">
-
-      <div class="section-title">
-
-        <div>
-
-          <h2>
-            Leaderboard
-          </h2>
-
-          <p>
-            Weekly standings.
-          </p>
-
-        </div>
-
-      </div>
-
-
-      <div class="leaderboard-card">
-
-        <div class="leaderboard-row leaderboard-header">
-
-          <div>#</div>
-
-          <div>
-            Player
-          </div>
-
-          <div class="entry">
-            Entry
-          </div>
-
-          <div class="points">
-            Points
-          </div>
-
-        </div>
-
-        <div id="leaderboardRows"></div>
-
-      </div>
-
-    </section>
+</section>
+```
 
   </div>
 
 </main>
-
 
 <footer>
 
@@ -909,7 +1046,6 @@
   </div>
 
 </footer>
-
 
 <script>
 
@@ -939,7 +1075,9 @@
   let games = [];
   let selectedPicks = {};
   let selectedBuyIn = null;
+  let tiebreakerTotal = null;
   let submitted = false;
+  let tiebreakerSaveTimer = null;
 
 
   // ============================================================
@@ -993,6 +1131,18 @@
 
   const authMessage =
     document.getElementById("authMessage");
+
+  const tiebreakerPanel =
+    document.getElementById("tiebreakerPanel");
+
+  const tiebreakerGame =
+    document.getElementById("tiebreakerGame");
+
+  const tiebreakerInput =
+    document.getElementById("tiebreakerInput");
+
+  const tiebreakerSaveStatus =
+    document.getElementById("tiebreakerSaveStatus");
 
 
   // ============================================================
@@ -1111,6 +1261,169 @@
     }
 
     return new Date(game.start_time) <= new Date();
+  }
+
+
+  // ============================================================
+  // FIND HIGHEST-RANKED GAME
+  // ============================================================
+
+  function getHighestRankedGame() {
+
+    const rankedGames =
+      games.filter((game) => {
+
+        const awayRank =
+          Number(game.away_rank);
+
+        const homeRank =
+          Number(game.home_rank);
+
+        return (
+          Number.isFinite(awayRank) ||
+          Number.isFinite(homeRank)
+        );
+      });
+
+
+    if (!rankedGames.length) {
+      return null;
+    }
+
+
+    /*
+     * Best-ranked matchup:
+     *
+     * - Games with two ranked teams are preferred.
+     * - Among those, the lowest combined ranking wins.
+     * - If only one team is ranked, its ranking is compared
+     *   using 25 as the unranked team's baseline.
+     *
+     * Example:
+     * #7 LSU vs #8 Ole Miss = 15
+     * #1 Texas vs unranked UTSA = 26
+     *
+     * Therefore LSU/Ole Miss is the tiebreaker game.
+     */
+
+    return rankedGames.reduce(
+      (best, game) => {
+
+        const awayRank =
+          Number(game.away_rank);
+
+        const homeRank =
+          Number(game.home_rank);
+
+        const awayRanked =
+          Number.isFinite(awayRank);
+
+        const homeRanked =
+          Number.isFinite(homeRank);
+
+        const score =
+          (awayRanked ? awayRank : 25) +
+          (homeRanked ? homeRank : 25);
+
+
+        if (!best) {
+          return {
+            game,
+            score
+          };
+        }
+
+
+        if (score < best.score) {
+          return {
+            game,
+            score
+          };
+        }
+
+
+        return best;
+
+      },
+      null
+    )?.game || null;
+  }
+
+
+  // ============================================================
+  // RENDER TIEBREAKER
+  // ============================================================
+
+  function renderTiebreaker() {
+
+    const game =
+      getHighestRankedGame();
+
+
+    if (!game) {
+
+      tiebreakerPanel.classList.add(
+        "hidden"
+      );
+
+      return;
+    }
+
+
+    tiebreakerPanel.classList.remove(
+      "hidden"
+    );
+
+
+    const awayRank =
+      game.away_rank
+        ? `#${escapeHtml(game.away_rank)} `
+        : "";
+
+    const homeRank =
+      game.home_rank
+        ? `#${escapeHtml(game.home_rank)} `
+        : "";
+
+
+    tiebreakerGame.innerHTML = `
+
+      <div class="tiebreaker-label">
+        Highest-Ranked Game
+      </div>
+
+      <div class="tiebreaker-matchup">
+        ${awayRank}${escapeHtml(game.away_team)}
+        vs.
+        ${homeRank}${escapeHtml(game.home_team)}
+      </div>
+
+    `;
+
+
+    tiebreakerInput.value =
+      tiebreakerTotal ?? "";
+
+
+    tiebreakerInput.disabled =
+      submitted;
+
+
+    if (submitted) {
+
+      tiebreakerSaveStatus.textContent =
+        "Tiebreaker locked.";
+
+    } else if (tiebreakerTotal !== null) {
+
+      tiebreakerSaveStatus.textContent =
+        "Saved automatically.";
+
+    } else {
+
+      tiebreakerSaveStatus.textContent =
+        "";
+    }
   }
 
 
@@ -1262,11 +1575,7 @@
 
     currentWeek = data;
 
-    /*
-     * Games are loaded first and independently.
-     * This guarantees the game cards render even if
-     * the user's saved picks have a problem.
-     */
+
     await loadGames();
 
     await loadEntry();
@@ -1329,6 +1638,7 @@
         : [];
 
     renderGames();
+    renderTiebreaker();
   }
 
 
@@ -1549,7 +1859,6 @@
       selectedPicks[gameId];
 
 
-    // User removed the pick.
     if (!pick) {
 
       const { error } =
@@ -1577,7 +1886,6 @@
     }
 
 
-    // User selected or changed a pick.
     const { error } =
       await supabaseClient
         .from("picks")
@@ -1648,10 +1956,6 @@
     }
 
 
-    // ========================================================
-    // REMOVE EXISTING PICK
-    // ========================================================
-
     if (selectedPicks[gameId]) {
 
       if (
@@ -1673,13 +1977,7 @@
         };
       }
 
-    }
-
-    // ========================================================
-    // ADD NEW PICK
-    // ========================================================
-
-    else {
+    } else {
 
       if (
         Object.keys(selectedPicks).length >= 10
@@ -1705,20 +2003,9 @@
     }
 
 
-    /*
-     * IMPORTANT:
-     *
-     * Update the screen immediately.
-     * Do NOT wait for Supabase.
-     */
     updatePickDisplay();
 
 
-    /*
-     * Save in the background.
-     *
-     * This does not control rendering.
-     */
     saveDraftPick(gameId)
       .catch((error) => {
 
@@ -1750,17 +2037,16 @@
     yourPickCount.textContent =
       `${count} / 10`;
 
+
     submitBtn.disabled =
       submitted ||
       count !== 10 ||
-      !selectedBuyIn;
+      !selectedBuyIn ||
+      tiebreakerTotal === null;
 
-    /*
-     * Re-render using the current local state.
-     *
-     * This is separate from saving.
-     */
+
     renderGames();
+    renderTiebreaker();
   }
 
 
@@ -1789,15 +2075,9 @@
     );
 
 
-    /*
-     * Update the screen immediately.
-     */
     updatePickDisplay();
 
 
-    /*
-     * Save buy-in in the background.
-     */
     saveEntry()
       .catch((error) => {
 
@@ -1823,6 +2103,218 @@
     "click",
     () => chooseBuyIn(20)
   );
+
+
+  // ============================================================
+  // TIEBREAKER INPUT
+  // ============================================================
+
+  tiebreakerInput.addEventListener(
+    "input",
+    () => {
+
+      if (submitted) {
+        return;
+      }
+
+
+      const value =
+        tiebreakerInput.value.trim();
+
+
+      if (value === "") {
+
+        tiebreakerTotal =
+          null;
+
+        tiebreakerSaveStatus.textContent =
+          "";
+
+        updatePickDisplay();
+
+        return;
+      }
+
+
+      const number =
+        Number(value);
+
+
+      if (
+        !Number.isInteger(number) ||
+        number < 1
+      ) {
+
+        tiebreakerTotal =
+          null;
+
+        tiebreakerSaveStatus.textContent =
+          "Enter a whole number greater than 0.";
+
+        updatePickDisplay();
+
+        return;
+      }
+
+
+      tiebreakerTotal =
+        number;
+
+
+      tiebreakerSaveStatus.textContent =
+        "Saving...";
+
+
+      updatePickDisplay();
+
+
+      clearTimeout(
+        tiebreakerSaveTimer
+      );
+
+
+      tiebreakerSaveTimer =
+        setTimeout(
+          async () => {
+
+            try {
+
+              await saveTiebreaker();
+
+              tiebreakerSaveStatus.textContent =
+                "Saved automatically.";
+
+            } catch (error) {
+
+              console.error(
+                "Could not save tiebreaker:",
+                error
+              );
+
+              tiebreakerSaveStatus.textContent =
+                "Could not save. Please try again.";
+
+            }
+
+          },
+          400
+        );
+    }
+  );
+
+
+  // ============================================================
+  // SAVE TIEBREAKER
+  // ============================================================
+
+  async function saveTiebreaker() {
+
+    if (
+      !currentUser ||
+      !currentWeek ||
+      submitted
+    ) {
+      return;
+    }
+
+
+    if (
+      tiebreakerTotal === null ||
+      !Number.isInteger(
+        Number(tiebreakerTotal)
+      ) ||
+      Number(tiebreakerTotal) < 1
+    ) {
+      throw new Error(
+        "Enter a valid tiebreaker."
+      );
+    }
+
+
+    const {
+      data: existing,
+      error: existingError
+    } =
+      await supabaseClient
+        .from("entries")
+        .select(
+          "id, submitted"
+        )
+        .eq(
+          "user_id",
+          currentUser.id
+        )
+        .eq(
+          "week_id",
+          currentWeek.id
+        )
+        .maybeSingle();
+
+
+    if (existingError) {
+      throw existingError;
+    }
+
+
+    if (existing?.submitted) {
+
+      submitted = true;
+
+      throw new Error(
+        "Your entry has already been submitted."
+      );
+    }
+
+
+    if (existing) {
+
+      const { error } =
+        await supabaseClient
+          .from("entries")
+          .update({
+            tiebreaker_total:
+              Number(tiebreakerTotal)
+          })
+          .eq(
+            "id",
+            existing.id
+          );
+
+      if (error) {
+        throw error;
+      }
+
+    } else {
+
+      if (!selectedBuyIn) {
+        throw new Error(
+          "Please select a buy-in first."
+        );
+      }
+
+
+      const { error } =
+        await supabaseClient
+          .from("entries")
+          .insert({
+            user_id:
+              currentUser.id,
+
+            week_id:
+              currentWeek.id,
+
+            buy_in:
+              selectedBuyIn,
+
+            tiebreaker_total:
+              Number(tiebreakerTotal)
+          });
+
+      if (error) {
+        throw error;
+      }
+    }
+  }
 
 
   // ============================================================
@@ -1861,6 +2353,8 @@
 
       selectedBuyIn = null;
 
+      tiebreakerTotal = null;
+
       buyin10.classList.remove("selected");
       buyin20.classList.remove("selected");
 
@@ -1872,6 +2366,13 @@
       Number(data.buy_in);
 
 
+    tiebreakerTotal =
+      data.tiebreaker_total !== null &&
+      data.tiebreaker_total !== undefined
+        ? Number(data.tiebreaker_total)
+        : null;
+
+
     buyin10.classList.toggle(
       "selected",
       selectedBuyIn === 10
@@ -1881,6 +2382,9 @@
       "selected",
       selectedBuyIn === 20
     );
+
+
+    renderTiebreaker();
   }
 
 
@@ -1916,10 +2420,6 @@
         "error"
       );
 
-      /*
-       * IMPORTANT:
-       * Do not clear the games if saved picks fail.
-       */
       return;
     }
 
@@ -1976,10 +2476,6 @@
         "error"
       );
 
-      /*
-       * Still load saved picks even if the status
-       * function has a problem.
-       */
       await loadPicks();
 
       return;
@@ -2104,19 +2600,31 @@
 
     } else {
 
+      const insertData = {
+        user_id:
+          currentUser.id,
+
+        week_id:
+          currentWeek.id,
+
+        buy_in:
+          selectedBuyIn
+      };
+
+
+      if (tiebreakerTotal !== null) {
+
+        insertData.tiebreaker_total =
+          Number(tiebreakerTotal);
+      }
+
+
       const { error } =
         await supabaseClient
           .from("entries")
-          .insert({
-            user_id:
-              currentUser.id,
-
-            week_id:
-              currentWeek.id,
-
-            buy_in:
-              selectedBuyIn
-          });
+          .insert(
+            insertData
+          );
 
       if (error) {
         throw error;
@@ -2232,13 +2740,34 @@
     }
 
 
+    if (
+      tiebreakerTotal === null ||
+      !Number.isInteger(
+        Number(tiebreakerTotal)
+      ) ||
+      Number(tiebreakerTotal) < 1
+    ) {
+
+      showMessage(
+        "Please enter your tiebreaker total score.",
+        "error"
+      );
+
+      tiebreakerInput.focus();
+
+      return;
+    }
+
+
     const confirmed =
       window.confirm(
         "Are you sure you want to submit your picks?\n\n" +
-        "You selected 10 games and chose a $" +
+        "You selected 10 games, chose a $" +
         selectedBuyIn +
-        " entry.\n\n" +
-        "Once submitted, your picks CANNOT be changed."
+        " entry, and entered a tiebreaker of " +
+        tiebreakerTotal +
+        ".\n\n" +
+        "Once submitted, your picks and tiebreaker CANNOT be changed."
       );
 
 
@@ -2253,11 +2782,13 @@
     try {
 
       /*
-       * Make sure the entry and all 10 picks
-       * are saved before final submission.
+       * Make sure the entry, tiebreaker, and all
+       * 10 picks are saved before final submission.
        */
 
       await saveEntry();
+
+      await saveTiebreaker();
 
       await savePicks();
 
@@ -2269,7 +2800,7 @@
         await supabaseClient.rpc(
           "submit_entry",
           {
-            target_week_id:
+            p_week_id:
               currentWeek.id
           }
         );
@@ -2304,8 +2835,16 @@
       );
 
 
+      tiebreakerInput.disabled =
+        true;
+
+
+      tiebreakerSaveStatus.textContent =
+        "Tiebreaker locked.";
+
+
       showMessage(
-        "Your 10 picks have been submitted and permanently locked.",
+        "Your 10 picks and tiebreaker have been submitted and permanently locked.",
         "success"
       );
 
@@ -2575,6 +3114,9 @@
       {};
 
     selectedBuyIn =
+      null;
+
+    tiebreakerTotal =
       null;
 
     submitted =
