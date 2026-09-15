@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -476,6 +475,13 @@
       font-weight: 900;
     }
 
+    .tiebreaker-score {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
     .tiebreaker-input-wrap {
       max-width: 260px;
     }
@@ -613,6 +619,26 @@
       font-size: 12px;
     }
 
+    .payout {
+      color: var(--green);
+      font-size: 11px;
+      margin-top: 4px;
+      font-weight: 800;
+    }
+
+    .empty-leaderboard {
+      padding: 30px 20px;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .empty-leaderboard-title {
+      color: var(--text);
+      font-size: 18px;
+      font-weight: 900;
+      margin-bottom: 6px;
+    }
+
     footer {
       border-top: 1px solid var(--border);
       padding: 28px 0;
@@ -676,7 +702,6 @@
       }
     }
   </style>
-
 </head>
 
 <body>
@@ -684,19 +709,17 @@
 <header>
   <div class="container header-inner">
 
-```
-<div class="logo">
-  SATURDAY<span>LINES</span>
-</div>
+    <div class="logo">
+      SATURDAY<span>LINES</span>
+    </div>
 
-<div class="header-right">
-  <div id="userEmail" class="user-email"></div>
+    <div class="header-right">
+      <div id="userEmail" class="user-email"></div>
 
-  <button id="logoutBtn" class="small-btn hidden">
-    Log Out
-  </button>
-</div>
-```
+      <button id="logoutBtn" class="small-btn hidden">
+        Log Out
+      </button>
+    </div>
 
   </div>
 </header>
@@ -705,56 +728,54 @@
 
   <div class="container">
 
-```
-<div class="eyebrow">
-  College Football • Weekly ATS Competition
-</div>
-
-<h1>
-  PICK.<br />
-  PLAY.<br />
-  WIN.
-</h1>
-
-<p class="hero-copy">
-  Choose 10 games against the spread, lock your picks,
-  and compete for the weekly pot.
-</p>
-
-<div class="stats">
-
-  <div class="stat">
-    <div class="stat-label">
-      This Week's Pot
+    <div class="eyebrow">
+      College Football • Weekly ATS Competition
     </div>
 
-    <div id="potValue" class="stat-value">
-      $0
-    </div>
-  </div>
+    <h1>
+      PICK.<br />
+      PLAY.<br />
+      WIN.
+    </h1>
 
-  <div class="stat">
-    <div class="stat-label">
-      Players
-    </div>
+    <p class="hero-copy">
+      Choose 10 games against the spread, lock your picks,
+      and compete for the weekly pot.
+    </p>
 
-    <div id="playerCount" class="stat-value">
-      0
-    </div>
-  </div>
+    <div class="stats">
 
-  <div class="stat">
-    <div class="stat-label">
-      Your Picks
-    </div>
+      <div class="stat">
+        <div class="stat-label">
+          This Week's Pot
+        </div>
 
-    <div id="yourPickCount" class="stat-value">
-      0 / 10
-    </div>
-  </div>
+        <div id="potValue" class="stat-value">
+          $0
+        </div>
+      </div>
 
-</div>
-```
+      <div class="stat">
+        <div class="stat-label">
+          Players
+        </div>
+
+        <div id="playerCount" class="stat-value">
+          0
+        </div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-label">
+          Your Picks
+        </div>
+
+        <div id="yourPickCount" class="stat-value">
+          0 / 10
+        </div>
+      </div>
+
+    </div>
 
   </div>
 
@@ -764,61 +785,59 @@
 
   <div class="container">
 
-```
-<div class="auth-card">
+    <div class="auth-card">
 
-  <h2>Enter Saturday Lines</h2>
+      <h2>Enter Saturday Lines</h2>
 
-  <p>
-    Sign in or create an account to make your weekly picks.
-  </p>
+      <p>
+        Sign in or create an account to make your weekly picks.
+      </p>
 
-  <div class="field">
+      <div class="field">
 
-    <label for="email">
-      Email
-    </label>
+        <label for="email">
+          Email
+        </label>
 
-    <input
-      id="email"
-      type="email"
-      autocomplete="email"
-      placeholder="you@example.com"
-    />
+        <input
+          id="email"
+          type="email"
+          autocomplete="email"
+          placeholder="you@example.com"
+        />
 
-  </div>
+      </div>
 
-  <div class="field">
+      <div class="field">
 
-    <label for="password">
-      Password
-    </label>
+        <label for="password">
+          Password
+        </label>
 
-    <input
-      id="password"
-      type="password"
-      autocomplete="current-password"
-      placeholder="Password"
-    />
+        <input
+          id="password"
+          type="password"
+          autocomplete="current-password"
+          placeholder="Password"
+        />
 
-  </div>
+      </div>
 
-  <div class="auth-buttons">
+      <div class="auth-buttons">
 
-    <button id="loginBtn" class="primary-btn">
-      Sign In
-    </button>
+        <button id="loginBtn" class="primary-btn">
+          Sign In
+        </button>
 
-    <button id="signupBtn" class="secondary-btn">
-      Create Account
-    </button>
+        <button id="signupBtn" class="secondary-btn">
+          Create Account
+        </button>
 
-  </div>
+      </div>
 
-  <div id="authMessage" class="status-message hidden"></div>
+      <div id="authMessage" class="status-message hidden"></div>
 
-</div>
-```
+    </div>
 
   </div>
 
@@ -828,212 +847,196 @@
 
   <div class="container">
 
-```
-<div id="pageMessage" class="status-message hidden"></div>
+    <div id="pageMessage" class="status-message hidden"></div>
 
-
-<div class="section-title">
-
-  <div>
-
-    <h2>
-      Weekly Entry
-    </h2>
-
-    <p>
-      Choose your buy-in before submitting your picks.
-    </p>
-
-  </div>
-
-</div>
-
-
-<div id="buyinGrid" class="buyin-grid">
-
-  <div
-    id="buyin10"
-    class="buyin-card"
-    data-buyin="10"
-  >
-
-    <div class="buyin-amount">
-      $10
-    </div>
-
-    <div class="buyin-description">
-      $10 entry
-    </div>
-
-  </div>
-
-
-  <div
-    id="buyin20"
-    class="buyin-card"
-    data-buyin="20"
-  >
-
-    <div class="buyin-amount">
-      $20
-    </div>
-
-    <div class="buyin-description">
-      $20 entry
-    </div>
-
-  </div>
-
-</div>
-
-
-<div class="section-title">
-
-  <div>
-
-    <h2>
-      This Week's Games
-    </h2>
-
-    <p>
-      Select exactly 10 games against the stored spread.
-    </p>
-
-  </div>
-
-</div>
-
-
-<div id="gamesGrid" class="games-grid"></div>
-
-
-<!-- ======================================================
-     TIEBREAKER
-     ====================================================== -->
-
-<div id="tiebreakerPanel" class="tiebreaker-panel hidden">
-
-  <div class="tiebreaker-title">
-    Tiebreaker
-  </div>
-
-  <div class="tiebreaker-description">
-    Predict the total combined score of the highest-ranked game of the week.
-    The tiebreaker is used to break ties in the weekly standings.
-  </div>
-
-  <div id="tiebreakerGame" class="tiebreaker-game"></div>
-
-  <div class="tiebreaker-input-wrap">
-
-    <label for="tiebreakerInput">
-      Your Predicted Total Score
-    </label>
-
-    <input
-      id="tiebreakerInput"
-      type="number"
-      min="1"
-      step="1"
-      inputmode="numeric"
-      placeholder="Example: 54"
-    />
-
-    <div
-      id="tiebreakerSaveStatus"
-      class="tiebreaker-save-status"
-    ></div>
-
-  </div>
-
-</div>
-
-
-<div id="submitPanel" class="submit-panel">
-
-  <div>
-
-    <div class="pick-count">
-      Picks Selected:
-      <span id="selectedCount">0</span> / 10
-    </div>
-
-    <div class="submit-help">
-      Your picks and tiebreaker save automatically. Once submitted, they cannot be changed.
-    </div>
-
-  </div>
-
-
-  <button
-    id="submitBtn"
-    class="primary-btn"
-    disabled
-  >
-    Submit Picks
-  </button>
-
-</div>
-
-
-<div id="submittedBox" class="submitted-box hidden">
-
-  <div class="submitted-title">
-    ✓ PICKS SUBMITTED — LOCKED
-  </div>
-
-  <div class="submitted-copy">
-    Your 10 picks and tiebreaker are permanently locked and cannot be changed.
-  </div>
-
-</div>
-
-
-<section class="leaderboard">
-
-  <div class="section-title">
-
-    <div>
-
-      <h2>
-        Leaderboard
-      </h2>
-
-      <p>
-        Weekly standings.
-      </p>
-
-    </div>
-
-  </div>
-
-
-  <div class="leaderboard-card">
-
-    <div class="leaderboard-row leaderboard-header">
-
-      <div>#</div>
+    <div class="section-title">
 
       <div>
-        Player
-      </div>
 
-      <div class="entry">
-        Entry
-      </div>
+        <h2>
+          Weekly Entry
+        </h2>
 
-      <div class="points">
-        Points
+        <p>
+          Choose your buy-in before submitting your picks.
+        </p>
+
       </div>
 
     </div>
 
-    <div id="leaderboardRows"></div>
+    <div id="buyinGrid" class="buyin-grid">
 
-  </div>
+      <div
+        id="buyin10"
+        class="buyin-card"
+        data-buyin="10"
+      >
 
-</section>
-```
+        <div class="buyin-amount">
+          $10
+        </div>
+
+        <div class="buyin-description">
+          $10 entry
+        </div>
+
+      </div>
+
+      <div
+        id="buyin20"
+        class="buyin-card"
+        data-buyin="20"
+      >
+
+        <div class="buyin-amount">
+          $20
+        </div>
+
+        <div class="buyin-description">
+          $20 entry
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="section-title">
+
+      <div>
+
+        <h2>
+          This Week's Games
+        </h2>
+
+        <p>
+          Select exactly 10 games against the locked Tuesday spread.
+        </p>
+
+      </div>
+
+    </div>
+
+    <div id="gamesGrid" class="games-grid"></div>
+
+    <div id="tiebreakerPanel" class="tiebreaker-panel hidden">
+
+      <div class="tiebreaker-title">
+        Tiebreaker
+      </div>
+
+      <div class="tiebreaker-description">
+        Predict the total combined score of this week's randomly selected
+        Top-25 game. The closest prediction wins any tie in the weekly standings.
+      </div>
+
+      <div id="tiebreakerGame" class="tiebreaker-game"></div>
+
+      <div class="tiebreaker-input-wrap">
+
+        <label for="tiebreakerInput">
+          Your Predicted Total Score
+        </label>
+
+        <input
+          id="tiebreakerInput"
+          type="number"
+          min="1"
+          step="1"
+          inputmode="numeric"
+          placeholder="Example: 54"
+        />
+
+        <div
+          id="tiebreakerSaveStatus"
+          class="tiebreaker-save-status"
+        ></div>
+
+      </div>
+
+    </div>
+
+    <div id="submitPanel" class="submit-panel">
+
+      <div>
+
+        <div class="pick-count">
+          Picks Selected:
+          <span id="selectedCount">0</span> / 10
+        </div>
+
+        <div class="submit-help">
+          Your picks and tiebreaker save automatically. Once submitted,
+          they cannot be changed.
+        </div>
+
+      </div>
+
+      <button
+        id="submitBtn"
+        class="primary-btn"
+        disabled
+      >
+        Submit Picks
+      </button>
+
+    </div>
+
+    <div id="submittedBox" class="submitted-box hidden">
+
+      <div class="submitted-title">
+        ✓ PICKS SUBMITTED — LOCKED
+      </div>
+
+      <div class="submitted-copy">
+        Your 10 picks and tiebreaker are permanently locked and cannot be changed.
+      </div>
+
+    </div>
+
+    <section class="leaderboard">
+
+      <div class="section-title">
+
+        <div>
+
+          <h2>
+            Leaderboard
+          </h2>
+
+          <p>
+            Weekly standings.
+          </p>
+
+        </div>
+
+      </div>
+
+      <div class="leaderboard-card">
+
+        <div class="leaderboard-row leaderboard-header">
+
+          <div>#</div>
+
+          <div>
+            Player
+          </div>
+
+          <div class="entry">
+            Entry
+          </div>
+
+          <div class="points">
+            Points
+          </div>
+
+        </div>
+
+        <div id="leaderboardRows"></div>
+
+      </div>
+
+    </section>
 
   </div>
 
@@ -1076,6 +1079,7 @@
   let selectedPicks = {};
   let selectedBuyIn = null;
   let tiebreakerTotal = null;
+  let tiebreakerGameData = null;
   let submitted = false;
   let tiebreakerSaveTimer = null;
 
@@ -1265,88 +1269,47 @@
 
 
   // ============================================================
-  // FIND HIGHEST-RANKED GAME
+  // LOAD STORED TIEBREAKER
   // ============================================================
 
-  function getHighestRankedGame() {
+  async function loadTiebreaker() {
 
-    const rankedGames =
-      games.filter((game) => {
-
-        const awayRank =
-          Number(game.away_rank);
-
-        const homeRank =
-          Number(game.home_rank);
-
-        return (
-          Number.isFinite(awayRank) ||
-          Number.isFinite(homeRank)
-        );
-      });
-
-
-    if (!rankedGames.length) {
-      return null;
+    if (!currentWeek) {
+      return;
     }
 
-
-    /*
-     * Best-ranked matchup:
-     *
-     * - Games with two ranked teams are preferred.
-     * - Among those, the lowest combined ranking wins.
-     * - If only one team is ranked, its ranking is compared
-     *   using 25 as the unranked team's baseline.
-     *
-     * Example:
-     * #7 LSU vs #8 Ole Miss = 15
-     * #1 Texas vs unranked UTSA = 26
-     *
-     * Therefore LSU/Ole Miss is the tiebreaker game.
-     */
-
-    return rankedGames.reduce(
-      (best, game) => {
-
-        const awayRank =
-          Number(game.away_rank);
-
-        const homeRank =
-          Number(game.home_rank);
-
-        const awayRanked =
-          Number.isFinite(awayRank);
-
-        const homeRanked =
-          Number.isFinite(homeRank);
-
-        const score =
-          (awayRanked ? awayRank : 25) +
-          (homeRanked ? homeRank : 25);
-
-
-        if (!best) {
-          return {
-            game,
-            score
-          };
+    const {
+      data,
+      error
+    } =
+      await supabaseClient.rpc(
+        "get_week_tiebreaker",
+        {
+          p_week_id:
+            currentWeek.id
         }
+      );
 
+    if (error) {
 
-        if (score < best.score) {
-          return {
-            game,
-            score
-          };
-        }
+      console.error(
+        "Tiebreaker loading error:",
+        error
+      );
 
+      tiebreakerGameData = null;
 
-        return best;
+      renderTiebreaker();
 
-      },
-      null
-    )?.game || null;
+      return;
+    }
+
+    tiebreakerGameData =
+      Array.isArray(data)
+        ? data[0] || null
+        : data || null;
+
+    renderTiebreaker();
   }
 
 
@@ -1356,11 +1319,7 @@
 
   function renderTiebreaker() {
 
-    const game =
-      getHighestRankedGame();
-
-
-    if (!game) {
+    if (!tiebreakerGameData) {
 
       tiebreakerPanel.classList.add(
         "hidden"
@@ -1369,10 +1328,13 @@
       return;
     }
 
-
     tiebreakerPanel.classList.remove(
       "hidden"
     );
+
+
+    const game =
+      tiebreakerGameData;
 
 
     const awayRank =
@@ -1386,16 +1348,36 @@
         : "";
 
 
+    let scoreText =
+      "Game not started";
+
+    if (
+      game.away_score !== null &&
+      game.away_score !== undefined &&
+      game.home_score !== null &&
+      game.home_score !== undefined
+    ) {
+
+      scoreText =
+        `${escapeHtml(game.away_team)} ${escapeHtml(game.away_score)} — ` +
+        `${escapeHtml(game.home_score)} ${escapeHtml(game.home_team)}`;
+    }
+
+
     tiebreakerGame.innerHTML = `
 
       <div class="tiebreaker-label">
-        Highest-Ranked Game
+        Randomly Selected Top-25 Game
       </div>
 
       <div class="tiebreaker-matchup">
         ${awayRank}${escapeHtml(game.away_team)}
         vs.
         ${homeRank}${escapeHtml(game.home_team)}
+      </div>
+
+      <div class="tiebreaker-score">
+        ${scoreText}
       </div>
 
     `;
@@ -1538,7 +1520,10 @@
 
   async function loadWeek() {
 
-    const { data, error } =
+    const {
+      data,
+      error
+    } =
       await supabaseClient
         .from("weeks")
         .select("*")
@@ -1563,6 +1548,7 @@
       return;
     }
 
+
     if (!data) {
 
       showMessage(
@@ -1573,10 +1559,14 @@
       return;
     }
 
-    currentWeek = data;
+
+    currentWeek =
+      data;
 
 
     await loadGames();
+
+    await loadTiebreaker();
 
     await loadEntry();
 
@@ -1598,7 +1588,10 @@
       return;
     }
 
-    const { data, error } =
+    const {
+      data,
+      error
+    } =
       await supabaseClient
         .from("games")
         .select("*")
@@ -1607,6 +1600,7 @@
         .order("start_time", {
           ascending: true
         });
+
 
     if (error) {
 
@@ -1632,13 +1626,14 @@
       return;
     }
 
+
     games =
       Array.isArray(data)
         ? data
         : [];
 
+
     renderGames();
-    renderTiebreaker();
   }
 
 
@@ -1650,6 +1645,7 @@
 
     gamesGrid.innerHTML = "";
 
+
     if (!games.length) {
 
       gamesGrid.innerHTML = `
@@ -1660,6 +1656,7 @@
 
       return;
     }
+
 
     games.forEach((game) => {
 
@@ -1701,13 +1698,16 @@
           ? game.home_score
           : "";
 
+
       const card =
         document.createElement("div");
+
 
       card.className =
         "game-card" +
         (selected ? " selected" : "") +
         (gameLocked ? " locked" : "");
+
 
       card.innerHTML = `
 
@@ -1809,6 +1809,7 @@
 
       `;
 
+
       gamesGrid.appendChild(card);
     });
 
@@ -1855,13 +1856,16 @@
       return;
     }
 
+
     const pick =
       selectedPicks[gameId];
 
 
     if (!pick) {
 
-      const { error } =
+      const {
+        error
+      } =
         await supabaseClient
           .from("picks")
           .delete()
@@ -1878,15 +1882,19 @@
             Number(gameId)
           );
 
+
       if (error) {
         throw error;
       }
+
 
       return;
     }
 
 
-    const { error } =
+    const {
+      error
+    } =
       await supabaseClient
         .from("picks")
         .upsert(
@@ -1921,6 +1929,7 @@
           }
         );
 
+
     if (error) {
       throw error;
     }
@@ -1937,19 +1946,23 @@
       return;
     }
 
+
     const game =
       games.find(
         (item) =>
           item.id === gameId
       );
 
+
     if (!game) {
       return;
     }
 
+
     if (!isSpreadAvailable(game)) {
       return;
     }
+
 
     if (isGameLocked(game)) {
       return;
@@ -1991,6 +2004,7 @@
         return;
       }
 
+
       selectedPicks[gameId] = {
         side,
         team:
@@ -2031,8 +2045,10 @@
     const count =
       Object.keys(selectedPicks).length;
 
+
     selectedCount.textContent =
       count;
+
 
     yourPickCount.textContent =
       `${count} / 10`;
@@ -2046,6 +2062,7 @@
 
 
     renderGames();
+
     renderTiebreaker();
   }
 
@@ -2060,6 +2077,7 @@
       return;
     }
 
+
     selectedBuyIn =
       Number(amount);
 
@@ -2068,6 +2086,7 @@
       "selected",
       selectedBuyIn === 10
     );
+
 
     buyin20.classList.toggle(
       "selected",
@@ -2098,6 +2117,7 @@
     "click",
     () => chooseBuyIn(10)
   );
+
 
   buyin20.addEventListener(
     "click",
@@ -2193,7 +2213,6 @@
 
               tiebreakerSaveStatus.textContent =
                 "Could not save. Please try again.";
-
             }
 
           },
@@ -2225,6 +2244,7 @@
       ) ||
       Number(tiebreakerTotal) < 1
     ) {
+
       throw new Error(
         "Enter a valid tiebreaker."
       );
@@ -2268,7 +2288,9 @@
 
     if (existing) {
 
-      const { error } =
+      const {
+        error
+      } =
         await supabaseClient
           .from("entries")
           .update({
@@ -2280,6 +2302,7 @@
             existing.id
           );
 
+
       if (error) {
         throw error;
       }
@@ -2287,13 +2310,16 @@
     } else {
 
       if (!selectedBuyIn) {
+
         throw new Error(
           "Please select a buy-in first."
         );
       }
 
 
-      const { error } =
+      const {
+        error
+      } =
         await supabaseClient
           .from("entries")
           .insert({
@@ -2310,6 +2336,7 @@
               Number(tiebreakerTotal)
           });
 
+
       if (error) {
         throw error;
       }
@@ -2323,7 +2350,10 @@
 
   async function loadEntry() {
 
-    const { data, error } =
+    const {
+      data,
+      error
+    } =
       await supabaseClient
         .from("entries")
         .select("*")
@@ -2336,6 +2366,7 @@
           currentWeek.id
         )
         .maybeSingle();
+
 
     if (error) {
 
@@ -2351,12 +2382,21 @@
 
     if (!data) {
 
-      selectedBuyIn = null;
+      selectedBuyIn =
+        null;
 
-      tiebreakerTotal = null;
+      tiebreakerTotal =
+        null;
 
-      buyin10.classList.remove("selected");
-      buyin20.classList.remove("selected");
+      buyin10.classList.remove(
+        "selected"
+      );
+
+      buyin20.classList.remove(
+        "selected"
+      );
+
+      renderTiebreaker();
 
       return;
     }
@@ -2378,6 +2418,7 @@
       selectedBuyIn === 10
     );
 
+
     buyin20.classList.toggle(
       "selected",
       selectedBuyIn === 20
@@ -2394,7 +2435,10 @@
 
   async function loadPicks() {
 
-    const { data, error } =
+    const {
+      data,
+      error
+    } =
       await supabaseClient
         .from("picks")
         .select("*")
@@ -2406,6 +2450,7 @@
           "week_id",
           currentWeek.id
         );
+
 
     if (error) {
 
@@ -2427,21 +2472,23 @@
     selectedPicks = {};
 
 
-    (data || []).forEach((pick) => {
+    (data || []).forEach(
+      (pick) => {
 
-      selectedPicks[pick.game_id] = {
+        selectedPicks[pick.game_id] = {
 
-        side:
-          pick.pick_side,
+          side:
+            pick.pick_side,
 
-        team:
-          pick.pick_team,
+          team:
+            pick.pick_team,
 
-        spread:
-          pick.pick_spread
+          spread:
+            pick.pick_spread
 
-      };
-    });
+        };
+      }
+    );
 
 
     updatePickDisplay();
@@ -2454,7 +2501,10 @@
 
   async function loadSubmissionStatus() {
 
-    const { data, error } =
+    const {
+      data,
+      error
+    } =
       await supabaseClient.rpc(
         "get_my_submission_status",
         {
@@ -2462,6 +2512,7 @@
             currentWeek.id
         }
       );
+
 
     if (error) {
 
@@ -2492,7 +2543,8 @@
         "hidden"
       );
 
-      submitBtn.disabled = true;
+      submitBtn.disabled =
+        true;
 
       buyin10.classList.add(
         "locked"
@@ -2530,15 +2582,21 @@
 
   async function saveEntry() {
 
-    if (!currentUser || !currentWeek) {
+    if (
+      !currentUser ||
+      !currentWeek
+    ) {
       return;
     }
 
+
     if (!selectedBuyIn) {
+
       throw new Error(
         "Please select a buy-in."
       );
     }
+
 
     if (submitted) {
       return;
@@ -2582,7 +2640,9 @@
 
     if (existing) {
 
-      const { error } =
+      const {
+        error
+      } =
         await supabaseClient
           .from("entries")
           .update({
@@ -2593,6 +2653,7 @@
             "id",
             existing.id
           );
+
 
       if (error) {
         throw error;
@@ -2619,12 +2680,15 @@
       }
 
 
-      const { error } =
+      const {
+        error
+      } =
         await supabaseClient
           .from("entries")
           .insert(
             insertData
           );
+
 
       if (error) {
         throw error;
@@ -2683,7 +2747,9 @@
 
     for (const pick of picks) {
 
-      const { error } =
+      const {
+        error
+      } =
         await supabaseClient
           .from("picks")
           .upsert(
@@ -2693,6 +2759,7 @@
                 "user_id,week_id,game_id"
             }
           );
+
 
       if (error) {
         throw error;
@@ -2776,15 +2843,11 @@
     }
 
 
-    submitBtn.disabled = true;
+    submitBtn.disabled =
+      true;
 
 
     try {
-
-      /*
-       * Make sure the entry, tiebreaker, and all
-       * 10 picks are saved before final submission.
-       */
 
       await saveEntry();
 
@@ -2819,16 +2882,19 @@
       }
 
 
-      submitted = true;
+      submitted =
+        true;
 
 
       submittedBox.classList.remove(
         "hidden"
       );
 
+
       buyin10.classList.add(
         "locked"
       );
+
 
       buyin20.classList.add(
         "locked"
@@ -2891,11 +2957,14 @@
     }
 
 
-    const { data, error } =
+    const {
+      data,
+      error
+    } =
       await supabaseClient.rpc(
         "get_week_pot",
         {
-          target_week_id:
+          p_week_id:
             currentWeek.id
         }
       );
@@ -2926,17 +2995,25 @@
 
     const pot =
       Number(
-        data.pot || 0
+        data.pot ??
+        data.total_pot ??
+        data.pot_total ??
+        0
       );
+
 
     const players =
       Number(
-        data.players || 0
+        data.players ??
+        data.player_count ??
+        data.total_players ??
+        0
       );
 
 
     potValue.textContent =
       `$${pot}`;
+
 
     playerCount.textContent =
       players;
@@ -2954,11 +3031,14 @@
     }
 
 
-    const { data, error } =
+    const {
+      data,
+      error
+    } =
       await supabaseClient.rpc(
         "get_week_leaderboard",
         {
-          target_week_id:
+          p_week_id:
             currentWeek.id
         }
       );
@@ -2971,6 +3051,18 @@
         error
       );
 
+      leaderboardRows.innerHTML = `
+        <div class="empty-leaderboard">
+          <div class="empty-leaderboard-title">
+            Leaderboard unavailable
+          </div>
+
+          <div>
+            ${escapeHtml(error.message)}
+          </div>
+        </div>
+      `;
+
       return;
     }
 
@@ -2980,25 +3072,23 @@
 
 
     const rows =
-      data || [];
+      Array.isArray(data)
+        ? data
+        : [];
 
 
     if (!rows.length) {
 
       leaderboardRows.innerHTML = `
 
-        <div class="leaderboard-row">
+        <div class="empty-leaderboard">
 
-          <div></div>
-
-          <div>
-            No players yet.
+          <div class="empty-leaderboard-title">
+            No entries yet
           </div>
 
-          <div></div>
-
-          <div class="points">
-            0
+          <div>
+            Be the first player to submit your picks.
           </div>
 
         </div>
@@ -3010,13 +3100,43 @@
 
 
     rows.sort(
-      (a, b) =>
-        Number(
-          b.points || 0
-        ) -
-        Number(
-          a.points || 0
-        )
+      (a, b) => {
+
+        const rankA =
+          Number(
+            a.leaderboard_rank ??
+            Number.MAX_SAFE_INTEGER
+          );
+
+        const rankB =
+          Number(
+            b.leaderboard_rank ??
+            Number.MAX_SAFE_INTEGER
+          );
+
+
+        if (rankA !== rankB) {
+          return rankA - rankB;
+        }
+
+
+        const pointsA =
+          Number(
+            a.total_points ??
+            a.points ??
+            0
+          );
+
+        const pointsB =
+          Number(
+            b.total_points ??
+            b.points ??
+            0
+          );
+
+
+        return pointsB - pointsA;
+      }
     );
 
 
@@ -3028,33 +3148,65 @@
             "div"
           );
 
+
         element.className =
           "leaderboard-row";
+
+
+        const playerName =
+          row.player_name ||
+          row.display_name ||
+          "Player";
+
+
+        const buyIn =
+          row.buy_in ??
+          0;
+
+
+        const points =
+          row.total_points ??
+          row.points ??
+          0;
+
+
+        const payout =
+          row.projected_payout ??
+          row.payout ??
+          0;
 
 
         element.innerHTML = `
 
           <div class="place">
-            ${index + 1}
+            ${
+              row.leaderboard_rank ??
+              index + 1
+            }
           </div>
 
           <div class="player-name">
-            ${escapeHtml(
-              row.display_name ||
-              "Player"
-            )}
+
+            ${escapeHtml(playerName)}
+
+            ${
+              Number(payout) > 0
+                ? `
+                  <div class="payout">
+                    Projected payout: $${escapeHtml(payout)}
+                  </div>
+                `
+                : ""
+            }
+
           </div>
 
           <div class="entry">
-            $${escapeHtml(
-              row.buy_in
-            )}
+            $${escapeHtml(buyIn)}
           </div>
 
           <div class="points">
-            ${escapeHtml(
-              row.points || 0
-            )}
+            ${escapeHtml(points)}
           </div>
 
         `;
@@ -3082,9 +3234,11 @@
       "hidden"
     );
 
+
     mainContent.classList.remove(
       "hidden"
     );
+
 
     logoutBtn.classList.remove(
       "hidden"
@@ -3119,6 +3273,9 @@
     tiebreakerTotal =
       null;
 
+    tiebreakerGameData =
+      null;
+
     submitted =
       false;
 
@@ -3127,9 +3284,11 @@
       "hidden"
     );
 
+
     mainContent.classList.add(
       "hidden"
     );
+
 
     logoutBtn.classList.add(
       "hidden"
@@ -3236,6 +3395,8 @@
 
 
       await loadGames();
+
+      await loadTiebreaker();
 
       await loadPot();
 
