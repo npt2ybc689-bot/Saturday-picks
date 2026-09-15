@@ -9,28 +9,15 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
-    :root {
-      --bg: #0a0a0a;
-      --panel: #111111;
-      --panel-2: #171717;
-      --border: #292929;
-      --text: #f5f5f5;
-      --muted: #999999;
-      --orange: #ff6a00;
-      --orange-dark: #d95700;
-      --green: #25c76f;
-      --red: #ff4d4d;
-    }
-
     * {
       box-sizing: border-box;
     }
 
     body {
       margin: 0;
+      background: #0b0d0f;
+      color: #f5f5f5;
       font-family: Arial, Helvetica, sans-serif;
-      background: var(--bg);
-      color: var(--text);
     }
 
     button,
@@ -39,151 +26,100 @@
       font: inherit;
     }
 
-    button {
-      cursor: pointer;
-    }
-
-    .container {
-      width: min(1200px, calc(100% - 32px));
-      margin: 0 auto;
-    }
-
-    header {
-      border-bottom: 1px solid var(--border);
-      background: rgba(10, 10, 10, 0.97);
+    .topbar {
+      background: #111417;
+      border-bottom: 1px solid #292d31;
+      padding: 18px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
       position: sticky;
       top: 0;
-      z-index: 50;
-      backdrop-filter: blur(12px);
+      z-index: 10;
     }
 
-    .header-inner {
-      min-height: 72px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-    }
-
-    .logo {
+    .brand {
       font-size: 22px;
       font-weight: 900;
-      letter-spacing: 2px;
+      letter-spacing: -0.5px;
     }
 
-    .logo span {
-      color: var(--orange);
+    .brand span {
+      color: #ff6a00;
     }
 
-    .header-right {
+    .top-right {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
     }
 
     .user-email {
-      color: var(--muted);
+      color: #9da3a8;
       font-size: 13px;
     }
 
-    .small-btn,
-    .secondary-btn {
-      border: 1px solid var(--border);
-      background: var(--panel);
-      color: var(--text);
-      padding: 10px 14px;
-      border-radius: 5px;
-      font-weight: 800;
+    .logout-btn {
+      background: transparent;
+      color: #fff;
+      border: 1px solid #3a3f44;
+      padding: 9px 14px;
+      border-radius: 6px;
+      cursor: pointer;
     }
 
-    .small-btn:hover,
-    .secondary-btn:hover {
-      border-color: var(--orange);
+    .logout-btn:hover {
+      border-color: #ff6a00;
+      color: #ff6a00;
     }
 
-    .primary-btn {
-      border: none;
-      background: var(--orange);
-      color: white;
-      padding: 11px 16px;
-      border-radius: 5px;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 0.4px;
+    .page {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 30px 24px 60px;
     }
 
-    .primary-btn:hover {
-      background: var(--orange-dark);
+    .loading,
+    .login-panel,
+    .error-panel,
+    .admin-panel {
+      display: none;
     }
 
-    .danger-btn {
-      border: 1px solid rgba(255, 77, 77, 0.5);
-      background: rgba(255, 77, 77, 0.08);
-      color: #ff8a8a;
-      padding: 10px 14px;
-      border-radius: 5px;
-      font-weight: 800;
+    .loading.active,
+    .login-panel.active,
+    .error-panel.active,
+    .admin-panel.active {
+      display: block;
     }
 
-    .danger-btn:hover {
-      background: rgba(255, 77, 77, 0.15);
+    .loading {
+      text-align: center;
+      padding: 100px 20px;
+      color: #9da3a8;
     }
 
-    .hero {
-      padding: 46px 0 34px;
-      border-bottom: 1px solid var(--border);
-      background:
-        radial-gradient(circle at 80% 20%, rgba(255, 106, 0, 0.11), transparent 32%),
-        linear-gradient(180deg, #101010 0%, #0a0a0a 100%);
+    .login-panel,
+    .error-panel {
+      max-width: 480px;
+      margin: 80px auto;
+      background: #111417;
+      border: 1px solid #292d31;
+      border-radius: 10px;
+      padding: 30px;
     }
 
-    .eyebrow {
-      color: var(--orange);
-      font-size: 12px;
-      font-weight: 900;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      margin-bottom: 10px;
-    }
-
-    h1 {
-      margin: 0;
-      font-size: clamp(36px, 6vw, 64px);
-      line-height: 0.95;
-      letter-spacing: -2px;
-    }
-
-    .hero-copy {
-      max-width: 680px;
-      color: var(--muted);
-      margin: 16px 0 0;
-      line-height: 1.55;
-    }
-
-    main {
-      padding: 34px 0 70px;
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
-    .auth-card {
-      max-width: 500px;
-      margin: 50px auto;
-      background: var(--panel);
-      border: 1px solid var(--border);
-      padding: 28px;
-    }
-
-    .auth-card h2 {
-      margin: 0 0 8px;
+    .panel-title {
       font-size: 26px;
+      font-weight: 900;
+      margin-bottom: 8px;
     }
 
-    .auth-card p {
-      color: var(--muted);
-      margin: 0 0 22px;
+    .panel-subtitle {
+      color: #9da3a8;
+      margin-bottom: 25px;
+      line-height: 1.5;
     }
 
     .field {
@@ -192,173 +128,203 @@
 
     .field label {
       display: block;
-      color: var(--muted);
-      font-size: 11px;
-      font-weight: 900;
+      color: #9da3a8;
+      font-size: 12px;
+      font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.8px;
       margin-bottom: 7px;
     }
 
-    .field input,
-    .field select {
+    .field input {
       width: 100%;
+      background: #0b0d0f;
+      color: #fff;
+      border: 1px solid #34393e;
       padding: 12px;
-      background: #0b0b0b;
-      border: 1px solid var(--border);
-      color: white;
-      border-radius: 5px;
+      border-radius: 6px;
       outline: none;
     }
 
-    .field input:focus,
-    .field select:focus {
-      border-color: var(--orange);
+    .field input:focus {
+      border-color: #ff6a00;
     }
 
-    .auth-buttons {
-      display: flex;
-      gap: 10px;
-      margin-top: 18px;
+    .primary-btn {
+      width: 100%;
+      border: 0;
+      background: #ff6a00;
+      color: #fff;
+      font-weight: 900;
+      padding: 13px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 5px;
+    }
+
+    .primary-btn:hover {
+      background: #ff7b20;
     }
 
     .message {
-      margin: 18px 0;
-      padding: 13px 15px;
-      border: 1px solid var(--border);
-      background: var(--panel);
-      border-radius: 5px;
-      color: var(--muted);
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      display: none;
       line-height: 1.45;
     }
 
+    .message.show {
+      display: block;
+    }
+
     .message.error {
-      border-color: rgba(255, 77, 77, 0.55);
-      color: #ff8a8a;
+      background: rgba(220, 50, 50, 0.12);
+      border: 1px solid rgba(220, 50, 50, 0.35);
+      color: #ff8d8d;
     }
 
     .message.success {
-      border-color: rgba(37, 199, 111, 0.55);
-      color: #7ce0a7;
+      background: rgba(40, 180, 100, 0.12);
+      border: 1px solid rgba(40, 180, 100, 0.35);
+      color: #78e0a2;
     }
 
-    .dashboard {
-      display: grid;
-      gap: 22px;
+    .admin-header {
+      margin-bottom: 28px;
     }
 
-    .panel {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      padding: 22px;
+    .admin-title {
+      font-size: 38px;
+      font-weight: 900;
+      letter-spacing: -1px;
+      margin: 0 0 8px;
     }
 
-    .panel-title {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-      margin-bottom: 18px;
+    .admin-title span {
+      color: #ff6a00;
     }
 
-    .panel-title h2 {
+    .admin-subtitle {
+      color: #9da3a8;
       margin: 0;
-      font-size: 22px;
     }
 
-    .panel-title p {
-      margin: 5px 0 0;
-      color: var(--muted);
-      font-size: 13px;
+    .control-bar {
+      background: #111417;
+      border: 1px solid #292d31;
+      padding: 18px;
+      border-radius: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+
+    .status-box {
+      margin-right: auto;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .status-label {
+      color: #8f969c;
+      font-size: 12px;
+      text-transform: uppercase;
+      font-weight: 800;
+    }
+
+    .status-value {
+      font-size: 15px;
+      font-weight: 900;
+    }
+
+    .status-open {
+      color: #65df99;
+    }
+
+    .status-closed {
+      color: #ff8a8a;
+    }
+
+    .control-btn {
+      background: #1a1e22;
+      color: #fff;
+      border: 1px solid #363b40;
+      padding: 10px 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .control-btn:hover {
+      border-color: #ff6a00;
+      color: #ff6a00;
+    }
+
+    .control-btn.orange {
+      background: #ff6a00;
+      border-color: #ff6a00;
+      color: #fff;
+    }
+
+    .control-btn.orange:hover {
+      background: #ff7b20;
     }
 
     .stats {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
+      gap: 14px;
+      margin-bottom: 22px;
     }
 
-    .stat {
-      background: #0d0d0d;
-      border: 1px solid var(--border);
-      padding: 18px;
+    .stat-card {
+      background: #111417;
+      border: 1px solid #292d31;
+      border-radius: 10px;
+      padding: 20px;
     }
 
     .stat-label {
-      color: var(--muted);
+      color: #8f969c;
       font-size: 11px;
       text-transform: uppercase;
-      font-weight: 900;
-      letter-spacing: 0.8px;
+      font-weight: 800;
+      margin-bottom: 8px;
     }
 
     .stat-value {
-      margin-top: 8px;
-      font-size: 25px;
-      font-weight: 950;
-    }
-
-    .controls {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 9px;
-    }
-
-    .games-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-    }
-
-    .game-card {
-      background: #0d0d0d;
-      border: 1px solid var(--border);
-      padding: 17px;
-    }
-
-    .game-card h3 {
-      margin: 0 0 5px;
-      font-size: 17px;
-    }
-
-    .game-time {
-      color: var(--muted);
-      font-size: 11px;
-      margin-bottom: 15px;
-    }
-
-    .game-fields {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
-    }
-
-    .game-fields label {
-      display: block;
-      color: var(--muted);
-      font-size: 10px;
+      font-size: 28px;
       font-weight: 900;
-      text-transform: uppercase;
-      margin-bottom: 5px;
     }
 
-    .game-fields input {
-      width: 100%;
-      padding: 9px;
-      background: #090909;
-      color: white;
-      border: 1px solid var(--border);
-      border-radius: 4px;
+    .section {
+      background: #111417;
+      border: 1px solid #292d31;
+      border-radius: 10px;
+      margin-bottom: 22px;
+      overflow: hidden;
     }
 
-    .game-actions {
+    .section-header {
+      padding: 18px 20px;
+      border-bottom: 1px solid #292d31;
       display: flex;
-      gap: 8px;
-      margin-top: 12px;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
     }
 
-    .game-actions button {
-      flex: 1;
+    .section-title {
+      font-size: 18px;
+      font-weight: 900;
+    }
+
+    .section-body {
+      padding: 20px;
     }
 
     .table-wrap {
@@ -368,82 +334,155 @@
     table {
       width: 100%;
       border-collapse: collapse;
-      min-width: 650px;
-    }
-
-    th,
-    td {
-      padding: 12px 10px;
-      border-bottom: 1px solid var(--border);
-      text-align: left;
-      font-size: 13px;
+      min-width: 700px;
     }
 
     th {
-      color: var(--muted);
-      font-size: 10px;
+      text-align: left;
+      color: #858c92;
+      font-size: 11px;
       text-transform: uppercase;
-      letter-spacing: 0.7px;
+      padding: 11px;
+      border-bottom: 1px solid #292d31;
+      white-space: nowrap;
     }
 
-    td strong {
-      font-weight: 900;
+    td {
+      padding: 13px 11px;
+      border-bottom: 1px solid #202428;
+      font-size: 13px;
+      vertical-align: middle;
     }
 
-    .badge {
-      display: inline-block;
-      padding: 4px 7px;
-      border-radius: 4px;
-      font-size: 10px;
-      font-weight: 900;
-      text-transform: uppercase;
-    }
-
-    .badge.green {
-      color: #7ce0a7;
-      background: rgba(37, 199, 111, 0.1);
-      border: 1px solid rgba(37, 199, 111, 0.25);
-    }
-
-    .badge.orange {
-      color: #ffad70;
-      background: rgba(255, 106, 0, 0.1);
-      border: 1px solid rgba(255, 106, 0, 0.25);
-    }
-
-    .badge.red {
-      color: #ff8a8a;
-      background: rgba(255, 77, 77, 0.1);
-      border: 1px solid rgba(255, 77, 77, 0.25);
+    tr:last-child td {
+      border-bottom: 0;
     }
 
     .empty {
+      padding: 35px 15px;
       text-align: center;
-      padding: 28px;
-      color: var(--muted);
+      color: #858c92;
     }
 
-    .loading {
-      text-align: center;
-      padding: 45px;
-      color: var(--muted);
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
     }
 
-    .access-denied {
-      max-width: 600px;
-      margin: 50px auto;
-      text-align: center;
-      padding: 35px;
-      background: var(--panel);
-      border: 1px solid rgba(255, 77, 77, 0.4);
+    .game-card {
+      background: #0c0f11;
+      border: 1px solid #292d31;
+      border-radius: 8px;
+      padding: 16px;
     }
 
-    .access-denied h2 {
-      margin-top: 0;
-      color: #ff8a8a;
+    .game-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 14px;
     }
 
-    @media (max-width: 800px) {
+    .game-number {
+      color: #ff6a00;
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .game-status {
+      color: #65df99;
+      font-size: 10px;
+      text-transform: uppercase;
+      font-weight: 900;
+    }
+
+    .team-row {
+      display: grid;
+      grid-template-columns: 1fr 85px;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 9px;
+    }
+
+    .team-name {
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .game-card input {
+      width: 100%;
+      background: #15191d;
+      color: #fff;
+      border: 1px solid #34393e;
+      padding: 9px;
+      border-radius: 5px;
+      outline: none;
+    }
+
+    .game-card input:focus {
+      border-color: #ff6a00;
+    }
+
+    .game-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 13px;
+    }
+
+    .game-actions button {
+      flex: 1;
+      padding: 9px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 800;
+      border: 1px solid #383d42;
+      background: #171b1f;
+      color: #fff;
+    }
+
+    .game-actions button:hover {
+      border-color: #ff6a00;
+    }
+
+    .game-actions .save {
+      background: #ff6a00;
+      border-color: #ff6a00;
+    }
+
+    .pick-side {
+      font-weight: 900;
+      color: #ffb27d;
+    }
+
+    .points {
+      font-weight: 900;
+    }
+
+    .rank {
+      font-weight: 900;
+      color: #ff6a00;
+    }
+
+    .debug {
+      margin-top: 20px;
+      background: #080a0c;
+      border: 1px solid #292d31;
+      border-radius: 6px;
+      padding: 12px;
+      color: #737a80;
+      font-size: 11px;
+      word-break: break-word;
+      display: none;
+    }
+
+    .debug.show {
+      display: block;
+    }
+
+    @media (max-width: 900px) {
       .stats {
         grid-template-columns: repeat(2, 1fr);
       }
@@ -451,32 +490,43 @@
       .games-grid {
         grid-template-columns: 1fr;
       }
+    }
 
-      .game-fields {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .header-inner {
-        min-height: 62px;
+    @media (max-width: 600px) {
+      .topbar {
+        padding: 15px;
       }
 
       .user-email {
         display: none;
       }
-    }
 
-    @media (max-width: 520px) {
+      .page {
+        padding: 22px 15px 50px;
+      }
+
+      .admin-title {
+        font-size: 30px;
+      }
+
       .stats {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr 1fr;
       }
 
-      .auth-buttons,
-      .controls {
-        flex-direction: column;
+      .stat-value {
+        font-size: 22px;
       }
 
-      .controls button {
+      .control-bar {
+        align-items: stretch;
+      }
+
+      .status-box {
         width: 100%;
+      }
+
+      .control-btn {
+        flex: 1;
       }
     }
   </style>
@@ -484,521 +534,307 @@
 
 <body>
 
-<header>
-  <div class="container header-inner">
+  <div class="topbar">
+    <div class="brand">SATURDAY<span>LINES</span></div>
 
-    <div class="logo">
-      SATURDAY<span>LINES</span>
-      <span style="color:#777;font-size:12px;letter-spacing:1px;">
-        ADMIN
-      </span>
+    <div class="top-right">
+      <div class="user-email" id="userEmail"></div>
+      <button class="logout-btn" id="logoutBtn">Log Out</button>
+    </div>
+  </div>
+
+  <main class="page">
+
+    <div class="loading active" id="loading">
+      Checking administrator access...
     </div>
 
-    <div class="header-right">
-      <div id="userEmail" class="user-email"></div>
+    <div class="login-panel" id="loginPanel">
 
-      <button id="logoutBtn" class="small-btn hidden">
-        Log Out
+      <div class="panel-title">Admin Login</div>
+
+      <div class="panel-subtitle">
+        Sign in with your Saturday Lines administrator account.
+      </div>
+
+      <div class="field">
+        <label>Email</label>
+        <input id="loginEmail" type="email" autocomplete="email">
+      </div>
+
+      <div class="field">
+        <label>Password</label>
+        <input id="loginPassword" type="password" autocomplete="current-password">
+      </div>
+
+      <button class="primary-btn" id="loginBtn">
+        Sign In
       </button>
+
+      <div class="message" id="loginMessage"></div>
+
     </div>
 
-  </div>
-</header>
+    <div class="error-panel" id="errorPanel">
 
+      <div class="panel-title">Admin Access Required</div>
 
-<section class="hero">
-  <div class="container">
+      <div class="panel-subtitle" id="errorText">
+        Your account does not have administrator permissions.
+      </div>
 
-    <div class="eyebrow">
-      Saturday Lines • Administration
+      <button class="primary-btn" id="retryBtn">
+        Check Again
+      </button>
+
+      <div class="debug" id="debugText"></div>
+
     </div>
 
-    <h1>
-      CONTROL<br />
-      CENTER
-    </h1>
+    <div class="admin-panel" id="adminPanel">
 
-    <p class="hero-copy">
-      Manage the weekly slate, entries, picks, scores, standings,
-      and results from one place.
-    </p>
+      <div class="admin-header">
+        <h1 class="admin-title">
+          Saturday <span>Lines</span> Admin
+        </h1>
 
-  </div>
-</section>
-
-
-<main>
-
-  <div class="container">
-
-    <!-- LOGIN -->
-
-    <section id="loginSection" class="auth-card">
-
-      <h2>Admin Sign In</h2>
-
-      <p>
-        Sign in with your Saturday Lines account.
-      </p>
-
-      <div class="field">
-        <label for="email">Email</label>
-
-        <input
-          id="email"
-          type="email"
-          autocomplete="email"
-          placeholder="you@example.com"
-        />
+        <p class="admin-subtitle">
+          Manage the current weekly competition.
+        </p>
       </div>
 
-      <div class="field">
-        <label for="password">Password</label>
+      <div class="control-bar">
 
-        <input
-          id="password"
-          type="password"
-          autocomplete="current-password"
-          placeholder="Password"
-        />
-      </div>
+        <div class="status-box">
+          <span class="status-label">Week</span>
+          <span class="status-value" id="weekValue">—</span>
 
-      <div class="auth-buttons">
+          <span class="status-label">Status</span>
+          <span class="status-value" id="statusValue">—</span>
+        </div>
 
-        <button
-          id="loginBtn"
-          type="button"
-          class="primary-btn"
-        >
-          Sign In
+        <button class="control-btn orange" id="openWeekBtn">
+          Open Week
+        </button>
+
+        <button class="control-btn" id="closeWeekBtn">
+          Close Week
+        </button>
+
+        <button class="control-btn" id="recalculateBtn">
+          Recalculate
+        </button>
+
+        <button class="control-btn" id="refreshBtn">
+          Refresh
         </button>
 
       </div>
 
-      <div
-        id="loginMessage"
-        class="message hidden"
-      ></div>
+      <div class="stats">
 
-    </section>
-
-
-    <!-- ACCESS DENIED -->
-
-    <section
-      id="accessDenied"
-      class="access-denied hidden"
-    >
-
-      <h2>Admin Access Required</h2>
-
-      <p>
-        This account is signed in, but it does not have administrator
-        permissions.
-      </p>
-
-    </section>
-
-
-    <!-- DASHBOARD -->
-
-    <section
-      id="dashboard"
-      class="dashboard hidden"
-    >
-
-      <div
-        id="dashboardMessage"
-        class="message hidden"
-      ></div>
-
-
-      <!-- WEEK CONTROL -->
-
-      <section class="panel">
-
-        <div class="panel-title">
-
-          <div>
-            <h2>Week Control</h2>
-
-            <p>
-              Manage the current competition week.
-            </p>
-          </div>
-
-          <div id="weekLabel"></div>
-
+        <div class="stat-card">
+          <div class="stat-label">Current Week</div>
+          <div class="stat-value" id="statWeek">—</div>
         </div>
 
-
-        <div class="stats">
-
-          <div class="stat">
-            <div class="stat-label">Week</div>
-            <div id="statWeek" class="stat-value">—</div>
-          </div>
-
-          <div class="stat">
-            <div class="stat-label">Status</div>
-            <div id="statStatus" class="stat-value">—</div>
-          </div>
-
-          <div class="stat">
-            <div class="stat-label">Players</div>
-            <div id="statPlayers" class="stat-value">0</div>
-          </div>
-
-          <div class="stat">
-            <div class="stat-label">Pot</div>
-            <div id="statPot" class="stat-value">$0</div>
-          </div>
-
+        <div class="stat-card">
+          <div class="stat-label">Players</div>
+          <div class="stat-value" id="statPlayers">—</div>
         </div>
 
+        <div class="stat-card">
+          <div class="stat-label">Pot</div>
+          <div class="stat-value" id="statPot">$0</div>
+        </div>
 
-        <div
-          class="controls"
-          style="margin-top:18px;"
-        >
+        <div class="stat-card">
+          <div class="stat-label">Tiebreaker</div>
+          <div class="stat-value" id="statTiebreaker">—</div>
+        </div>
 
-          <button
-            id="openWeekBtn"
-            type="button"
-            class="primary-btn"
-          >
-            Open Week
-          </button>
+      </div>
 
-          <button
-            id="closeWeekBtn"
-            type="button"
-            class="secondary-btn"
-          >
-            Close Week
-          </button>
+      <section class="section">
 
-          <button
-            id="recalculateBtn"
-            type="button"
-            class="secondary-btn"
-          >
-            Recalculate
-          </button>
+        <div class="section-header">
+          <div class="section-title">Entries</div>
+        </div>
 
-          <button
-            id="refreshBtn"
-            type="button"
-            class="secondary-btn"
-          >
-            Refresh
-          </button>
+        <div class="section-body">
+
+          <div class="table-wrap">
+
+            <table>
+
+              <thead>
+                <tr>
+                  <th>Rank</th>
+                  <th>Player</th>
+                  <th>Email</th>
+                  <th>Buy-In</th>
+                  <th>Points</th>
+                  <th>Tiebreaker</th>
+                  <th>Submitted</th>
+                </tr>
+              </thead>
+
+              <tbody id="entriesBody"></tbody>
+
+            </table>
+
+          </div>
+
+          <div class="empty" id="entriesEmpty">
+            No entries yet.
+          </div>
 
         </div>
 
       </section>
 
+      <section class="section">
 
-      <!-- ENTRIES -->
-
-      <section class="panel">
-
-        <div class="panel-title">
-
-          <div>
-            <h2>Entries</h2>
-
-            <p>
-              Submitted and draft entries for this week.
-            </p>
-          </div>
-
+        <div class="section-header">
+          <div class="section-title">Games & Scores</div>
         </div>
 
-        <div class="table-wrap">
+        <div class="section-body">
 
-          <table>
-
-            <thead>
-              <tr>
-                <th>Player</th>
-                <th>Email</th>
-                <th>Entry</th>
-                <th>Picks</th>
-                <th>Points</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-
-            <tbody id="entriesBody"></tbody>
-
-          </table>
+          <div class="games-grid" id="gamesGrid"></div>
 
         </div>
 
       </section>
 
+      <section class="section">
 
-      <!-- GAMES -->
-
-      <section class="panel">
-
-        <div class="panel-title">
-
-          <div>
-            <h2>Games & Scores</h2>
-
-            <p>
-              Correct spreads or scores if necessary.
-            </p>
-          </div>
-
+        <div class="section-header">
+          <div class="section-title">Player Picks</div>
         </div>
 
-        <div id="gamesGrid" class="games-grid"></div>
+        <div class="section-body">
 
-      </section>
+          <div class="table-wrap">
 
+            <table>
 
-      <!-- PICKS -->
+              <thead>
+                <tr>
+                  <th>Player</th>
+                  <th>Game</th>
+                  <th>Pick</th>
+                  <th>Spread</th>
+                  <th>Result</th>
+                  <th>Points</th>
+                </tr>
+              </thead>
 
-      <section class="panel">
+              <tbody id="picksBody"></tbody>
 
-        <div class="panel-title">
+            </table>
 
-          <div>
-            <h2>Player Picks</h2>
-
-            <p>
-              Review the picks submitted for this week.
-            </p>
           </div>
 
-        </div>
-
-        <div class="table-wrap">
-
-          <table>
-
-            <thead>
-              <tr>
-                <th>Player</th>
-                <th>Game</th>
-                <th>Pick</th>
-                <th>Spread</th>
-                <th>Result</th>
-                <th>Points</th>
-              </tr>
-            </thead>
-
-            <tbody id="picksBody"></tbody>
-
-          </table>
+          <div class="empty" id="picksEmpty">
+            No picks yet.
+          </div>
 
         </div>
 
       </section>
 
-    </section>
+    </div>
 
-  </div>
+  </main>
 
-</main>
+  <script>
 
+    const SUPABASE_URL =
+      "https://ffzlgkaenvivlsrhxvcs.supabase.co";
 
-<script>
+    const SUPABASE_PUBLISHABLE_KEY =
+      "sb_publishable_pILr3XbyWT721ABLUMVwVA_8_IiVXKg";
 
-  // ============================================================
-  // SUPABASE
-  // ============================================================
-
-  const SUPABASE_URL =
-    "https://ffzlgkaenvivlsrhxvcs.supabase.co";
-
-  const SUPABASE_PUBLISHABLE_KEY =
-    "sb_publishable_pILr3XbyWT721ABLUMVwVA_8_IiVXKg";
-
-  const supabaseClient =
-    window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_PUBLISHABLE_KEY
-    );
-
-
-  // ============================================================
-  // STATE
-  // ============================================================
-
-  let currentUser = null;
-  let currentWeek = null;
-  let currentGames = [];
-
-
-  // ============================================================
-  // ELEMENTS
-  // ============================================================
-
-  const loginSection =
-    document.getElementById("loginSection");
-
-  const accessDenied =
-    document.getElementById("accessDenied");
-
-  const dashboard =
-    document.getElementById("dashboard");
-
-  const loginMessage =
-    document.getElementById("loginMessage");
-
-  const dashboardMessage =
-    document.getElementById("dashboardMessage");
-
-  const loginBtn =
-    document.getElementById("loginBtn");
-
-  const logoutBtn =
-    document.getElementById("logoutBtn");
-
-  const userEmail =
-    document.getElementById("userEmail");
-
-
-  // ============================================================
-  // MESSAGE HELPERS
-  // ============================================================
-
-  function showLoginMessage(message, type = "") {
-
-    loginMessage.textContent =
-      message;
-
-    loginMessage.className =
-      "message" +
-      (type ? ` ${type}` : "");
-  }
-
-
-  function hideLoginMessage() {
-
-    loginMessage.className =
-      "message hidden";
-  }
-
-
-  function showDashboardMessage(message, type = "") {
-
-    dashboardMessage.textContent =
-      message;
-
-    dashboardMessage.className =
-      "message" +
-      (type ? ` ${type}` : "");
-  }
-
-
-  function hideDashboardMessage() {
-
-    dashboardMessage.className =
-      "message hidden";
-  }
-
-
-  function escapeHtml(value) {
-
-    return String(value ?? "")
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#039;");
-  }
-
-
-  function formatDate(value) {
-
-    if (!value) {
-      return "Time TBD";
-    }
-
-    const date =
-      new Date(value);
-
-    if (Number.isNaN(date.getTime())) {
-      return "Time TBD";
-    }
-
-    return date.toLocaleString([], {
-      weekday: "short",
-      month: "short",
-      day: "numeric",
-      hour: "numeric",
-      minute: "2-digit"
-    });
-  }
-
-
-  function formatSpread(value) {
-
-    if (
-      value === null ||
-      value === undefined ||
-      value === ""
-    ) {
-      return "—";
-    }
-
-    const number =
-      Number(value);
-
-    if (Number.isNaN(number)) {
-      return String(value);
-    }
-
-    return number > 0
-      ? `+${number}`
-      : String(number);
-  }
-
-
-  // ============================================================
-  // LOGIN
-  // ============================================================
-
-  async function login() {
-
-    hideLoginMessage();
-
-    const email =
-      document
-        .getElementById("email")
-        .value
-        .trim();
-
-    const password =
-      document
-        .getElementById("password")
-        .value;
-
-    if (!email || !password) {
-
-      showLoginMessage(
-        "Enter your email and password.",
-        "error"
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
       );
 
-      return;
+    let currentUser = null;
+    let currentWeek = null;
+
+    const loading =
+      document.getElementById("loading");
+
+    const loginPanel =
+      document.getElementById("loginPanel");
+
+    const errorPanel =
+      document.getElementById("errorPanel");
+
+    const adminPanel =
+      document.getElementById("adminPanel");
+
+    const errorText =
+      document.getElementById("errorText");
+
+    const debugText =
+      document.getElementById("debugText");
+
+    function showOnly(element) {
+      loading.classList.remove("active");
+      loginPanel.classList.remove("active");
+      errorPanel.classList.remove("active");
+      adminPanel.classList.remove("active");
+
+      element.classList.add("active");
     }
 
+    function showDebug(text) {
+      debugText.textContent = text || "";
+      debugText.classList.toggle(
+        "show",
+        !!text
+      );
+    }
 
-    loginBtn.disabled = true;
+    function money(value) {
+      return "$" + Number(value || 0).toLocaleString();
+    }
 
-    loginBtn.textContent = "Signing In...";
+    async function login() {
 
+      const email =
+        document
+          .getElementById("loginEmail")
+          .value
+          .trim();
 
-    try {
+      const password =
+        document
+          .getElementById("loginPassword")
+          .value;
+
+      const message =
+        document.getElementById("loginMessage");
+
+      message.className = "message";
+
+      if (!email || !password) {
+        message.textContent =
+          "Enter your email and password.";
+
+        message.classList.add(
+          "show",
+          "error"
+        );
+
+        return;
+      }
 
       const {
-        data,
         error
       } =
         await supabaseClient.auth.signInWithPassword({
@@ -1006,1001 +842,887 @@
           password
         });
 
-
       if (error) {
-        throw error;
+
+        message.textContent =
+          error.message;
+
+        message.classList.add(
+          "show",
+          "error"
+        );
+
+        return;
       }
 
+      message.textContent =
+        "Signed in. Checking administrator access...";
 
-      if (!data?.user) {
-        throw new Error("No user was returned from Supabase.");
-      }
-
-
-      currentUser =
-        data.user;
-
-
-      userEmail.textContent =
-        currentUser.email || "";
-
-
-      await checkAdminAccess();
-
-    } catch (error) {
-
-      console.error(
-        "Admin login error:",
-        error
+      message.classList.add(
+        "show",
+        "success"
       );
-
-      showLoginMessage(
-        error.message ||
-        "Unable to sign in.",
-        "error"
-      );
-
-    } finally {
-
-      loginBtn.disabled = false;
-
-      loginBtn.textContent =
-        "Sign In";
     }
-  }
 
+    async function logout() {
 
-  loginBtn.addEventListener(
-    "click",
-    login
-  );
+      await supabaseClient.auth.signOut();
 
+      currentUser = null;
+      currentWeek = null;
 
-  // Allow Enter key to submit login.
+      document.getElementById(
+        "userEmail"
+      ).textContent = "";
 
-  document
-    .getElementById("password")
-    .addEventListener(
-      "keydown",
-      (event) => {
+      showOnly(loginPanel);
+    }
 
-        if (event.key === "Enter") {
-          login();
+    async function checkAdmin() {
+
+      showOnly(loading);
+
+      showDebug("");
+
+      try {
+
+        const {
+          data: {
+            session
+          },
+          error: sessionError
+        } =
+          await supabaseClient.auth.getSession();
+
+        if (sessionError) {
+          throw sessionError;
         }
 
+        if (!session?.user) {
+
+          showOnly(loginPanel);
+
+          return;
+        }
+
+        currentUser =
+          session.user;
+
+        document.getElementById(
+          "userEmail"
+        ).textContent =
+          currentUser.email || "";
+
+        /*
+          IMPORTANT:
+          We check the profiles table directly.
+
+          This avoids the previous
+          is_current_user_admin() RPC.
+        */
+
+        const {
+          data: profile,
+          error: profileError
+        } =
+          await supabaseClient
+            .from("profiles")
+            .select("id, display_name, is_admin")
+            .eq("id", currentUser.id)
+            .maybeSingle();
+
+        if (profileError) {
+
+          errorText.textContent =
+            "Supabase could not read your administrator profile.";
+
+          showDebug(
+            "Profile query error: " +
+            profileError.message
+          );
+
+          showOnly(errorPanel);
+
+          return;
+        }
+
+        if (!profile) {
+
+          errorText.textContent =
+            "Your account is signed in, but no profile record was found.";
+
+          showDebug(
+            "Signed-in user ID: " +
+            currentUser.id
+          );
+
+          showOnly(errorPanel);
+
+          return;
+        }
+
+        if (profile.is_admin !== true) {
+
+          errorText.textContent =
+            "This account is signed in, but it does not have administrator permissions.";
+
+          showDebug(
+            "Profile found. is_admin = " +
+            String(profile.is_admin)
+          );
+
+          showOnly(errorPanel);
+
+          return;
+        }
+
+        showOnly(adminPanel);
+
+        await loadAdmin();
+
+      } catch (error) {
+
+        console.error(
+          "Admin check failed:",
+          error
+        );
+
+        errorText.textContent =
+          "Admin Check Failed";
+
+        showDebug(
+          error?.message ||
+          String(error)
+        );
+
+        showOnly(errorPanel);
       }
-    );
-
-
-  // ============================================================
-  // LOGOUT
-  // ============================================================
-
-  async function logout() {
-
-    await supabaseClient.auth.signOut();
-
-    resetPage();
-  }
-
-
-  logoutBtn.addEventListener(
-    "click",
-    logout
-  );
-
-
-  // ============================================================
-  // RESET
-  // ============================================================
-
-  function resetPage() {
-
-    currentUser = null;
-    currentWeek = null;
-    currentGames = [];
-
-    loginSection.classList.remove(
-      "hidden"
-    );
-
-    accessDenied.classList.add(
-      "hidden"
-    );
-
-    dashboard.classList.add(
-      "hidden"
-    );
-
-    logoutBtn.classList.add(
-      "hidden"
-    );
-
-    userEmail.textContent =
-      "";
-
-    hideDashboardMessage();
-  }
-
-
-  // ============================================================
-  // ADMIN CHECK
-  // ============================================================
-
-  async function checkAdminAccess() {
-
-    loginSection.classList.add(
-      "hidden"
-    );
-
-    accessDenied.classList.add(
-      "hidden"
-    );
-
-    dashboard.classList.add(
-      "hidden"
-    );
-
-    logoutBtn.classList.remove(
-      "hidden"
-    );
-
-
-    const {
-      data,
-      error
-    } =
-      await supabaseClient.rpc(
-        "is_current_user_admin"
-      );
-
-
-    if (error) {
-
-      console.error(
-        "Admin check error:",
-        error
-      );
-
-      accessDenied.innerHTML = `
-
-        <h2>Admin Check Failed</h2>
-
-        <p>
-          Supabase returned this error:
-        </p>
-
-        <p style="color:#ff8a8a;">
-          ${escapeHtml(error.message)}
-        </p>
-
-      `;
-
-      accessDenied.classList.remove(
-        "hidden"
-      );
-
-      return;
     }
 
+    async function loadAdmin() {
 
-    if (data !== true) {
+      try {
 
-      accessDenied.classList.remove(
-        "hidden"
-      );
+        await loadCurrentWeek();
 
-      return;
+        if (!currentWeek) {
+
+          throw new Error(
+            "No week exists in the weeks table."
+          );
+        }
+
+        await Promise.all([
+          loadStats(),
+          loadEntries(),
+          loadGames(),
+          loadPicks()
+        ]);
+
+      } catch (error) {
+
+        console.error(
+          "Admin load failed:",
+          error
+        );
+
+        errorText.textContent =
+          "Admin dashboard could not load.";
+
+        showDebug(
+          error?.message ||
+          String(error)
+        );
+
+        showOnly(errorPanel);
+      }
     }
 
+    async function loadCurrentWeek() {
 
-    dashboard.classList.remove(
-      "hidden"
-    );
+      let result =
+        await supabaseClient
+          .from("weeks")
+          .select("*")
+          .eq("status", "open")
+          .order("season_year", {
+            ascending: false
+          })
+          .order("week_number", {
+            ascending: false
+          })
+          .limit(1)
+          .maybeSingle();
 
+      if (result.error) {
+        throw result.error;
+      }
 
-    await loadDashboard();
-  }
+      if (!result.data) {
 
+        result =
+          await supabaseClient
+            .from("weeks")
+            .select("*")
+            .order("season_year", {
+              ascending: false
+            })
+            .order("week_number", {
+              ascending: false
+            })
+            .limit(1)
+            .maybeSingle();
 
-  // ============================================================
-  // LOAD DASHBOARD
-  // ============================================================
+        if (result.error) {
+          throw result.error;
+        }
+      }
 
-  async function loadDashboard() {
-
-    hideDashboardMessage();
-
-    try {
-
-      await loadCurrentWeek();
+      currentWeek =
+        result.data;
 
       if (!currentWeek) {
-        throw new Error(
-          "No week was found."
-        );
+        return;
       }
 
-      await loadGames();
+      document.getElementById(
+        "weekValue"
+      ).textContent =
+        "Week " +
+        currentWeek.week_number +
+        " • " +
+        currentWeek.season_year;
 
-      await loadStats();
+      document.getElementById(
+        "statWeek"
+      ).textContent =
+        "Week " +
+        currentWeek.week_number;
 
-      await loadEntries();
-
-      await loadPicks();
-
-    } catch (error) {
-
-      console.error(
-        "Dashboard loading error:",
-        error
-      );
-
-      showDashboardMessage(
-        "Dashboard load failed: " +
-        error.message,
-        "error"
-      );
-    }
-  }
-
-
-  // ============================================================
-  // LOAD CURRENT WEEK
-  // ============================================================
-
-  async function loadCurrentWeek() {
-
-    const {
-      data,
-      error
-    } =
-      await supabaseClient
-        .from("weeks")
-        .select("*")
-        .order(
-          "season_year",
-          {
-            ascending: false
-          }
-        )
-        .order(
-          "week_number",
-          {
-            ascending: false
-          }
-        )
-        .limit(1)
-        .maybeSingle();
-
-
-    if (error) {
-      throw error;
-    }
-
-
-    currentWeek =
-      data || null;
-
-
-    if (!currentWeek) {
-      return;
-    }
-
-
-    document.getElementById(
-      "statWeek"
-    ).textContent =
-      `Week ${currentWeek.week_number}`;
-
-
-    document.getElementById(
-      "statStatus"
-    ).textContent =
-      currentWeek.status ||
-      "—";
-
-
-    document.getElementById(
-      "weekLabel"
-    ).textContent =
-      `${currentWeek.season_year} • Week ${currentWeek.week_number}`;
-  }
-
-
-  // ============================================================
-  // LOAD GAMES
-  // ============================================================
-
-  async function loadGames() {
-
-    const {
-      data,
-      error
-    } =
-      await supabaseClient
-        .from("games")
-        .select("*")
-        .eq(
-          "week_id",
-          currentWeek.id
-        )
-        .eq(
-          "is_featured",
-          true
-        )
-        .order(
-          "start_time",
-          {
-            ascending: true
-          }
+      const statusElement =
+        document.getElementById(
+          "statusValue"
         );
 
+      statusElement.textContent =
+        currentWeek.status
+          .toUpperCase();
 
-    if (error) {
-      throw error;
+      statusElement.className =
+        "status-value " +
+        (
+          currentWeek.status === "open"
+            ? "status-open"
+            : "status-closed"
+        );
     }
 
+    async function loadStats() {
 
-    currentGames =
-      data || [];
+      const [
+        potResult,
+        entriesResult,
+        tiebreakerResult
+      ] =
+        await Promise.all([
 
+          supabaseClient.rpc(
+            "get_week_pot",
+            {
+              p_week_id:
+                currentWeek.id
+            }
+          ),
 
-    renderGames();
-  }
+          supabaseClient.rpc(
+            "admin_get_week_entries",
+            {
+              p_week_id:
+                currentWeek.id
+            }
+          ),
 
+          supabaseClient.rpc(
+            "get_week_tiebreaker",
+            {
+              p_week_id:
+                currentWeek.id
+            }
+          )
 
-  // ============================================================
-  // RENDER GAMES
-  // ============================================================
+        ]);
 
-  function renderGames() {
+      if (potResult.error) {
+        throw potResult.error;
+      }
 
-    const container =
+      if (entriesResult.error) {
+        throw entriesResult.error;
+      }
+
+      if (tiebreakerResult.error) {
+        throw tiebreakerResult.error;
+      }
+
+      const pot =
+        potResult.data;
+
+      const entries =
+        entriesResult.data || [];
+
+      const tiebreaker =
+        tiebreakerResult.data;
+
       document.getElementById(
-        "gamesGrid"
-      );
+        "statPot"
+      ).textContent =
+        money(
+          Array.isArray(pot)
+            ? pot[0]?.pot_total
+            : pot?.pot_total
+        );
 
+      document.getElementById(
+        "statPlayers"
+      ).textContent =
+        entries.length;
 
-    if (!currentGames.length) {
+      if (tiebreaker) {
 
-      container.innerHTML =
-        `<div class="empty">No games found.</div>`;
+        document.getElementById(
+          "statTiebreaker"
+        ).textContent =
+          (
+            tiebreaker.away_team ||
+            "Away"
+          ) +
+          " @ " +
+          (
+            tiebreaker.home_team ||
+            "Home"
+          );
 
-      return;
+      } else {
+
+        document.getElementById(
+          "statTiebreaker"
+        ).textContent =
+          "—";
+      }
     }
 
-
-    container.innerHTML =
-      currentGames.map(
-        (game) => {
-
-          const status =
-            game.result_final
-              ? "FINAL"
-              : (
-                game.status ||
-                "SCHEDULED"
-              );
-
-
-          return `
-
-            <div
-              class="game-card"
-              data-game-id="${game.id}"
-            >
-
-              <h3>
-                ${escapeHtml(game.away_team)}
-                @
-                ${escapeHtml(game.home_team)}
-              </h3>
-
-              <div class="game-time">
-                ${escapeHtml(
-                  formatDate(game.start_time)
-                )}
-              </div>
-
-
-              <div class="game-fields">
-
-                <div>
-                  <label>Away Spread</label>
-
-                  <input
-                    class="away-spread"
-                    type="number"
-                    step="0.5"
-                    value="${
-                      game.away_spread ??
-                      ""
-                    }"
-                  />
-                </div>
-
-
-                <div>
-                  <label>Home Spread</label>
-
-                  <input
-                    class="home-spread"
-                    type="number"
-                    step="0.5"
-                    value="${
-                      game.home_spread ??
-                      ""
-                    }"
-                  />
-                </div>
-
-
-                <div>
-                  <label>Away Score</label>
-
-                  <input
-                    class="away-score"
-                    type="number"
-                    step="1"
-                    min="0"
-                    value="${
-                      game.away_score ??
-                      0
-                    }"
-                  />
-                </div>
-
-
-                <div>
-                  <label>Home Score</label>
-
-                  <input
-                    class="home-score"
-                    type="number"
-                    step="1"
-                    min="0"
-                    value="${
-                      game.home_score ??
-                      0
-                    }"
-                  />
-                </div>
-
-              </div>
-
-
-              <div
-                style="
-                  margin-top:10px;
-                  color:#999;
-                  font-size:11px;
-                "
-              >
-                Current status:
-                <strong style="color:white;">
-                  ${escapeHtml(status)}
-                </strong>
-              </div>
-
-
-              <div class="game-actions">
-
-                <button
-                  type="button"
-                  class="primary-btn save-game-btn"
-                >
-                  Save Game
-                </button>
-
-                <button
-                  type="button"
-                  class="secondary-btn final-game-btn"
-                >
-                  Mark Final
-                </button>
-
-              </div>
-
-            </div>
-
-          `;
-        }
-      )
-      .join("");
-
-
-    container
-      .querySelectorAll(
-        ".save-game-btn"
-      )
-      .forEach(
-        (button) => {
-
-          button.addEventListener(
-            "click",
-            () => {
-
-              const card =
-                button.closest(
-                  ".game-card"
-                );
-
-              saveGame(
-                card,
-                false
-              );
-            }
-          );
-
-        }
-      );
-
-
-    container
-      .querySelectorAll(
-        ".final-game-btn"
-      )
-      .forEach(
-        (button) => {
-
-          button.addEventListener(
-            "click",
-            () => {
-
-              const card =
-                button.closest(
-                  ".game-card"
-                );
-
-              saveGame(
-                card,
-                true
-              );
-            }
-          );
-
-        }
-      );
-  }
-
-
-  // ============================================================
-  // SAVE GAME
-  // ============================================================
-
-  async function saveGame(
-    card,
-    markFinal
-  ) {
-
-    const gameId =
-      Number(
-        card.dataset.gameId
-      );
-
-
-    const awaySpread =
-      card.querySelector(
-        ".away-spread"
-      ).value;
-
-    const homeSpread =
-      card.querySelector(
-        ".home-spread"
-      ).value;
-
-    const awayScore =
-      card.querySelector(
-        ".away-score"
-      ).value;
-
-    const homeScore =
-      card.querySelector(
-        ".home-score"
-      ).value;
-
-
-    try {
+    async function loadEntries() {
 
       const {
         data,
         error
       } =
         await supabaseClient.rpc(
-          "admin_update_game",
+          "admin_get_week_entries",
           {
-            p_game_id:
-              gameId,
-
-            p_away_spread:
-              awaySpread === ""
-                ? null
-                : Number(awaySpread),
-
-            p_home_spread:
-              homeSpread === ""
-                ? null
-                : Number(homeSpread),
-
-            p_away_score:
-              awayScore === ""
-                ? 0
-                : Number(awayScore),
-
-            p_home_score:
-              homeScore === ""
-                ? 0
-                : Number(homeScore),
-
-            p_status:
-              markFinal
-                ? "final"
-                : "scheduled",
-
-            p_result_final:
-              markFinal
+            p_week_id:
+              currentWeek.id
           }
         );
-
 
       if (error) {
         throw error;
       }
 
+      const rows =
+        data || [];
 
-      showDashboardMessage(
-        "Game saved successfully.",
-        "success"
+      const body =
+        document.getElementById(
+          "entriesBody"
+        );
+
+      const empty =
+        document.getElementById(
+          "entriesEmpty"
+        );
+
+      body.innerHTML = "";
+
+      if (!rows.length) {
+
+        empty.style.display =
+          "block";
+
+        return;
+      }
+
+      empty.style.display =
+        "none";
+
+      rows.forEach((row, index) => {
+
+        const tr =
+          document.createElement("tr");
+
+        const submitted =
+          row.submitted_at
+            ? new Date(
+                row.submitted_at
+              ).toLocaleString()
+            : "—";
+
+        tr.innerHTML = `
+          <td class="rank">
+            ${row.leaderboard_rank ?? index + 1}
+          </td>
+
+          <td>
+            ${escapeHtml(
+              row.player_name ||
+              row.display_name ||
+              "Player"
+            )}
+          </td>
+
+          <td>
+            ${escapeHtml(
+              row.email ||
+              "—"
+            )}
+          </td>
+
+          <td>
+            ${money(row.buy_in)}
+          </td>
+
+          <td class="points">
+            ${row.total_points ?? 0}
+          </td>
+
+          <td>
+            ${row.tiebreaker_total ?? "—"}
+          </td>
+
+          <td>
+            ${escapeHtml(submitted)}
+          </td>
+        `;
+
+        body.appendChild(tr);
+      });
+    }
+
+    async function loadGames() {
+
+      const {
+        data,
+        error
+      } =
+        await supabaseClient
+          .from("games")
+          .select("*")
+          .eq(
+            "week_id",
+            currentWeek.id
+          )
+          .order("start_time", {
+            ascending: true
+          });
+
+      if (error) {
+        throw error;
+      }
+
+      const games =
+        data || [];
+
+      const grid =
+        document.getElementById(
+          "gamesGrid"
+        );
+
+      grid.innerHTML = "";
+
+      if (!games.length) {
+
+        grid.innerHTML =
+          `<div class="empty">No games found.</div>`;
+
+        return;
+      }
+
+      games.forEach((game, index) => {
+
+        const card =
+          document.createElement("div");
+
+        card.className =
+          "game-card";
+
+        card.innerHTML = `
+
+          <div class="game-top">
+
+            <div class="game-number">
+              Game ${index + 1}
+            </div>
+
+            <div class="game-status">
+              ${
+                game.result_final
+                  ? "FINAL"
+                  : (
+                    game.spread_locked
+                      ? "LOCKED"
+                      : "OPEN"
+                  )
+              }
+            </div>
+
+          </div>
+
+          <div class="team-row">
+
+            <div class="team-name">
+              ${escapeHtml(
+                game.away_team
+              )}
+            </div>
+
+            <input
+              type="number"
+              step="0.5"
+              id="awaySpread-${game.id}"
+              value="${
+                game.away_spread ??
+                ""
+              }"
+            >
+
+          </div>
+
+          <div class="team-row">
+
+            <div class="team-name">
+              ${escapeHtml(
+                game.home_team
+              )}
+            </div>
+
+            <input
+              type="number"
+              step="0.5"
+              id="homeSpread-${game.id}"
+              value="${
+                game.home_spread ??
+                ""
+              }"
+            >
+
+          </div>
+
+          <div class="team-row">
+
+            <div>
+              <span class="stat-label">
+                Away Score
+              </span>
+            </div>
+
+            <input
+              type="number"
+              id="awayScore-${game.id}"
+              value="${
+                game.away_score ??
+                0
+              }"
+            >
+
+          </div>
+
+          <div class="team-row">
+
+            <div>
+              <span class="stat-label">
+                Home Score
+              </span>
+            </div>
+
+            <input
+              type="number"
+              id="homeScore-${game.id}"
+              value="${
+                game.home_score ??
+                0
+              }"
+            >
+
+          </div>
+
+          <div class="game-actions">
+
+            <button
+              class="save"
+              onclick="saveGame(${game.id})"
+            >
+              Save Game
+            </button>
+
+            <button
+              onclick="markFinal(${game.id})"
+            >
+              Mark Final
+            </button>
+
+          </div>
+        `;
+
+        grid.appendChild(card);
+      });
+    }
+
+    async function saveGame(gameId) {
+
+      const awaySpread =
+        document.getElementById(
+          "awaySpread-" + gameId
+        ).value;
+
+      const homeSpread =
+        document.getElementById(
+          "homeSpread-" + gameId
+        ).value;
+
+      const awayScore =
+        document.getElementById(
+          "awayScore-" + gameId
+        ).value;
+
+      const homeScore =
+        document.getElementById(
+          "homeScore-" + gameId
+        ).value;
+
+      const {
+        error
+      } =
+        await supabaseClient.rpc(
+          "admin_update_game",
+          {
+            p_game_id: gameId,
+            p_away_spread:
+              awaySpread === ""
+                ? null
+                : Number(awaySpread),
+            p_home_spread:
+              homeSpread === ""
+                ? null
+                : Number(homeSpread),
+            p_away_score:
+              awayScore === ""
+                ? null
+                : Number(awayScore),
+            p_home_score:
+              homeScore === ""
+                ? null
+                : Number(homeScore),
+            p_result_final:
+              false
+          }
+        );
+
+      if (error) {
+
+        alert(
+          "Save failed: " +
+          error.message
+        );
+
+        return;
+      }
+
+      alert(
+        "Game saved."
       );
 
+      await loadGames();
+    }
+
+    async function markFinal(gameId) {
+
+      const awaySpread =
+        document.getElementById(
+          "awaySpread-" + gameId
+        ).value;
+
+      const homeSpread =
+        document.getElementById(
+          "homeSpread-" + gameId
+        ).value;
+
+      const awayScore =
+        document.getElementById(
+          "awayScore-" + gameId
+        ).value;
+
+      const homeScore =
+        document.getElementById(
+          "homeScore-" + gameId
+        ).value;
+
+      const {
+        error
+      } =
+        await supabaseClient.rpc(
+          "admin_update_game",
+          {
+            p_game_id: gameId,
+            p_away_spread:
+              awaySpread === ""
+                ? null
+                : Number(awaySpread),
+            p_home_spread:
+              homeSpread === ""
+                ? null
+                : Number(homeSpread),
+            p_away_score:
+              awayScore === ""
+                ? null
+                : Number(awayScore),
+            p_home_score:
+              homeScore === ""
+                ? null
+                : Number(homeScore),
+            p_result_final:
+              true
+          }
+        );
+
+      if (error) {
+
+        alert(
+          "Could not mark final: " +
+          error.message
+        );
+
+        return;
+      }
+
+      alert(
+        "Game marked final."
+      );
 
       await loadGames();
 
-    } catch (error) {
+      await recalculate();
+    }
 
-      console.error(
-        "Save game error:",
+    async function loadPicks() {
+
+      const {
+        data,
         error
-      );
-
-      showDashboardMessage(
-        "Could not save game: " +
-        error.message,
-        "error"
-      );
-    }
-  }
-
-
-  // ============================================================
-  // LOAD STATS
-  // ============================================================
-
-  async function loadStats() {
-
-    const {
-      data,
-      error
-    } =
-      await supabaseClient.rpc(
-        "get_week_pot",
-        {
-          p_week_id:
-            currentWeek.id
-        }
-      );
-
-
-    if (error) {
-      throw error;
-    }
-
-
-    const potData =
-      Array.isArray(data)
-        ? data[0]
-        : data;
-
-
-    const pot =
-      Number(
-        potData?.pot ??
-        potData?.total_pot ??
-        potData?.pot_total ??
-        0
-      );
-
-
-    const players =
-      Number(
-        potData?.players ??
-        potData?.player_count ??
-        potData?.total_players ??
-        0
-      );
-
-
-    document.getElementById(
-      "statPot"
-    ).textContent =
-      `$${pot}`;
-
-
-    document.getElementById(
-      "statPlayers"
-    ).textContent =
-      players;
-  }
-
-
-  // ============================================================
-  // LOAD ENTRIES
-  // ============================================================
-
-  async function loadEntries() {
-
-    const {
-      data,
-      error
-    } =
-      await supabaseClient.rpc(
-        "admin_get_week_entries",
-        {
-          p_week_id:
-            currentWeek.id
-        }
-      );
-
-
-    if (error) {
-      throw error;
-    }
-
-
-    const body =
-      document.getElementById(
-        "entriesBody"
-      );
-
-
-    const rows =
-      Array.isArray(data)
-        ? data
-        : [];
-
-
-    if (!rows.length) {
-
-      body.innerHTML =
-        `<tr><td colspan="6" class="empty">No entries yet.</td></tr>`;
-
-      return;
-    }
-
-
-    body.innerHTML =
-      rows.map(
-        (row) => {
-
-          const name =
-            row.player_name ||
-            row.display_name ||
-            "Player";
-
-          const email =
-            row.email ||
-            "—";
-
-          const buyIn =
-            row.buy_in ??
-            0;
-
-          const picks =
-            row.pick_count ??
-            row.picks_count ??
-            0;
-
-          const points =
-            row.total_points ??
-            row.points ??
-            0;
-
-          const isSubmitted =
-            row.submitted === true;
-
-
-          return `
-
-            <tr>
-
-              <td>
-                <strong>
-                  ${escapeHtml(name)}
-                </strong>
-              </td>
-
-              <td>
-                ${escapeHtml(email)}
-              </td>
-
-              <td>
-                $${escapeHtml(buyIn)}
-              </td>
-
-              <td>
-                ${escapeHtml(picks)}
-              </td>
-
-              <td>
-                ${escapeHtml(points)}
-              </td>
-
-              <td>
-
-                ${
-                  isSubmitted
-                    ? `<span class="badge green">Submitted</span>`
-                    : `<span class="badge orange">Draft</span>`
-                }
-
-              </td>
-
-            </tr>
-
-          `;
-        }
-      )
-      .join("");
-  }
-
-
-  // ============================================================
-  // LOAD PICKS
-  // ============================================================
-
-  async function loadPicks() {
-
-    const {
-      data,
-      error
-    } =
-      await supabaseClient.rpc(
-        "admin_get_week_picks",
-        {
-          p_week_id:
-            currentWeek.id
-        }
-      );
-
-
-    if (error) {
-      throw error;
-    }
-
-
-    const body =
-      document.getElementById(
-        "picksBody"
-      );
-
-
-    const rows =
-      Array.isArray(data)
-        ? data
-        : [];
-
-
-    if (!rows.length) {
-
-      body.innerHTML =
-        `<tr><td colspan="6" class="empty">No picks yet.</td></tr>`;
-
-      return;
-    }
-
-
-    body.innerHTML =
-      rows.map(
-        (row) => {
-
-          const player =
-            row.player_name ||
-            row.display_name ||
-            "Player";
-
-          const away =
-            row.away_team ||
-            "";
-
-          const home =
-            row.home_team ||
-            "";
-
-          const pick =
-            row.pick_team ||
-            "—";
-
-          const spread =
-            row.pick_spread ??
-            "—";
-
-          const result =
-            row.result ||
-            "pending";
-
-          const points =
-            row.points ??
-            0;
-
-
-          let badgeClass =
-            "orange";
-
-          if (result === "win") {
-            badgeClass = "green";
+      } =
+        await supabaseClient.rpc(
+          "admin_get_week_picks",
+          {
+            p_week_id:
+              currentWeek.id
           }
+        );
 
-          if (result === "loss") {
-            badgeClass = "red";
-          }
+      if (error) {
+        throw error;
+      }
 
+      const rows =
+        data || [];
 
-          return `
+      const body =
+        document.getElementById(
+          "picksBody"
+        );
 
-            <tr>
+      const empty =
+        document.getElementById(
+          "picksEmpty"
+        );
 
-              <td>
-                <strong>
-                  ${escapeHtml(player)}
-                </strong>
-              </td>
+      body.innerHTML = "";
 
-              <td>
-                ${escapeHtml(away)}
-                @
-                ${escapeHtml(home)}
-              </td>
+      if (!rows.length) {
 
-              <td>
-                ${escapeHtml(pick)}
-              </td>
+        empty.style.display =
+          "block";
 
-              <td>
-                ${escapeHtml(formatSpread(spread))}
-              </td>
+        return;
+      }
 
-              <td>
-                <span class="badge ${badgeClass}">
-                  ${escapeHtml(result)}
-                </span>
-              </td>
+      empty.style.display =
+        "none";
 
-              <td>
-                ${escapeHtml(points)}
-              </td>
+      rows.forEach(row => {
 
-            </tr>
+        const tr =
+          document.createElement("tr");
 
-          `;
-        }
-      )
-      .join("");
-  }
+        tr.innerHTML = `
 
+          <td>
+            ${escapeHtml(
+              row.player_name ||
+              row.display_name ||
+              "Player"
+            )}
+          </td>
 
-  // ============================================================
-  // WEEK STATUS
-  // ============================================================
+          <td>
+            ${escapeHtml(
+              (
+                row.away_team ||
+                "Away"
+              ) +
+              " @ " +
+              (
+                row.home_team ||
+                "Home"
+              )
+            )}
+          </td>
 
-  async function setWeekStatus(status) {
+          <td class="pick-side">
+            ${escapeHtml(
+              row.pick_team ||
+              row.pick_side ||
+              "—"
+            )}
+          </td>
 
-    if (!currentWeek) {
-      return;
+          <td>
+            ${
+              row.pick_spread ??
+              "—"
+            }
+          </td>
+
+          <td>
+            ${escapeHtml(
+              row.result ||
+              "pending"
+            )}
+          </td>
+
+          <td class="points">
+            ${row.points ?? 0}
+          </td>
+
+        `;
+
+        body.appendChild(tr);
+      });
     }
 
+    async function setWeekStatus(status) {
 
-    try {
+      if (!currentWeek) {
+        return;
+      }
 
       const {
         error
@@ -2010,74 +1732,35 @@
           {
             p_week_id:
               currentWeek.id,
-
             p_status:
               status
           }
         );
 
-
       if (error) {
-        throw error;
+
+        alert(
+          "Could not change week status: " +
+          error.message
+        );
+
+        return;
       }
 
+      await loadCurrentWeek();
 
-      showDashboardMessage(
-        `Week ${status === "open" ? "opened" : "closed"} successfully.`,
-        "success"
-      );
-
-
-      await loadDashboard();
-
-    } catch (error) {
-
-      console.error(
-        "Week status error:",
-        error
-      );
-
-      showDashboardMessage(
-        "Could not change week status: " +
-        error.message,
-        "error"
+      alert(
+        "Week is now " +
+        status +
+        "."
       );
     }
-  }
 
+    async function recalculate() {
 
-  document
-    .getElementById(
-      "openWeekBtn"
-    )
-    .addEventListener(
-      "click",
-      () => setWeekStatus("open")
-    );
-
-
-  document
-    .getElementById(
-      "closeWeekBtn"
-    )
-    .addEventListener(
-      "click",
-      () => setWeekStatus("closed")
-    );
-
-
-  // ============================================================
-  // RECALCULATE
-  // ============================================================
-
-  async function recalculate() {
-
-    if (!currentWeek) {
-      return;
-    }
-
-
-    try {
+      if (!currentWeek) {
+        return;
+      }
 
       const {
         error
@@ -2090,141 +1773,105 @@
           }
         );
 
-
       if (error) {
-        throw error;
+
+        alert(
+          "Recalculate failed: " +
+          error.message
+        );
+
+        return;
       }
 
+      await loadAdmin();
 
-      showDashboardMessage(
-        "Week recalculated successfully.",
-        "success"
-      );
-
-
-      await loadDashboard();
-
-    } catch (error) {
-
-      console.error(
-        "Recalculate error:",
-        error
-      );
-
-      showDashboardMessage(
-        "Could not recalculate: " +
-        error.message,
-        "error"
+      alert(
+        "Week recalculated."
       );
     }
-  }
 
+    function escapeHtml(value) {
 
-  document
-    .getElementById(
-      "recalculateBtn"
-    )
-    .addEventListener(
-      "click",
-      recalculate
+      return String(
+        value ?? ""
+      )
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    document
+      .getElementById("loginBtn")
+      .addEventListener(
+        "click",
+        login
+      );
+
+    document
+      .getElementById("logoutBtn")
+      .addEventListener(
+        "click",
+        logout
+      );
+
+    document
+      .getElementById("retryBtn")
+      .addEventListener(
+        "click",
+        checkAdmin
+      );
+
+    document
+      .getElementById("openWeekBtn")
+      .addEventListener(
+        "click",
+        () => setWeekStatus("open")
+      );
+
+    document
+      .getElementById("closeWeekBtn")
+      .addEventListener(
+        "click",
+        () => setWeekStatus("closed")
+      );
+
+    document
+      .getElementById("recalculateBtn")
+      .addEventListener(
+        "click",
+        recalculate
+      );
+
+    document
+      .getElementById("refreshBtn")
+      .addEventListener(
+        "click",
+        loadAdmin
+      );
+
+    supabaseClient.auth.onAuthStateChange(
+      async (_event, session) => {
+
+        if (session?.user) {
+          await checkAdmin();
+        } else {
+          showOnly(loginPanel);
+        }
+
+      }
     );
 
+    async function initialize() {
 
-  // ============================================================
-  // REFRESH
-  // ============================================================
+      await checkAdmin();
 
-  document
-    .getElementById(
-      "refreshBtn"
-    )
-    .addEventListener(
-      "click",
-      loadDashboard
-    );
-
-
-  // ============================================================
-  // AUTH STATE
-  // ============================================================
-
-  supabaseClient.auth.onAuthStateChange(
-    async (_event, session) => {
-
-      if (session?.user) {
-
-        currentUser =
-          session.user;
-
-        userEmail.textContent =
-          session.user.email || "";
-
-        await checkAdminAccess();
-
-      } else {
-
-        resetPage();
-
-      }
     }
-  );
 
+    initialize();
 
-  // ============================================================
-  // INITIAL SESSION
-  // ============================================================
-
-  async function initialize() {
-
-    try {
-
-      const {
-        data,
-        error
-      } =
-        await supabaseClient.auth.getSession();
-
-
-      if (error) {
-        throw error;
-      }
-
-
-      if (data?.session?.user) {
-
-        currentUser =
-          data.session.user;
-
-        userEmail.textContent =
-          data.session.user.email || "";
-
-        await checkAdminAccess();
-
-      } else {
-
-        resetPage();
-
-      }
-
-    } catch (error) {
-
-      console.error(
-        "Initial session error:",
-        error
-      );
-
-      showLoginMessage(
-        "Could not load your session: " +
-        error.message,
-        "error"
-      );
-    }
-  }
-
-
-  initialize();
-
-</script>
+  </script>
 
 </body>
 </html>
