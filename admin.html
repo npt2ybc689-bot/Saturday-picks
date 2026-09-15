@@ -1,0 +1,1454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Saturday Lines — Admin</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    :root {
+      --bg: #090a0c;
+      --panel: #111317;
+      --panel-2: #16181d;
+      --border: #292c33;
+      --orange: #ff6a00;
+      --orange-dark: #cc5200;
+      --text: #f5f5f5;
+      --muted: #9297a1;
+      --green: #42d392;
+      --red: #ff5c5c;
+      --yellow: #f5c451;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    header {
+      border-bottom: 1px solid var(--border);
+      background: #0b0c0f;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+
+    .header-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 18px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 23px;
+      font-weight: 900;
+      letter-spacing: -1px;
+    }
+
+    .logo span {
+      color: var(--orange);
+    }
+
+    .admin-badge {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      color: var(--orange);
+      border: 1px solid rgba(255,106,0,.35);
+      padding: 7px 10px;
+      text-transform: uppercase;
+    }
+
+    .logout-btn {
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 9px 14px;
+    }
+
+    .logout-btn:hover {
+      color: white;
+      border-color: #555b66;
+    }
+
+    main {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 34px 24px 70px;
+    }
+
+    .page-heading {
+      margin-bottom: 28px;
+    }
+
+    .eyebrow {
+      color: var(--orange);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(32px, 5vw, 52px);
+      letter-spacing: -2px;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      margin-top: 10px;
+      max-width: 700px;
+      line-height: 1.5;
+    }
+
+    .notice {
+      padding: 15px 18px;
+      margin-bottom: 22px;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      color: var(--muted);
+    }
+
+    .notice.success {
+      border-color: rgba(66,211,146,.35);
+      color: var(--green);
+    }
+
+    .notice.error {
+      border-color: rgba(255,92,92,.35);
+      color: var(--red);
+    }
+
+    .dashboard {
+      display: grid;
+      gap: 22px;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      padding: 22px;
+    }
+
+    .panel-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .panel-heading h2 {
+      margin: 0;
+      font-size: 20px;
+    }
+
+    .panel-heading p {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .stat {
+      background: var(--panel-2);
+      border: 1px solid var(--border);
+      padding: 18px;
+    }
+
+    .stat-label {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .stat-value {
+      margin-top: 8px;
+      font-size: 28px;
+      font-weight: 900;
+    }
+
+    .status-open {
+      color: var(--green);
+    }
+
+    .status-closed {
+      color: var(--red);
+    }
+
+    .status-finalized {
+      color: var(--yellow);
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .btn {
+      border: 1px solid var(--border);
+      background: var(--panel-2);
+      color: white;
+      padding: 11px 16px;
+      font-weight: 800;
+      border-radius: 2px;
+    }
+
+    .btn:hover {
+      border-color: #555b66;
+    }
+
+    .btn-primary {
+      background: var(--orange);
+      border-color: var(--orange);
+      color: #111;
+    }
+
+    .btn-primary:hover {
+      background: #ff7b21;
+      border-color: #ff7b21;
+    }
+
+    .btn-danger {
+      border-color: rgba(255,92,92,.4);
+      color: var(--red);
+    }
+
+    .btn-success {
+      border-color: rgba(66,211,146,.4);
+      color: var(--green);
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 700px;
+    }
+
+    th,
+    td {
+      text-align: left;
+      padding: 13px 14px;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+    }
+
+    th {
+      color: var(--muted);
+      background: var(--panel-2);
+      text-transform: uppercase;
+      letter-spacing: .8px;
+      font-size: 10px;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 5px 8px;
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .6px;
+      border: 1px solid var(--border);
+    }
+
+    .pill-green {
+      color: var(--green);
+      border-color: rgba(66,211,146,.3);
+    }
+
+    .pill-orange {
+      color: var(--orange);
+      border-color: rgba(255,106,0,.3);
+    }
+
+    .pill-red {
+      color: var(--red);
+      border-color: rgba(255,92,92,.3);
+    }
+
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .game-card {
+      background: var(--panel-2);
+      border: 1px solid var(--border);
+      padding: 17px;
+    }
+
+    .game-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .game-number {
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .game-lock {
+      color: var(--green);
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .team-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 7px 0;
+    }
+
+    .team-name {
+      font-weight: 800;
+    }
+
+    .rank {
+      color: var(--orange);
+      margin-right: 5px;
+    }
+
+    .score {
+      font-size: 18px;
+      font-weight: 900;
+    }
+
+    .game-meta {
+      color: var(--muted);
+      font-size: 11px;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+    }
+
+    .edit-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .field label {
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .7px;
+    }
+
+    .field input,
+    .field select {
+      width: 100%;
+      background: #0c0d10;
+      color: white;
+      border: 1px solid var(--border);
+      padding: 10px;
+      outline: none;
+    }
+
+    .field input:focus,
+    .field select:focus {
+      border-color: var(--orange);
+    }
+
+    .entry-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .empty {
+      padding: 30px;
+      text-align: center;
+      color: var(--muted);
+      border: 1px dashed var(--border);
+    }
+
+    .login-screen {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 25px;
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 430px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      padding: 30px;
+    }
+
+    .login-card h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+    }
+
+    .login-card p {
+      color: var(--muted);
+      line-height: 1.5;
+      margin-bottom: 24px;
+    }
+
+    .login-form {
+      display: grid;
+      gap: 13px;
+    }
+
+    .login-form input {
+      background: #0c0d10;
+      color: white;
+      border: 1px solid var(--border);
+      padding: 13px;
+      outline: none;
+    }
+
+    .login-form input:focus {
+      border-color: var(--orange);
+    }
+
+    .login-form button {
+      background: var(--orange);
+      border: 0;
+      padding: 14px;
+      font-weight: 900;
+    }
+
+    @media (max-width: 900px) {
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .games-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .edit-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .header-inner,
+      main {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+
+      .stats {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .stat-value {
+        font-size: 23px;
+      }
+
+      .edit-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .panel {
+        padding: 16px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- LOGIN -->
+  <div id="loginScreen" class="login-screen">
+    <div class="login-card">
+      <div class="eyebrow">Saturday Lines</div>
+      <h1>Admin Login</h1>
+      <p>
+        Sign in with your Saturday Lines account. Only accounts marked as administrators
+        can access this dashboard.
+      </p>
+
+      <form id="loginForm" class="login-form">
+        <input id="emailInput" type="email" placeholder="Email address" required />
+        <input id="passwordInput" type="password" placeholder="Password" required />
+        <button type="submit">Sign In</button>
+      </form>
+
+      <div id="loginMessage" class="notice hidden" style="margin-top:15px;"></div>
+    </div>
+  </div>
+
+  <!-- ADMIN APP -->
+  <div id="adminApp" class="hidden">
+
+    <header>
+      <div class="header-inner">
+        <div>
+          <div class="logo">SATURDAY<span>LINES</span></div>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div class="admin-badge">Admin</div>
+          <button id="logoutBtn" class="logout-btn">Log Out</button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+
+      <div class="page-heading">
+        <div class="eyebrow">Control Center</div>
+        <h1>Saturday Lines Admin</h1>
+        <div class="subtitle">
+          Manage the current week, games, entries, scores and standings.
+        </div>
+      </div>
+
+      <div id="globalMessage" class="notice hidden"></div>
+
+      <div class="dashboard">
+
+        <!-- WEEK OVERVIEW -->
+        <section class="panel">
+          <div class="panel-heading">
+            <div>
+              <h2>Week Control</h2>
+              <p>Manage the current competition week.</p>
+            </div>
+
+            <div class="controls">
+              <button class="btn btn-success" onclick="setWeekStatus('open')">
+                Open Week
+              </button>
+
+              <button class="btn btn-danger" onclick="setWeekStatus('closed')">
+                Close Week
+              </button>
+
+              <button class="btn" onclick="recalculateWeek()">
+                Recalculate
+              </button>
+
+              <button class="btn" onclick="loadDashboard()">
+                Refresh
+              </button>
+            </div>
+          </div>
+
+          <div class="stats">
+            <div class="stat">
+              <div class="stat-label">Week</div>
+              <div id="weekNumber" class="stat-value">—</div>
+            </div>
+
+            <div class="stat">
+              <div class="stat-label">Status</div>
+              <div id="weekStatus" class="stat-value">—</div>
+            </div>
+
+            <div class="stat">
+              <div class="stat-label">Players</div>
+              <div id="playerCount" class="stat-value">—</div>
+            </div>
+
+            <div class="stat">
+              <div class="stat-label">Pot</div>
+              <div id="potAmount" class="stat-value">$0</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ENTRIES -->
+        <section class="panel">
+          <div class="panel-heading">
+            <div>
+              <h2>Player Entries</h2>
+              <p>Every submitted and unsubmitted entry for the current week.</p>
+            </div>
+          </div>
+
+          <div id="entriesContainer">
+            <div class="empty">Loading entries...</div>
+          </div>
+        </section>
+
+        <!-- GAMES -->
+        <section class="panel">
+          <div class="panel-heading">
+            <div>
+              <h2>Games & Scores</h2>
+              <p>Review the 20 selected games and make administrative corrections when necessary.</p>
+            </div>
+          </div>
+
+          <div id="gamesContainer" class="games-grid">
+            <div class="empty">Loading games...</div>
+          </div>
+        </section>
+
+        <!-- PICKS -->
+        <section class="panel">
+          <div class="panel-heading">
+            <div>
+              <h2>Player Picks</h2>
+              <p>Review the picks submitted by every player.</p>
+            </div>
+          </div>
+
+          <div id="picksContainer">
+            <div class="empty">Loading picks...</div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+<script>
+  const SUPABASE_URL = "https://ffzlgkaenvivlsrhxvcs.supabase.co";
+  const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_pILr3XbyWT721ABLUMVwVA_8_IiVXKg";
+
+  const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
+
+  let currentUser = null;
+  let currentWeek = null;
+  let currentEntries = [];
+  let currentGames = [];
+  let currentPicks = [];
+
+  const $ = (id) => document.getElementById(id);
+
+  function showMessage(message, type = "") {
+    const el = $("globalMessage");
+
+    el.textContent = message;
+    el.className = "notice";
+
+    if (type) {
+      el.classList.add(type);
+    }
+
+    el.classList.remove("hidden");
+
+    setTimeout(() => {
+      el.classList.add("hidden");
+    }, 4500);
+  }
+
+  function showLoginMessage(message, type = "error") {
+    const el = $("loginMessage");
+
+    el.textContent = message;
+    el.className = "notice";
+
+    if (type) {
+      el.classList.add(type);
+    }
+
+    el.classList.remove("hidden");
+  }
+
+  function escapeHtml(value) {
+    return String(value ?? "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+  }
+
+  function money(value) {
+    return "$" + Number(value || 0).toFixed(0);
+  }
+
+  function formatDateTime(value) {
+    if (!value) return "—";
+
+    const date = new Date(value);
+
+    if (Number.isNaN(date.getTime())) {
+      return value;
+    }
+
+    return date.toLocaleString([], {
+      month: "short",
+      day: "numeric",
+      hour: "numeric",
+      minute: "2-digit"
+    });
+  }
+
+  async function login(email, password) {
+    const { data, error } =
+      await supabaseClient.auth.signInWithPassword({
+        email,
+        password
+      });
+
+    if (error) {
+      throw error;
+    }
+
+    currentUser = data.user;
+
+    await verifyAdmin();
+  }
+
+  async function verifyAdmin() {
+    const { data, error } =
+      await supabaseClient.rpc("is_current_user_admin");
+
+    if (error) {
+      console.error(error);
+      throw new Error("Unable to verify administrator access.");
+    }
+
+    if (!data) {
+      await supabaseClient.auth.signOut();
+      throw new Error("This account is not an administrator.");
+    }
+
+    $("loginScreen").classList.add("hidden");
+    $("adminApp").classList.remove("hidden");
+
+    await loadDashboard();
+  }
+
+  async function initialize() {
+    const {
+      data: { session }
+    } = await supabaseClient.auth.getSession();
+
+    if (session?.user) {
+      currentUser = session.user;
+
+      try {
+        await verifyAdmin();
+      } catch (error) {
+        console.error(error);
+        $("loginScreen").classList.remove("hidden");
+        $("adminApp").classList.add("hidden");
+        showLoginMessage(error.message || "Admin access denied.");
+      }
+    }
+  }
+
+  async function loadCurrentWeek() {
+    const { data, error } = await supabaseClient
+      .from("weeks")
+      .select("*")
+      .eq("status", "open")
+      .order("season_year", { ascending: false })
+      .order("week_number", { ascending: false })
+      .limit(1)
+      .maybeSingle();
+
+    if (error) {
+      throw error;
+    }
+
+    if (!data) {
+      const { data: fallback, error: fallbackError } =
+        await supabaseClient
+          .from("weeks")
+          .select("*")
+          .order("season_year", { ascending: false })
+          .order("week_number", { ascending: false })
+          .limit(1)
+          .maybeSingle();
+
+      if (fallbackError) {
+        throw fallbackError;
+      }
+
+      currentWeek = fallback;
+    } else {
+      currentWeek = data;
+    }
+
+    if (!currentWeek) {
+      throw new Error("No competition week exists.");
+    }
+  }
+
+  async function loadPot() {
+    const { data, error } =
+      await supabaseClient.rpc("get_week_pot", {
+        p_week_id: currentWeek.id
+      });
+
+    if (error) {
+      console.error(error);
+      $("potAmount").textContent = "$0";
+      return;
+    }
+
+    const result = Array.isArray(data) ? data[0] : data;
+
+    const pot = Number(result?.pot ?? 0);
+    const players = Number(result?.players ?? 0);
+
+    $("potAmount").textContent = money(pot);
+    $("playerCount").textContent = players;
+  }
+
+  async function loadEntries() {
+    const { data, error } =
+      await supabaseClient.rpc("admin_get_week_entries", {
+        p_week_id: currentWeek.id
+      });
+
+    if (error) {
+      console.error(error);
+      $("entriesContainer").innerHTML =
+        '<div class="empty">Unable to load entries.</div>';
+      return;
+    }
+
+    currentEntries = Array.isArray(data) ? data : [];
+
+    renderEntries();
+  }
+
+  function renderEntries() {
+    if (!currentEntries.length) {
+      $("entriesContainer").innerHTML =
+        '<div class="empty">No entries yet.</div>';
+      return;
+    }
+
+    const rows = currentEntries.map((row) => {
+      const name =
+        row.player_name ||
+        row.display_name ||
+        row.email ||
+        "Player";
+
+      const submitted = Boolean(row.submitted);
+
+      return `
+        <tr>
+          <td>
+            <strong>${escapeHtml(name)}</strong>
+          </td>
+
+          <td>
+            ${escapeHtml(row.email || "—")}
+          </td>
+
+          <td>
+            ${money(row.buy_in)}
+          </td>
+
+          <td>
+            ${
+              submitted
+                ? '<span class="pill pill-green">Submitted</span>'
+                : '<span class="pill">Draft</span>'
+            }
+          </td>
+
+          <td>
+            ${Number(row.total_points ?? row.points ?? 0)}
+          </td>
+
+          <td>
+            ${Number(row.tiebreaker_total ?? 0)}
+          </td>
+
+          <td>
+            ${formatDateTime(row.submitted_at)}
+          </td>
+        </tr>
+      `;
+    }).join("");
+
+    $("entriesContainer").innerHTML = `
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Player</th>
+              <th>Email</th>
+              <th>Entry</th>
+              <th>Status</th>
+              <th>Points</th>
+              <th>Tiebreaker</th>
+              <th>Submitted</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            ${rows}
+          </tbody>
+        </table>
+      </div>
+    `;
+  }
+
+  async function loadGames() {
+    const { data, error } =
+      await supabaseClient
+        .from("games")
+        .select("*")
+        .eq("week_id", currentWeek.id)
+        .eq("is_featured", true)
+        .order("start_time", { ascending: true });
+
+    if (error) {
+      console.error(error);
+      $("gamesContainer").innerHTML =
+        '<div class="empty">Unable to load games.</div>';
+      return;
+    }
+
+    currentGames = data || [];
+
+    renderGames();
+  }
+
+  function renderGames() {
+    if (!currentGames.length) {
+      $("gamesContainer").innerHTML =
+        '<div class="empty">No games found.</div>';
+      return;
+    }
+
+    $("gamesContainer").innerHTML =
+      currentGames.map((game, index) => {
+
+        const awayRank = game.away_rank
+          ? `<span class="rank">#${game.away_rank}</span>`
+          : "";
+
+        const homeRank = game.home_rank
+          ? `<span class="rank">#${game.home_rank}</span>`
+          : "";
+
+        return `
+          <div class="game-card">
+
+            <div class="game-top">
+              <div class="game-number">
+                Game ${index + 1}
+              </div>
+
+              <div class="game-lock">
+                ${game.spread_locked ? "Spread Locked" : "Unlocked"}
+              </div>
+            </div>
+
+            <div class="team-row">
+              <div class="team-name">
+                ${awayRank}${escapeHtml(game.away_team)}
+              </div>
+
+              <div class="score">
+                ${game.away_score ?? 0}
+              </div>
+            </div>
+
+            <div class="team-row">
+              <div class="team-name">
+                ${homeRank}${escapeHtml(game.home_team)}
+              </div>
+
+              <div class="score">
+                ${game.home_score ?? 0}
+              </div>
+            </div>
+
+            <div class="game-meta">
+              ${formatDateTime(game.start_time)}
+            </div>
+
+            <div class="edit-grid">
+
+              <div class="field">
+                <label>Away Spread</label>
+                <input
+                  id="awaySpread-${game.id}"
+                  type="number"
+                  step="0.5"
+                  value="${game.away_spread ?? ""}"
+                />
+              </div>
+
+              <div class="field">
+                <label>Home Spread</label>
+                <input
+                  id="homeSpread-${game.id}"
+                  type="number"
+                  step="0.5"
+                  value="${game.home_spread ?? ""}"
+                />
+              </div>
+
+              <div class="field">
+                <label>Away Score</label>
+                <input
+                  id="awayScore-${game.id}"
+                  type="number"
+                  step="1"
+                  value="${game.away_score ?? 0}"
+                />
+              </div>
+
+              <div class="field">
+                <label>Home Score</label>
+                <input
+                  id="homeScore-${game.id}"
+                  type="number"
+                  step="1"
+                  value="${game.home_score ?? 0}"
+                />
+              </div>
+
+            </div>
+
+            <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
+
+              <button
+                class="btn btn-primary"
+                onclick="updateGame(${game.id})"
+              >
+                Save Game
+              </button>
+
+              <button
+                class="btn"
+                onclick="finalizeGame(${game.id})"
+              >
+                Mark Final
+              </button>
+
+            </div>
+
+          </div>
+        `;
+      }).join("");
+  }
+
+  async function updateGame(gameId) {
+    const game = currentGames.find(
+      (item) => Number(item.id) === Number(gameId)
+    );
+
+    if (!game) return;
+
+    const awaySpread = parseFloat(
+      $(`awaySpread-${gameId}`).value
+    );
+
+    const homeSpread = parseFloat(
+      $(`homeSpread-${gameId}`).value
+    );
+
+    const awayScore = parseInt(
+      $(`awayScore-${gameId}`).value || "0",
+      10
+    );
+
+    const homeScore = parseInt(
+      $(`homeScore-${gameId}`).value || "0",
+      10
+    );
+
+    const { error } =
+      await supabaseClient.rpc("admin_update_game", {
+        p_game_id: gameId,
+        p_away_spread: Number.isFinite(awaySpread)
+          ? awaySpread
+          : null,
+        p_home_spread: Number.isFinite(homeSpread)
+          ? homeSpread
+          : null,
+        p_away_score: awayScore,
+        p_home_score: homeScore,
+        p_status: game.status || null,
+        p_result_final: Boolean(game.result_final)
+      });
+
+    if (error) {
+      console.error(error);
+      showMessage(
+        "Could not update the game: " + error.message,
+        "error"
+      );
+      return;
+    }
+
+    showMessage("Game updated successfully.", "success");
+
+    await loadGames();
+  }
+
+  async function finalizeGame(gameId) {
+    const game = currentGames.find(
+      (item) => Number(item.id) === Number(gameId)
+    );
+
+    if (!game) return;
+
+    const awayScore = parseInt(
+      $(`awayScore-${gameId}`).value || "0",
+      10
+    );
+
+    const homeScore = parseInt(
+      $(`homeScore-${gameId}`).value || "0",
+      10
+    );
+
+    const { error } =
+      await supabaseClient.rpc("admin_update_game", {
+        p_game_id: gameId,
+        p_away_spread: game.away_spread,
+        p_home_spread: game.home_spread,
+        p_away_score: awayScore,
+        p_home_score: homeScore,
+        p_status: "final",
+        p_result_final: true
+      });
+
+    if (error) {
+      console.error(error);
+      showMessage(
+        "Could not finalize game: " + error.message,
+        "error"
+      );
+      return;
+    }
+
+    showMessage("Game marked final.", "success");
+
+    await loadGames();
+    await recalculateWeek();
+  }
+
+  async function loadPicks() {
+    const { data, error } =
+      await supabaseClient.rpc("admin_get_week_picks", {
+        p_week_id: currentWeek.id
+      });
+
+    if (error) {
+      console.error(error);
+
+      $("picksContainer").innerHTML =
+        '<div class="empty">Unable to load picks.</div>';
+
+      return;
+    }
+
+    currentPicks = Array.isArray(data) ? data : [];
+
+    renderPicks();
+  }
+
+  function renderPicks() {
+    if (!currentPicks.length) {
+      $("picksContainer").innerHTML =
+        '<div class="empty">No picks have been submitted yet.</div>';
+      return;
+    }
+
+    const rows = currentPicks.map((row) => {
+
+      const name =
+        row.player_name ||
+        row.display_name ||
+        row.email ||
+        "Player";
+
+      return `
+        <tr>
+          <td>
+            <strong>${escapeHtml(name)}</strong>
+          </td>
+
+          <td>
+            ${escapeHtml(row.away_team || "—")}
+            @
+            ${escapeHtml(row.home_team || "—")}
+          </td>
+
+          <td>
+            ${escapeHtml(row.pick_team || "—")}
+          </td>
+
+          <td>
+            ${row.pick_spread ?? "—"}
+          </td>
+
+          <td>
+            ${
+              row.result === "correct"
+                ? '<span class="pill pill-green">Correct</span>'
+                : row.result === "incorrect"
+                  ? '<span class="pill pill-red">Incorrect</span>'
+                  : row.result === "push"
+                    ? '<span class="pill">Push</span>'
+                    : '<span class="pill">Pending</span>'
+            }
+          </td>
+
+          <td>
+            ${Number(row.points || 0)}
+          </td>
+        </tr>
+      `;
+    }).join("");
+
+    $("picksContainer").innerHTML = `
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Player</th>
+              <th>Game</th>
+              <th>Pick</th>
+              <th>Spread</th>
+              <th>Result</th>
+              <th>Points</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            ${rows}
+          </tbody>
+        </table>
+      </div>
+    `;
+  }
+
+  async function setWeekStatus(status) {
+    if (!currentWeek) return;
+
+    const action =
+      status === "open"
+        ? "open"
+        : "close";
+
+    const confirmed = confirm(
+      `Are you sure you want to ${action} Week ${currentWeek.week_number}?`
+    );
+
+    if (!confirmed) return;
+
+    const { error } =
+      await supabaseClient.rpc("admin_set_week_status", {
+        p_week_id: currentWeek.id,
+        p_status: status
+      });
+
+    if (error) {
+      console.error(error);
+
+      showMessage(
+        "Could not change week status: " + error.message,
+        "error"
+      );
+
+      return;
+    }
+
+    showMessage(
+      `Week ${currentWeek.week_number} is now ${status}.`,
+      "success"
+    );
+
+    await loadDashboard();
+  }
+
+  async function recalculateWeek() {
+    if (!currentWeek) return;
+
+    const { error } =
+      await supabaseClient.rpc("admin_recalculate_week", {
+        p_week_id: currentWeek.id
+      });
+
+    if (error) {
+      console.error(error);
+
+      showMessage(
+        "Could not recalculate the week: " + error.message,
+        "error"
+      );
+
+      return;
+    }
+
+    showMessage(
+      "Scores and standings recalculated.",
+      "success"
+    );
+
+    await loadDashboard();
+  }
+
+  async function loadDashboard() {
+    try {
+      await loadCurrentWeek();
+
+      $("weekNumber").textContent =
+        currentWeek.week_number ?? "—";
+
+      const status =
+        String(currentWeek.status || "unknown").toLowerCase();
+
+      $("weekStatus").textContent =
+        status.charAt(0).toUpperCase() + status.slice(1);
+
+      $("weekStatus").className =
+        "stat-value " +
+        (
+          status === "open"
+            ? "status-open"
+            : status === "closed"
+              ? "status-closed"
+              : status === "finalized"
+                ? "status-finalized"
+                : ""
+        );
+
+      await Promise.all([
+        loadPot(),
+        loadEntries(),
+        loadGames(),
+        loadPicks()
+      ]);
+
+    } catch (error) {
+      console.error(error);
+
+      showMessage(
+        error.message || "Unable to load admin dashboard.",
+        "error"
+      );
+    }
+  }
+
+  $("loginForm").addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const email = $("emailInput").value.trim();
+    const password = $("passwordInput").value;
+
+    try {
+      $("loginMessage").classList.add("hidden");
+
+      await login(email, password);
+
+    } catch (error) {
+      console.error(error);
+
+      showLoginMessage(
+        error.message || "Login failed.",
+        "error"
+      );
+    }
+  });
+
+  $("logoutBtn").addEventListener("click", async () => {
+    await supabaseClient.auth.signOut();
+
+    currentUser = null;
+
+    $("adminApp").classList.add("hidden");
+    $("loginScreen").classList.remove("hidden");
+
+    $("passwordInput").value = "";
+  });
+
+  supabaseClient.auth.onAuthStateChange(async (event, session) => {
+    if (event === "SIGNED_OUT") {
+      $("adminApp").classList.add("hidden");
+      $("loginScreen").classList.remove("hidden");
+      return;
+    }
+
+    if (
+      session?.user &&
+      $("adminApp").classList.contains("hidden")
+    ) {
+      currentUser = session.user;
+
+      try {
+        await verifyAdmin();
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  });
+
+  initialize();
+</script>
+
+</body>
+</html>
