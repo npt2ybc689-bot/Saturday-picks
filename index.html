@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saturday Lines</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f3f4f6;
+      color: #111827;
+    }
+
+    header {
+      background: #111827;
+      color: white;
+      padding: 25px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 32px;
+    }
+
+    header p {
+      margin: 8px 0 0;
+      color: #d1d5db;
+    }
+
+    .container {
+      max-width: 850px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
+
+    .info {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 25px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,.08);
+    }
+
+    .info h2 {
+      margin-top: 0;
+    }
+
+    .counter {
+      font-size: 28px;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    .game {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 18px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.08);
+    }
+
+    .game-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 10px;
+    }
+
+    .matchup {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .value {
+      background: #e5e7eb;
+      padding: 7px 12px;
+      border-radius: 20px;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+
+    .spread {
+      text-align: center;
+      color: #6b7280;
+      margin-bottom: 15px;
+    }
+
+    .teams {
+      display: flex;
+      gap: 12px;
+    }
+
+    .team {
+      flex: 1;
+      padding: 15px;
+      border: 2px solid #d1d5db;
+      border-radius: 8px;
+      background: white;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .team:hover {
+      border-color: #111827;
+    }
+
+    .team.selected {
+      background: #111827;
+      color: white;
+      border-color: #111827;
+    }
+
+    .submit {
+      width: 100%;
+      padding: 17px;
+      border: none;
+      border-radius: 10px;
+      background: #111827;
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 5px;
+    }
+
+    .submit:hover {
+      background: #374151;
+    }
+
+    #message {
+      text-align: center;
+      font-weight: bold;
+      margin: 18px 0;
+    }
+
+    @media (max-width: 600px) {
+      .game-top {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .teams {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>Saturday Lines</h1>
+    <p>Pick 10 games against the spread.</p>
+  </header>
+
+  <main class="container">
+
+    <div class="info">
+      <h2>Your Picks</h2>
+      <div class="counter">
+        <span id="selectedCount">0</span> / 10
+      </div>
+      <p>Select exactly 10 games.</p>
+    </div>
+
+    <div id="games"></div>
+
+    <button class="submit" onclick="submitPicks()">
+      Submit Picks
+    </button>
+
+    <div id="message"></div>
+
+  </main>
+
+  <script>
+
+    const games = [
+      {
+        id: 1,
+        away: "Michigan",
+        awaySpread: "+3.5",
+        home: "Oklahoma",
+        homeSpread: "-3.5"
+      },
+      {
+        id: 2,
+        away: "Alabama",
+        awaySpread: "+6.5",
+        home: "Georgia",
+        homeSpread: "-6.5"
+      },
+      {
+        id: 3,
+        away: "LSU",
+        awaySpread: "+2.5",
+        home: "Texas",
+        homeSpread: "-2.5"
+      },
+      {
+        id: 4,
+        away: "Clemson",
+        awaySpread: "+4.5",
+        home: "Florida State",
+        homeSpread: "-4.5"
+      },
+      {
+        id: 5,
+        away: "Ohio State",
+        awaySpread: "-7.5",
+        home: "Penn State",
+        homeSpread: "+7.5"
+      }
+    ];
+
+    const selectedGames = new Set();
+
+    function displayGames() {
+
+      const container = document.getElementById("games");
+
+      container.innerHTML = "";
+
+      games.forEach(game => {
+
+        const card = document.createElement("div");
+
+        card.className = "game";
+
+        card.innerHTML = `
+          <div class="game-top">
+            <div class="matchup">
+              ${game.away} @ ${game.home}
+            </div>
+
+            <div class="value">
+              1 Point
+            </div>
+          </div>
+
+          <div class="spread">
+            Pick against the spread
+          </div>
+
+          <div class="teams">
+
+            <button
+              class="team"
+              onclick="selectTeam(${game.id}, 'away', this)">
+              ${game.away} ${game.awaySpread}
+            </button>
+
+            <button
+              class="team"
+              onclick="selectTeam(${game.id}, 'home', this)">
+              ${game.home} ${game.homeSpread}
+            </button>
+
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
+    }
+
+    function selectTeam(gameId, team, button) {
+
+      const game = games.find(g => g.id === gameId);
+
+      if (!game) return;
+
+      const card = button.closest(".game");
+
+      const buttons = card.querySelectorAll(".team");
+
+      buttons.forEach(btn => {
+        btn.classList.remove("selected");
+      });
+
+      if (selectedGames.has(gameId)) {
+
+        selectedGames.delete(gameId);
+
+      } else {
+
+        if (selectedGames.size >= 10) {
+
+          document.getElementById("message").innerText =
+            "You can only select 10 games.";
+
+          return;
+        }
+
+        selectedGames.add(gameId);
+      }
+
+      button.classList.add("selected");
+
+      document.getElementById("selectedCount").innerText =
+        selectedGames.size;
+
+      document.getElementById("message").innerText = "";
+    }
+
+    function submitPicks() {
+
+      const message = document.getElementById("message");
+
+      if (selectedGames.size !== 10) {
+
+        message.innerText =
+          "You must select exactly 10 games.";
+
+        return;
+      }
+
+      message.innerText =
+        "Picks submitted successfully!";
+
+    }
+
+    displayGames();
+
+  </script>
+
+</body>
+</html>
