@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>Saturday Lines</title>
 
@@ -10,33 +10,27 @@
 
   <style>
     :root {
-      --bg: #090a0c;
-      --surface: #111317;
-      --surface-2: #181b20;
-      --border: #292d34;
-      --orange: #ff6a00;
-      --orange-light: #ff8733;
+      --bg: #0a0a0a;
+      --panel: #111111;
+      --panel-2: #171717;
+      --border: #292929;
       --text: #f5f5f5;
-      --muted: #9299a3;
-      --green: #35c978;
-      --red: #ef5350;
+      --muted: #999999;
+      --orange: #ff6a00;
+      --orange-dark: #d95700;
+      --green: #25c76f;
+      --red: #ff4d4d;
     }
 
     * {
       box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
     }
 
     body {
-      min-height: 100vh;
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
       background: var(--bg);
       color: var(--text);
-      font-family: Arial, Helvetica, sans-serif;
     }
 
     button,
@@ -48,30 +42,24 @@
       cursor: pointer;
     }
 
-    .hidden {
-      display: none !important;
-    }
-
     .container {
       width: min(1180px, calc(100% - 32px));
       margin: 0 auto;
     }
 
-    /* =========================
-       HEADER
-    ========================= */
+    /* HEADER */
 
     header {
+      border-bottom: 1px solid var(--border);
+      background: rgba(10, 10, 10, 0.96);
       position: sticky;
       top: 0;
-      z-index: 100;
-      background: rgba(9, 10, 12, 0.94);
-      border-bottom: 1px solid var(--border);
-      backdrop-filter: blur(14px);
+      z-index: 50;
+      backdrop-filter: blur(12px);
     }
 
-    .nav {
-      min-height: 70px;
+    .header-inner {
+      min-height: 72px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -79,124 +67,149 @@
     }
 
     .logo {
-      color: var(--text);
       font-size: 22px;
       font-weight: 900;
-      letter-spacing: -1px;
+      letter-spacing: 2px;
     }
 
     .logo span {
       color: var(--orange);
     }
 
-    .nav-right {
+    .header-right {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
 
-    .user-name {
+    .user-email {
       color: var(--muted);
-      font-size: 14px;
+      font-size: 13px;
     }
 
-    /* =========================
-       BUTTONS
-    ========================= */
-
-    .btn {
+    .small-btn {
       border: 1px solid var(--border);
-      background: var(--surface-2);
+      background: var(--panel);
       color: var(--text);
+      padding: 9px 13px;
       border-radius: 6px;
-      padding: 11px 17px;
-      font-weight: 800;
-      transition: 0.15s ease;
+      font-weight: 700;
     }
 
-    .btn:hover {
+    .small-btn:hover {
       border-color: var(--orange);
     }
 
-    .btn-orange {
-      background: var(--orange);
-      border-color: var(--orange);
-      color: #111;
-    }
+    /* HERO */
 
-    .btn-orange:hover {
-      background: var(--orange-light);
-      border-color: var(--orange-light);
-    }
-
-    .btn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-
-    /* =========================
-       LOGIN
-    ========================= */
-
-    .login-wrapper {
-      min-height: calc(100vh - 70px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 50px 0;
-    }
-
-    .login-card {
-      width: min(500px, 100%);
-      background: var(--surface);
-      border: 1px solid var(--border);
-      padding: 34px;
+    .hero {
+      padding: 64px 0 42px;
+      border-bottom: 1px solid var(--border);
+      background:
+        radial-gradient(circle at 80% 20%, rgba(255, 106, 0, 0.12), transparent 32%),
+        linear-gradient(180deg, #101010 0%, #0a0a0a 100%);
     }
 
     .eyebrow {
       color: var(--orange);
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 900;
       letter-spacing: 2px;
       text-transform: uppercase;
-      margin-bottom: 10px;
-    }
-
-    .login-card h1 {
-      font-size: 36px;
-      line-height: 1;
-      letter-spacing: -2px;
       margin-bottom: 12px;
     }
 
-    .login-card p {
+    h1 {
+      margin: 0;
+      font-size: clamp(42px, 7vw, 78px);
+      line-height: 0.95;
+      letter-spacing: -3px;
+      font-weight: 950;
+    }
+
+    .hero-copy {
+      max-width: 650px;
       color: var(--muted);
-      line-height: 1.55;
-      margin-bottom: 25px;
+      font-size: 17px;
+      line-height: 1.6;
+      margin: 20px 0 0;
+    }
+
+    /* STATS */
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 30px;
+    }
+
+    .stat {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      padding: 20px;
+      min-height: 100px;
+    }
+
+    .stat-label {
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 800;
+    }
+
+    .stat-value {
+      margin-top: 8px;
+      font-size: 27px;
+      font-weight: 900;
+    }
+
+    /* AUTH */
+
+    .auth-wrap {
+      padding: 36px 0;
+    }
+
+    .auth-card {
+      max-width: 520px;
+      margin: 0 auto;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      padding: 28px;
+    }
+
+    .auth-card h2 {
+      margin: 0 0 8px;
+      font-size: 26px;
+    }
+
+    .auth-card p {
+      margin: 0 0 22px;
+      color: var(--muted);
     }
 
     .field {
-      margin-bottom: 14px;
+      margin-bottom: 13px;
     }
 
     .field label {
       display: block;
-      color: var(--muted);
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 1px;
-      text-transform: uppercase;
       margin-bottom: 7px;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--muted);
     }
 
     .field input {
       width: 100%;
-      background: #0c0e10;
-      border: 1px solid var(--border);
-      color: var(--text);
-      border-radius: 5px;
       padding: 13px;
+      border: 1px solid var(--border);
+      background: #0b0b0b;
+      color: white;
       outline: none;
+      border-radius: 5px;
     }
 
     .field input:focus {
@@ -204,487 +217,398 @@
     }
 
     .auth-buttons {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+      display: flex;
       gap: 10px;
       margin-top: 18px;
     }
 
-    .message {
-      min-height: 20px;
-      margin-top: 15px;
-      font-size: 14px;
-      line-height: 1.5;
-    }
+    /* BUTTONS */
 
-    .message.error {
-      color: var(--red);
-    }
-
-    .message.success {
-      color: var(--green);
-    }
-
-    /* =========================
-       HERO
-    ========================= */
-
-    .hero {
-      padding: 45px 0 25px;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.6fr 0.75fr;
-      gap: 16px;
-    }
-
-    .hero-main,
-    .pot-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-    }
-
-    .hero-main {
-      min-height: 270px;
-      padding: 40px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      background:
-        linear-gradient(
-          135deg,
-          rgba(255, 106, 0, 0.14),
-          transparent 52%
-        ),
-        var(--surface);
-    }
-
-    .hero-main h1 {
-      font-size: clamp(45px, 7vw, 78px);
-      line-height: 0.9;
-      letter-spacing: -5px;
-      margin-bottom: 22px;
-    }
-
-    .hero-main h1 span {
-      color: var(--orange);
-    }
-
-    .hero-main p {
-      max-width: 650px;
-      color: var(--muted);
-      line-height: 1.6;
-    }
-
-    .pot-card {
-      padding: 30px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .pot-label {
-      color: var(--muted);
-      font-size: 11px;
+    .primary-btn {
+      border: none;
+      background: var(--orange);
+      color: white;
+      padding: 13px 18px;
+      border-radius: 5px;
       font-weight: 900;
-      letter-spacing: 1.5px;
       text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
-    .pot-amount {
-      color: var(--orange);
-      font-size: 50px;
-      font-weight: 900;
-      margin: 8px 0;
+    .primary-btn:hover {
+      background: var(--orange-dark);
     }
 
-    .pot-detail {
+    .primary-btn:disabled {
+      cursor: not-allowed;
+      opacity: 0.45;
+    }
+
+    .secondary-btn {
+      border: 1px solid var(--border);
+      background: var(--panel-2);
+      color: white;
+      padding: 13px 18px;
+      border-radius: 5px;
+      font-weight: 800;
+    }
+
+    /* MAIN */
+
+    main {
+      padding: 42px 0 70px;
+    }
+
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 20px;
+      margin-bottom: 18px;
+    }
+
+    .section-title h2 {
+      margin: 0;
+      font-size: 28px;
+    }
+
+    .section-title p {
+      margin: 5px 0 0;
       color: var(--muted);
       font-size: 14px;
     }
 
-    /* =========================
-       SECTIONS
-    ========================= */
-
-    section {
-      padding: 25px 0;
-    }
-
-    .section-heading {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 20px;
-      margin-bottom: 17px;
-    }
-
-    .section-heading h2 {
-      font-size: 28px;
-      letter-spacing: -1px;
-    }
-
-    .section-heading p {
+    .status-message {
+      padding: 13px 15px;
+      border: 1px solid var(--border);
+      background: var(--panel);
       color: var(--muted);
-      font-size: 13px;
-      text-align: right;
+      margin-bottom: 20px;
+      border-radius: 5px;
     }
 
-    /* =========================
-       BUY-IN
-    ========================= */
+    .status-message.error {
+      border-color: rgba(255, 77, 77, 0.5);
+      color: #ff8a8a;
+    }
+
+    .status-message.success {
+      border-color: rgba(37, 199, 111, 0.5);
+      color: #7ce0a7;
+    }
+
+    /* BUY IN */
 
     .buyin-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(2, 1fr);
       gap: 14px;
+      margin-bottom: 28px;
     }
 
     .buyin-card {
-      position: relative;
-      display: block;
-      padding: 24px;
-      background: var(--surface);
+      background: var(--panel);
       border: 1px solid var(--border);
-      cursor: pointer;
+      padding: 20px;
       transition: 0.15s ease;
-    }
-
-    .buyin-card:hover {
-      border-color: #4a4f57;
     }
 
     .buyin-card.selected {
       border-color: var(--orange);
-      box-shadow: inset 0 0 0 1px var(--orange);
+      box-shadow: 0 0 0 1px var(--orange);
     }
 
-    .buyin-card input {
-      position: absolute;
-      opacity: 0;
-      pointer-events: none;
+    .buyin-card.locked {
+      opacity: 0.6;
+      cursor: not-allowed;
     }
 
-    .buyin-price {
-      font-size: 32px;
-      font-weight: 900;
-      margin-bottom: 4px;
+    .buyin-card:not(.locked) {
+      cursor: pointer;
     }
 
-    .buyin-title {
-      font-weight: 800;
-      margin-bottom: 8px;
+    .buyin-amount {
+      font-size: 30px;
+      font-weight: 950;
     }
 
     .buyin-description {
       color: var(--muted);
+      margin-top: 6px;
       font-size: 13px;
-      line-height: 1.5;
     }
 
-    /* =========================
-       GAMES
-    ========================= */
+    /* GAMES */
 
     .games-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
     }
 
     .game-card {
-      background: var(--surface);
+      background: var(--panel);
       border: 1px solid var(--border);
       padding: 18px;
+      position: relative;
       transition: 0.15s ease;
     }
 
     .game-card:hover {
-      border-color: #41464e;
+      border-color: #414141;
     }
 
-    .game-card.has-pick {
+    .game-card.selected {
       border-color: var(--orange);
+      box-shadow: 0 0 0 1px var(--orange);
+    }
+
+    .game-card.locked {
+      opacity: 0.75;
     }
 
     .game-top {
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
-      gap: 15px;
-      margin-bottom: 15px;
-    }
-
-    .game-number {
-      color: var(--orange);
-      font-size: 10px;
-      font-weight: 900;
-      letter-spacing: 1.2px;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 16px;
     }
 
     .game-status {
-      color: var(--muted);
-      font-size: 11px;
-      text-align: right;
+      color: var(--orange);
+      font-weight: 800;
     }
 
-    .game-status.live {
-      color: var(--green);
-      font-weight: 900;
+    .teams {
+      display: grid;
+      gap: 9px;
     }
 
     .team-row {
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
       gap: 12px;
-      padding: 7px 0;
-    }
-
-    .team-name {
-      font-size: 16px;
       font-weight: 800;
     }
 
-    .team-score {
-      min-width: 25px;
-      text-align: right;
-      font-size: 18px;
-      font-weight: 900;
+    .team-name {
+      display: flex;
+      align-items: center;
+      gap: 7px;
     }
 
-    .pick-grid {
+    .rank {
+      color: var(--orange);
+      font-size: 12px;
+    }
+
+    .spread-buttons {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 8px;
-      margin-top: 15px;
+      margin-top: 16px;
     }
 
-    .pick-button {
-      min-height: 61px;
-      padding: 8px;
-      background: #0c0e10;
-      color: var(--text);
+    .spread-btn {
       border: 1px solid var(--border);
-      border-radius: 5px;
-      font-size: 12px;
-      font-weight: 900;
-      transition: 0.15s ease;
+      background: #0c0c0c;
+      color: white;
+      padding: 11px 8px;
+      border-radius: 4px;
+      font-size: 13px;
+      font-weight: 800;
     }
 
-    .pick-button:hover:not(:disabled) {
+    .spread-btn:hover:not(:disabled) {
       border-color: var(--orange);
     }
 
-    .pick-button.selected {
+    .spread-btn.selected {
       background: var(--orange);
       border-color: var(--orange);
-      color: #111;
     }
 
-    .pick-button:disabled {
+    .spread-btn:disabled {
       cursor: not-allowed;
-      opacity: 0.42;
+      opacity: 0.45;
     }
 
-    .spread {
-      display: block;
+    .spread-unavailable {
+      margin-top: 15px;
+      padding: 10px;
+      background: #0c0c0c;
+      border: 1px dashed var(--border);
+      color: var(--muted);
+      font-size: 12px;
+      text-align: center;
+    }
+
+    /* SUBMIT */
+
+    .submit-panel {
+      margin-top: 22px;
+      padding: 22px;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .pick-count {
+      font-size: 17px;
+      font-weight: 900;
+    }
+
+    .pick-count span {
+      color: var(--orange);
+    }
+
+    .submit-help {
       margin-top: 5px;
       color: var(--muted);
       font-size: 12px;
     }
 
-    .pick-button.selected .spread {
-      color: #222;
+    .submitted-box {
+      margin-top: 22px;
+      padding: 20px;
+      border: 1px solid rgba(37, 199, 111, 0.5);
+      background: rgba(37, 199, 111, 0.05);
     }
 
-    .game-note {
-      margin-top: 12px;
-      color: var(--muted);
-      font-size: 11px;
-      line-height: 1.45;
-    }
-
-    .game-note.locked {
-      color: var(--red);
-      font-weight: 800;
-    }
-
-    .game-note.ready {
+    .submitted-title {
       color: var(--green);
-      font-weight: 800;
+      font-weight: 950;
+      font-size: 20px;
     }
 
-    /* =========================
-       EMPTY / LOADING
-    ========================= */
-
-    .loading,
-    .empty {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      padding: 35px;
+    .submitted-copy {
+      margin-top: 6px;
       color: var(--muted);
-      text-align: center;
-      line-height: 1.6;
+      font-size: 13px;
     }
 
-    /* =========================
-       SAVE BAR
-    ========================= */
-
-    .save-bar {
-      position: sticky;
-      bottom: 0;
-      z-index: 80;
-      border-top: 1px solid var(--border);
-      background: rgba(9, 10, 12, 0.96);
-      backdrop-filter: blur(14px);
-      padding: 13px 0;
-    }
-
-    .save-bar-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 15px;
-    }
-
-    .pick-counter {
-      font-weight: 900;
-    }
-
-    .pick-counter span {
-      color: var(--orange);
-    }
-
-    /* =========================
-       LEADERBOARD
-    ========================= */
+    /* LEADERBOARD */
 
     .leaderboard {
-      background: var(--surface);
+      margin-top: 42px;
+    }
+
+    .leaderboard-card {
       border: 1px solid var(--border);
+      background: var(--panel);
       overflow: hidden;
     }
 
-    .leader-row {
+    .leaderboard-row {
       display: grid;
-      grid-template-columns: 55px 1fr 90px 80px;
+      grid-template-columns: 60px 1fr 100px 100px;
+      gap: 15px;
       align-items: center;
-      gap: 10px;
-      padding: 16px 18px;
+      padding: 15px 18px;
       border-bottom: 1px solid var(--border);
     }
 
-    .leader-row:last-child {
-      border-bottom: 0;
+    .leaderboard-row:last-child {
+      border-bottom: none;
     }
 
-    .leader-header {
+    .leaderboard-header {
       color: var(--muted);
-      font-size: 10px;
-      font-weight: 900;
-      letter-spacing: 1px;
+      font-size: 11px;
       text-transform: uppercase;
-    }
-
-    .rank {
-      color: var(--orange);
       font-weight: 900;
     }
 
-    .leader-name {
+    .place {
+      font-weight: 900;
+      color: var(--orange);
+    }
+
+    .player-name {
       font-weight: 800;
     }
 
-    .leader-points {
+    .points {
       text-align: right;
-      font-weight: 900;
+      font-weight: 950;
     }
 
-    .leader-entry {
-      color: var(--muted);
+    .entry {
       text-align: right;
+      color: var(--muted);
       font-size: 12px;
     }
 
-    /* =========================
-       FOOTER
-    ========================= */
+    /* FOOTER */
 
     footer {
-      margin-top: 30px;
       border-top: 1px solid var(--border);
-      padding: 30px 0;
-      color: var(--muted);
-      font-size: 11px;
-      text-align: center;
+      padding: 28px 0;
+      color: #666;
+      font-size: 12px;
     }
 
-    /* =========================
-       MOBILE
-    ========================= */
+    /* HIDDEN */
 
-    @media (max-width: 800px) {
-      .hero-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .games-grid {
-        grid-template-columns: 1fr;
-      }
+    .hidden {
+      display: none !important;
     }
 
-    @media (max-width: 600px) {
-      .container {
-        width: min(100% - 20px, 1180px);
-      }
+    /* MOBILE */
 
-      .nav {
+    @media (max-width: 760px) {
+      .header-inner {
         min-height: 62px;
       }
 
-      .user-name {
+      .user-email {
         display: none;
       }
 
-      .hero-main {
-        padding: 28px;
+      .hero {
+        padding: 45px 0 30px;
       }
 
-      .hero-main h1 {
-        letter-spacing: -3px;
+      h1 {
+        letter-spacing: -2px;
       }
 
-      .buyin-grid {
+      .stats {
         grid-template-columns: 1fr;
+      }
+
+      .buyin-grid,
+      .games-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .submit-panel {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .submit-panel .primary-btn {
+        width: 100%;
+      }
+
+      .leaderboard-row {
+        grid-template-columns: 42px 1fr 70px;
+      }
+
+      .leaderboard-row .entry {
+        display: none;
       }
 
       .auth-buttons {
-        grid-template-columns: 1fr;
-      }
-
-      .section-heading {
-        align-items: flex-start;
         flex-direction: column;
-      }
-
-      .section-heading p {
-        text-align: left;
-      }
-
-      .leader-row {
-        grid-template-columns: 40px 1fr 60px;
-      }
-
-      .leader-entry {
-        display: none;
-      }
-
-      .save-bar-inner {
-        align-items: center;
       }
     }
   </style>
@@ -692,415 +616,228 @@
 
 <body>
 
-  <!-- =========================
-       HEADER
-  ========================== -->
-
   <header>
-    <div class="container nav">
-
+    <div class="container header-inner">
       <div class="logo">
         SATURDAY<span>LINES</span>
       </div>
 
-      <div class="nav-right">
+      <div class="header-right">
+        <div id="userEmail" class="user-email"></div>
+        <button id="logoutBtn" class="small-btn hidden">
+          Log Out
+        </button>
+      </div>
+    </div>
+  </header>
 
-        <div id="userName" class="user-name hidden"></div>
+  <section class="hero">
+    <div class="container">
+      <div class="eyebrow">College Football • Weekly ATS Competition</div>
+
+      <h1>
+        PICK.<br />
+        PLAY.<br />
+        WIN.
+      </h1>
+
+      <p class="hero-copy">
+        Choose 10 games against the spread, lock your picks,
+        and compete for the weekly pot.
+      </p>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-label">This Week's Pot</div>
+          <div id="potValue" class="stat-value">$0</div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-label">Players</div>
+          <div id="playerCount" class="stat-value">0</div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-label">Your Picks</div>
+          <div id="yourPickCount" class="stat-value">0 / 10</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="authSection" class="auth-wrap">
+    <div class="container">
+      <div class="auth-card">
+
+        <h2>Enter Saturday Lines</h2>
+
+        <p>
+          Sign in or create an account to make your weekly picks.
+        </p>
+
+        <div class="field">
+          <label for="email">Email</label>
+          <input
+            id="email"
+            type="email"
+            autocomplete="email"
+            placeholder="you@example.com"
+          />
+        </div>
+
+        <div class="field">
+          <label for="password">Password</label>
+          <input
+            id="password"
+            type="password"
+            autocomplete="current-password"
+            placeholder="Password"
+          />
+        </div>
+
+        <div class="auth-buttons">
+          <button id="loginBtn" class="primary-btn">
+            Sign In
+          </button>
+
+          <button id="signupBtn" class="secondary-btn">
+            Create Account
+          </button>
+        </div>
+
+        <div id="authMessage" class="status-message hidden"></div>
+
+      </div>
+    </div>
+  </section>
+
+  <main id="mainContent" class="hidden">
+
+    <div class="container">
+
+      <div id="pageMessage" class="status-message hidden"></div>
+
+      <div class="section-title">
+        <div>
+          <h2>Weekly Entry</h2>
+          <p>Choose your buy-in before submitting your picks.</p>
+        </div>
+      </div>
+
+      <div id="buyinGrid" class="buyin-grid">
+
+        <div
+          id="buyin10"
+          class="buyin-card"
+          data-buyin="10"
+        >
+          <div class="buyin-amount">$10</div>
+          <div class="buyin-description">
+            $10 entry
+          </div>
+        </div>
+
+        <div
+          id="buyin20"
+          class="buyin-card"
+          data-buyin="20"
+        >
+          <div class="buyin-amount">$20</div>
+          <div class="buyin-description">
+            $20 entry
+          </div>
+        </div>
+
+      </div>
+
+      <div class="section-title">
+        <div>
+          <h2>This Week's Games</h2>
+          <p>
+            Select exactly 10 games against the stored spread.
+          </p>
+        </div>
+      </div>
+
+      <div id="gamesGrid" class="games-grid"></div>
+
+      <div id="submitPanel" class="submit-panel">
+
+        <div>
+          <div class="pick-count">
+            Picks Selected:
+            <span id="selectedCount">0</span> / 10
+          </div>
+
+          <div class="submit-help">
+            Once submitted, your picks cannot be changed.
+          </div>
+        </div>
 
         <button
-          id="logoutButton"
-          class="btn hidden"
-          type="button"
+          id="submitBtn"
+          class="primary-btn"
+          disabled
         >
-          Log Out
+          Submit Picks
         </button>
 
       </div>
 
-    </div>
-  </header>
-
-
-  <!-- =========================
-       LOGIN
-  ========================== -->
-
-  <div id="loginScreen">
-
-    <div class="container login-wrapper">
-
-      <div class="login-card">
-
-        <div class="eyebrow">
-          College Football ATS Competition
+      <div id="submittedBox" class="submitted-box hidden">
+        <div class="submitted-title">
+          ✓ PICKS SUBMITTED — LOCKED
         </div>
 
-        <h1>
-          Pick your<br>
-          <span style="color: var(--orange);">10.</span>
-        </h1>
-
-        <p>
-          Choose 10 games against the spread every week.
-          One point for every correct pick.
-        </p>
-
-        <div class="field">
-          <label for="nameInput">
-            Name
-          </label>
-
-          <input
-            id="nameInput"
-            type="text"
-            autocomplete="name"
-            placeholder="Your name"
-          >
+        <div class="submitted-copy">
+          Your 10 picks are permanently locked and cannot be changed.
         </div>
-
-        <div class="field">
-          <label for="emailInput">
-            Email
-          </label>
-
-          <input
-            id="emailInput"
-            type="email"
-            autocomplete="email"
-            placeholder="you@email.com"
-          >
-        </div>
-
-        <div class="field">
-          <label for="passwordInput">
-            Password
-          </label>
-
-          <input
-            id="passwordInput"
-            type="password"
-            autocomplete="current-password"
-            placeholder="Password"
-          >
-        </div>
-
-        <div class="auth-buttons">
-
-          <button
-            id="signInButton"
-            class="btn"
-            type="button"
-          >
-            Sign In
-          </button>
-
-          <button
-            id="signUpButton"
-            class="btn btn-orange"
-            type="button"
-          >
-            Create Account
-          </button>
-
-        </div>
-
-        <div
-          id="authMessage"
-          class="message"
-        ></div>
-
       </div>
+
+      <section class="leaderboard">
+        <div class="section-title">
+          <div>
+            <h2>Leaderboard</h2>
+            <p>Weekly standings.</p>
+          </div>
+        </div>
+
+        <div class="leaderboard-card">
+
+          <div class="leaderboard-row leaderboard-header">
+            <div>#</div>
+            <div>Player</div>
+            <div class="entry">Entry</div>
+            <div class="points">Points</div>
+          </div>
+
+          <div id="leaderboardRows"></div>
+
+        </div>
+      </section>
 
     </div>
 
-  </div>
-
-
-  <!-- =========================
-       APPLICATION
-  ========================== -->
-
-  <div
-    id="appScreen"
-    class="hidden"
-  >
-
-    <!-- HERO -->
-
-    <section class="hero">
-
-      <div class="container hero-grid">
-
-        <div class="hero-main">
-
-          <div class="eyebrow">
-            Saturday Lines
-          </div>
-
-          <h1>
-            SATURDAY<br>
-            <span>LINES</span>
-          </h1>
-
-          <p>
-            Twenty games. Ten picks. One leaderboard.
-            The official line is captured Monday and stays locked
-            for the entire week.
-          </p>
-
-        </div>
-
-        <div class="pot-card">
-
-          <div class="pot-label">
-            This Week's Pot
-          </div>
-
-          <div
-            id="potAmount"
-            class="pot-amount"
-          >
-            $0
-          </div>
-
-          <div
-            id="potDetail"
-            class="pot-detail"
-          >
-            0 players entered
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- BUY-IN -->
-
-    <section>
-
-      <div class="container">
-
-        <div class="section-heading">
-
-          <div>
-            <div class="eyebrow">
-              Entry
-            </div>
-
-            <h2>
-              Choose Your Buy-In
-            </h2>
-          </div>
-
-          <p>
-            One entry per player per week.
-          </p>
-
-        </div>
-
-
-        <div class="buyin-grid">
-
-          <label
-            id="buyin10"
-            class="buyin-card"
-          >
-
-            <input
-              type="radio"
-              name="buyin"
-              value="10"
-            >
-
-            <div class="buyin-price">
-              $10
-            </div>
-
-            <div class="buyin-title">
-              Ten Dollar Entry
-            </div>
-
-            <div class="buyin-description">
-              A $10 winner can receive $10 from every player.
-              Any remaining pot goes to second place.
-            </div>
-
-          </label>
-
-
-          <label
-            id="buyin20"
-            class="buyin-card"
-          >
-
-            <input
-              type="radio"
-              name="buyin"
-              value="20"
-            >
-
-            <div class="buyin-price">
-              $20
-            </div>
-
-            <div class="buyin-title">
-              Twenty Dollar Entry
-            </div>
-
-            <div class="buyin-description">
-              If a $20 player wins the competition,
-              they receive the entire pot.
-            </div>
-
-          </label>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- GAMES -->
-
-    <section>
-
-      <div class="container">
-
-        <div class="section-heading">
-
-          <div>
-            <div class="eyebrow">
-              Weekly Slate
-            </div>
-
-            <h2>
-              Pick 10 Games
-            </h2>
-          </div>
-
-          <p id="weekInfo">
-            Loading week...
-          </p>
-
-        </div>
-
-
-        <div
-          id="gamesContainer"
-          class="loading"
-        >
-          Loading games...
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- LEADERBOARD -->
-
-    <section>
-
-      <div class="container">
-
-        <div class="section-heading">
-
-          <div>
-            <div class="eyebrow">
-              Standings
-            </div>
-
-            <h2>
-              Leaderboard
-            </h2>
-          </div>
-
-          <p>
-            1 point for every correct pick.
-          </p>
-
-        </div>
-
-
-        <div
-          id="leaderboard"
-          class="leaderboard"
-        >
-          <div class="loading">
-            Loading leaderboard...
-          </div>
-        </div>
-
-      </div>
-
-    </section>
-
-  </div>
-
-
-  <!-- =========================
-       SAVE BAR
-  ========================== -->
-
-  <div
-    id="saveBar"
-    class="save-bar hidden"
-  >
-
-    <div class="container save-bar-inner">
-
-      <div class="pick-counter">
-        Picks:
-        <span id="pickCount">0</span>
-        / 10
-      </div>
-
-      <button
-        id="savePicksButton"
-        class="btn btn-orange"
-        type="button"
-        disabled
-      >
-        Select 10 Games
-      </button>
-
-    </div>
-
-  </div>
-
-
-  <!-- =========================
-       FOOTER
-  ========================== -->
+  </main>
 
   <footer>
     <div class="container">
-      SATURDAY LINES • COLLEGE FOOTBALL ATS COMPETITION
+      SATURDAY LINES &nbsp;•&nbsp; College Football ATS
     </div>
   </footer>
 
 
   <script>
-    /*
-     * ============================================================
-     * SUPABASE CONFIGURATION
-     * ============================================================
-     *
-     * Use the SAME Project URL and Publishable Key
-     * that are already working in your current website.
-     *
-     * DO NOT use the Supabase secret/service-role key here.
-     */
 
-    const SUPABASE_URL = "https://ffzlgkaenvivlsrhxvcs.supabase.co";
+    // ============================================================
+    // SUPABASE CONFIG
+    // ============================================================
+
+    const SUPABASE_URL =
+      "https://ffzlgkaenvivlsrhxvcs.supabase.co";
 
     const SUPABASE_PUBLISHABLE_KEY =
       "sb_publishable_pILr3XbyWT721ABLUMVwVA_8_IiVXKg";
-
 
     const supabaseClient =
       window.supabase.createClient(
@@ -1109,82 +846,48 @@
       );
 
 
-    /*
-     * ============================================================
-     * APPLICATION STATE
-     * ============================================================
-     */
+    // ============================================================
+    // STATE
+    // ============================================================
 
     let currentUser = null;
-
     let currentWeek = null;
-
     let games = [];
-
     let selectedPicks = {};
-
     let selectedBuyIn = null;
+    let submitted = false;
 
 
-    /*
-     * ============================================================
-     * DOM ELEMENTS
-     * ============================================================
-     */
+    // ============================================================
+    // ELEMENTS
+    // ============================================================
 
-    const loginScreen =
-      document.getElementById("loginScreen");
+    const authSection =
+      document.getElementById("authSection");
 
-    const appScreen =
-      document.getElementById("appScreen");
+    const mainContent =
+      document.getElementById("mainContent");
 
-    const saveBar =
-      document.getElementById("saveBar");
+    const logoutBtn =
+      document.getElementById("logoutBtn");
 
-    const userName =
-      document.getElementById("userName");
+    const userEmail =
+      document.getElementById("userEmail");
 
-    const logoutButton =
-      document.getElementById("logoutButton");
+    const gamesGrid =
+      document.getElementById("gamesGrid");
 
-    const nameInput =
-      document.getElementById("nameInput");
+    const selectedCount =
+      document.getElementById("selectedCount");
 
-    const emailInput =
-      document.getElementById("emailInput");
+    const yourPickCount =
+      document.getElementById("yourPickCount");
 
-    const passwordInput =
-      document.getElementById("passwordInput");
+    const submitBtn =
+      document.getElementById("submitBtn");
 
-    const signInButton =
-      document.getElementById("signInButton");
-
-    const signUpButton =
-      document.getElementById("signUpButton");
-
-    const authMessage =
-      document.getElementById("authMessage");
-
-    const gamesContainer =
-      document.getElementById("gamesContainer");
-
-    const leaderboard =
-      document.getElementById("leaderboard");
-
-    const potAmount =
-      document.getElementById("potAmount");
-
-    const potDetail =
-      document.getElementById("potDetail");
-
-    const weekInfo =
-      document.getElementById("weekInfo");
-
-    const pickCount =
-      document.getElementById("pickCount");
-
-    const savePicksButton =
-      document.getElementById("savePicksButton");
+    const submittedBox =
+      document.getElementById("submittedBox");
 
     const buyin10 =
       document.getElementById("buyin10");
@@ -1192,109 +895,99 @@
     const buyin20 =
       document.getElementById("buyin20");
 
+    const potValue =
+      document.getElementById("potValue");
 
-    /*
-     * ============================================================
-     * HELPERS
-     * ============================================================
-     */
+    const playerCount =
+      document.getElementById("playerCount");
+
+    const leaderboardRows =
+      document.getElementById("leaderboardRows");
+
+    const pageMessage =
+      document.getElementById("pageMessage");
+
+    const authMessage =
+      document.getElementById("authMessage");
+
+
+    // ============================================================
+    // HELPERS
+    // ============================================================
+
+    function showMessage(message, type = "") {
+      pageMessage.textContent = message;
+      pageMessage.className =
+        "status-message" +
+        (type ? ` ${type}` : "");
+    }
+
+    function showAuthMessage(message, type = "") {
+      authMessage.textContent = message;
+      authMessage.className =
+        "status-message" +
+        (type ? ` ${type}` : "");
+    }
+
+    function hideAuthMessage() {
+      authMessage.className =
+        "status-message hidden";
+    }
 
     function escapeHtml(value) {
+      return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
 
-      if (
-        value === null ||
-        value === undefined
-      ) {
-        return "";
+    function formatGameTime(value) {
+      if (!value) {
+        return "Time TBD";
       }
 
-      return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
+      const date = new Date(value);
+
+      if (Number.isNaN(date.getTime())) {
+        return "Time TBD";
+      }
+
+      return date.toLocaleString([], {
+        weekday: "short",
+        month: "short",
+        day: "numeric",
+        hour: "numeric",
+        minute: "2-digit"
+      });
     }
-
-
-    function setAuthMessage(
-      message,
-      type = ""
-    ) {
-
-      authMessage.textContent = message;
-
-      authMessage.className =
-        "message" +
-        (type ? " " + type : "");
-    }
-
 
     function formatSpread(value) {
-
-      if (
-        value === null ||
-        value === undefined
-      ) {
-        return "—";
+      if (value === null || value === undefined) {
+        return null;
       }
 
-      const number =
-        Number(value);
+      const number = Number(value);
 
       if (Number.isNaN(number)) {
-        return "—";
+        return null;
       }
 
       if (number > 0) {
-        return "+" + number;
+        return `+${number}`;
       }
 
       return String(number);
     }
 
-
-    function formatGameTime(value) {
-
-      if (!value) {
-        return "";
-      }
-
-      const date =
-        new Date(value);
-
-      return date.toLocaleString(
-        "en-US",
-        {
-          weekday: "short",
-          month: "short",
-          day: "numeric",
-          hour: "numeric",
-          minute: "2-digit"
-        }
-      );
+    function getSpread(game, side) {
+      return side === "away"
+        ? game.away_spread
+        : game.home_spread;
     }
 
-
-    function gameIsLocked(game) {
-
-      if (game.spread_locked === true) {
-        return true;
-      }
-
-      if (!game.start_time) {
-        return false;
-      }
-
-      return (
-        new Date() >=
-        new Date(game.start_time)
-      );
-    }
-
-
-    function hasMondaySpread(game) {
-
+    function isSpreadAvailable(game) {
       return (
         game.away_spread !== null &&
         game.away_spread !== undefined &&
@@ -1304,35 +997,454 @@
       );
     }
 
+    function isGameLocked(game) {
+      if (!game.start_time) {
+        return false;
+      }
 
-    function updatePickCounter() {
+      return new Date(game.start_time) <= new Date();
+    }
+
+
+    // ============================================================
+    // AUTH
+    // ============================================================
+
+    async function login() {
+      const email =
+        document.getElementById("email").value.trim();
+
+      const password =
+        document.getElementById("password").value;
+
+      if (!email || !password) {
+        showAuthMessage(
+          "Enter your email and password.",
+          "error"
+        );
+        return;
+      }
+
+      const { error } =
+        await supabaseClient.auth.signInWithPassword({
+          email,
+          password
+        });
+
+      if (error) {
+        showAuthMessage(error.message, "error");
+        return;
+      }
+
+      hideAuthMessage();
+    }
+
+
+    async function signup() {
+      const email =
+        document.getElementById("email").value.trim();
+
+      const password =
+        document.getElementById("password").value;
+
+      if (!email || !password) {
+        showAuthMessage(
+          "Enter an email and password.",
+          "error"
+        );
+        return;
+      }
+
+      const { error } =
+        await supabaseClient.auth.signUp({
+          email,
+          password,
+          options: {
+            data: {
+              display_name:
+                email.split("@")[0]
+            }
+          }
+        });
+
+      if (error) {
+        showAuthMessage(error.message, "error");
+        return;
+      }
+
+      showAuthMessage(
+        "Account created. You can now sign in.",
+        "success"
+      );
+    }
+
+
+    async function logout() {
+      await supabaseClient.auth.signOut();
+    }
+
+
+    // ============================================================
+    // LOAD WEEK
+    // ============================================================
+
+    async function loadWeek() {
+
+      const { data, error } =
+        await supabaseClient
+          .from("weeks")
+          .select("*")
+          .eq("status", "open")
+          .order("season_year", {
+            ascending: false
+          })
+          .order("week_number", {
+            ascending: false
+          })
+          .limit(1)
+          .maybeSingle();
+
+      if (error) {
+        showMessage(
+          "Could not load the current week: " +
+          error.message,
+          "error"
+        );
+        return;
+      }
+
+      if (!data) {
+        showMessage(
+          "No open week is currently available.",
+          "error"
+        );
+        return;
+      }
+
+      currentWeek = data;
+
+      await loadGames();
+      await loadEntry();
+      await loadSubmissionStatus();
+      await loadPot();
+      await loadLeaderboard();
+    }
+
+
+    // ============================================================
+    // LOAD GAMES
+    // ============================================================
+
+    async function loadGames() {
+
+      const { data, error } =
+        await supabaseClient
+          .from("games")
+          .select("*")
+          .eq("week_id", currentWeek.id)
+          .eq("is_featured", true)
+          .order("start_time", {
+            ascending: true
+          });
+
+      if (error) {
+        showMessage(
+          "Could not load games: " +
+          error.message,
+          "error"
+        );
+        return;
+      }
+
+      games = data || [];
+
+      renderGames();
+    }
+
+
+    // ============================================================
+    // RENDER GAMES
+    // ============================================================
+
+    function renderGames() {
+
+      gamesGrid.innerHTML = "";
+
+      if (!games.length) {
+        gamesGrid.innerHTML = `
+          <div class="status-message">
+            Games have not been loaded yet.
+          </div>
+        `;
+        return;
+      }
+
+      games.forEach((game) => {
+
+        const selected =
+          selectedPicks[game.id];
+
+        const spreadAvailable =
+          isSpreadAvailable(game);
+
+        const gameLocked =
+          submitted ||
+          isGameLocked(game);
+
+        const awaySpread =
+          formatSpread(game.away_spread);
+
+        const homeSpread =
+          formatSpread(game.home_spread);
+
+        const awayRank =
+          game.away_rank
+            ? `<span class="rank">#${escapeHtml(game.away_rank)}</span>`
+            : "";
+
+        const homeRank =
+          game.home_rank
+            ? `<span class="rank">#${escapeHtml(game.home_rank)}</span>`
+            : "";
+
+        const awayScore =
+          game.away_score !== null &&
+          game.away_score !== undefined
+            ? game.away_score
+            : "";
+
+        const homeScore =
+          game.home_score !== null &&
+          game.home_score !== undefined
+            ? game.home_score
+            : "";
+
+        const card =
+          document.createElement("div");
+
+        card.className =
+          "game-card" +
+          (selected ? " selected" : "") +
+          (gameLocked ? " locked" : "");
+
+        card.innerHTML = `
+          <div class="game-top">
+            <span>${escapeHtml(formatGameTime(game.start_time))}</span>
+            <span class="game-status">
+              ${escapeHtml(game.status || "SCHEDULED")}
+            </span>
+          </div>
+
+          <div class="teams">
+
+            <div class="team-row">
+              <div class="team-name">
+                ${awayRank}
+                ${escapeHtml(game.away_team)}
+              </div>
+
+              <div>
+                ${escapeHtml(awayScore)}
+              </div>
+            </div>
+
+            <div class="team-row">
+              <div class="team-name">
+                ${homeRank}
+                ${escapeHtml(game.home_team)}
+              </div>
+
+              <div>
+                ${escapeHtml(homeScore)}
+              </div>
+            </div>
+
+          </div>
+
+          ${
+            spreadAvailable
+              ? `
+                <div class="spread-buttons">
+
+                  <button
+                    class="spread-btn ${
+                      selected?.side === "away"
+                        ? "selected"
+                        : ""
+                    }"
+                    data-game-id="${game.id}"
+                    data-side="away"
+                    ${
+                      gameLocked
+                        ? "disabled"
+                        : ""
+                    }
+                  >
+                    ${escapeHtml(game.away_team)}
+                    ${escapeHtml(awaySpread)}
+                  </button>
+
+                  <button
+                    class="spread-btn ${
+                      selected?.side === "home"
+                        ? "selected"
+                        : ""
+                    }"
+                    data-game-id="${game.id}"
+                    data-side="home"
+                    ${
+                      gameLocked
+                        ? "disabled"
+                        : ""
+                    }
+                  >
+                    ${escapeHtml(game.home_team)}
+                    ${escapeHtml(homeSpread)}
+                  </button>
+
+                </div>
+              `
+              : `
+                <div class="spread-unavailable">
+                  Monday spread has not been locked.
+                </div>
+              `
+          }
+        `;
+
+        gamesGrid.appendChild(card);
+      });
+
+      document
+        .querySelectorAll(".spread-btn")
+        .forEach((button) => {
+
+          button.addEventListener(
+            "click",
+            () => {
+
+              if (submitted) {
+                return;
+              }
+
+              const gameId =
+                Number(button.dataset.gameId);
+
+              const side =
+                button.dataset.side;
+
+              togglePick(gameId, side);
+            }
+          );
+        });
+    }
+
+
+    // ============================================================
+    // PICK SELECTION
+    // ============================================================
+
+    function togglePick(gameId, side) {
+
+      if (submitted) {
+        return;
+      }
+
+      const game =
+        games.find((item) =>
+          item.id === gameId
+        );
+
+      if (!game) {
+        return;
+      }
+
+      if (!isSpreadAvailable(game)) {
+        return;
+      }
+
+      if (isGameLocked(game)) {
+        return;
+      }
+
+      if (selectedPicks[gameId]) {
+
+        if (
+          selectedPicks[gameId].side === side
+        ) {
+          delete selectedPicks[gameId];
+        } else {
+
+          selectedPicks[gameId] = {
+            side,
+            team:
+              side === "away"
+                ? game.away_team
+                : game.home_team,
+            spread:
+              getSpread(game, side)
+          };
+        }
+
+      } else {
+
+        if (
+          Object.keys(selectedPicks).length >= 10
+        ) {
+          showMessage(
+            "You can only select 10 games.",
+            "error"
+          );
+          return;
+        }
+
+        selectedPicks[gameId] = {
+          side,
+          team:
+            side === "away"
+              ? game.away_team
+              : game.home_team,
+          spread:
+            getSpread(game, side)
+        };
+      }
+
+      updatePickDisplay();
+    }
+
+
+    function updatePickDisplay() {
 
       const count =
         Object.keys(selectedPicks).length;
 
-      pickCount.textContent =
-        String(count);
+      selectedCount.textContent =
+        count;
 
-      if (count === 10) {
+      yourPickCount.textContent =
+        `${count} / 10`;
 
-        savePicksButton.disabled =
-          false;
+      submitBtn.disabled =
+        submitted ||
+        count !== 10 ||
+        !selectedBuyIn;
 
-        savePicksButton.textContent =
-          "Save 10 Picks";
-
-      } else {
-
-        savePicksButton.disabled =
-          true;
-
-        savePicksButton.textContent =
-          "Select 10 Games";
-      }
+      renderGames();
     }
 
 
-    function updateBuyInDisplay() {
+    // ============================================================
+    // BUY-IN
+    // ============================================================
+
+    function chooseBuyIn(amount) {
+
+      if (submitted) {
+        return;
+      }
+
+      selectedBuyIn =
+        Number(amount);
 
       buyin10.classList.toggle(
         "selected",
@@ -1344,1181 +1456,374 @@
         selectedBuyIn === 20
       );
 
-      const input10 =
-        buyin10.querySelector("input");
-
-      const input20 =
-        buyin20.querySelector("input");
-
-      input10.checked =
-        selectedBuyIn === 10;
-
-      input20.checked =
-        selectedBuyIn === 20;
+      updatePickDisplay();
     }
 
 
-    /*
-     * ============================================================
-     * AUTHENTICATION
-     * ============================================================
-     */
+    buyin10.addEventListener(
+      "click",
+      () => chooseBuyIn(10)
+    );
 
-    async function signUp() {
+    buyin20.addEventListener(
+      "click",
+      () => chooseBuyIn(20)
+    );
 
-      const name =
-        nameInput.value.trim();
 
-      const email =
-        emailInput.value.trim();
+    // ============================================================
+    // LOAD EXISTING ENTRY
+    // ============================================================
 
-      const password =
-        passwordInput.value;
+    async function loadEntry() {
 
-      if (!name || !email || !password) {
-
-        setAuthMessage(
-          "Please enter your name, email, and password.",
-          "error"
-        );
-
-        return;
-      }
-
-      if (password.length < 6) {
-
-        setAuthMessage(
-          "Your password must be at least 6 characters.",
-          "error"
-        );
-
-        return;
-      }
-
-      signUpButton.disabled =
-        true;
-
-      setAuthMessage(
-        "Creating your account..."
-      );
-
-      try {
-
-        const {
-          data,
-          error
-        } =
-          await supabaseClient.auth.signUp(
-            {
-              email,
-              password,
-
-              options: {
-                data: {
-                  display_name: name
-                }
-              }
-            }
-          );
-
-        if (error) {
-          throw error;
-        }
-
-        if (data.session) {
-
-          setAuthMessage(
-            "Account created.",
-            "success"
-          );
-
-        } else {
-
-          setAuthMessage(
-            "Account created. Check your email if confirmation is required.",
-            "success"
-          );
-        }
-
-      } catch (error) {
-
-        console.error(error);
-
-        setAuthMessage(
-          error.message ||
-          "Unable to create account.",
-          "error"
-        );
-
-      } finally {
-
-        signUpButton.disabled =
-          false;
-      }
-    }
-
-
-    async function signIn() {
-
-      const email =
-        emailInput.value.trim();
-
-      const password =
-        passwordInput.value;
-
-      if (!email || !password) {
-
-        setAuthMessage(
-          "Enter your email and password.",
-          "error"
-        );
-
-        return;
-      }
-
-      signInButton.disabled =
-        true;
-
-      setAuthMessage(
-        "Signing in..."
-      );
-
-      try {
-
-        const {
-          error
-        } =
-          await supabaseClient.auth.signInWithPassword(
-            {
-              email,
-              password
-            }
-          );
-
-        if (error) {
-          throw error;
-        }
-
-        setAuthMessage("");
-
-      } catch (error) {
-
-        console.error(error);
-
-        setAuthMessage(
-          error.message ||
-          "Unable to sign in.",
-          "error"
-        );
-
-      } finally {
-
-        signInButton.disabled =
-          false;
-      }
-    }
-
-
-    async function signOut() {
-
-      const {
-        error
-      } =
-        await supabaseClient.auth.signOut();
-
-      if (error) {
-        console.error(error);
-      }
-    }
-
-
-    async function handleSession(session) {
-
-      currentUser =
-        session?.user || null;
-
-      if (!currentUser) {
-
-        loginScreen.classList.remove(
-          "hidden"
-        );
-
-        appScreen.classList.add(
-          "hidden"
-        );
-
-        saveBar.classList.add(
-          "hidden"
-        );
-
-        userName.classList.add(
-          "hidden"
-        );
-
-        logoutButton.classList.add(
-          "hidden"
-        );
-
-        return;
-      }
-
-
-      loginScreen.classList.add(
-        "hidden"
-      );
-
-      appScreen.classList.remove(
-        "hidden"
-      );
-
-      saveBar.classList.remove(
-        "hidden"
-      );
-
-      userName.classList.remove(
-        "hidden"
-      );
-
-      logoutButton.classList.remove(
-        "hidden"
-      );
-
-
-      const displayName =
-        currentUser.user_metadata?.display_name ||
-        currentUser.email?.split("@")[0] ||
-        "Player";
-
-      userName.textContent =
-        displayName;
-
-
-      await loadApplication();
-    }
-
-
-    /*
-     * ============================================================
-     * WEEK
-     * ============================================================
-     */
-
-    async function loadCurrentWeek() {
-
-      const {
-        data,
-        error
-      } =
-        await supabaseClient
-          .from("weeks")
-          .select("*")
-          .eq("status", "open")
-          .order(
-            "season_year",
-            {
-              ascending: false
-            }
-          )
-          .order(
-            "week_number",
-            {
-              ascending: false
-            }
-          )
-          .limit(1)
-          .maybeSingle();
-
-
-      if (error) {
-        throw error;
-      }
-
-      if (!data) {
-
-        throw new Error(
-          "There is no open Saturday Lines week."
-        );
-      }
-
-      currentWeek =
-        data;
-
-
-      weekInfo.textContent =
-        `Week ${currentWeek.week_number} • ${currentWeek.season_year}`;
-    }
-
-
-    /*
-     * ============================================================
-     * GAMES
-     * ============================================================
-     */
-
-    async function loadGames() {
-
-      if (!currentWeek) {
-        return;
-      }
-
-
-      const {
-        data,
-        error
-      } =
-        await supabaseClient
-          .from("games")
-          .select("*")
-          .eq(
-            "week_id",
-            currentWeek.id
-          )
-          .order(
-            "start_time",
-            {
-              ascending: true
-            }
-          );
-
-
-      if (error) {
-        throw error;
-      }
-
-
-      games =
-        data || [];
-
-
-      /*
-       * Saturday Lines displays exactly 20 games.
-       *
-       * The database may contain more than 20 games
-       * because ESPN supplies the full slate.
-       */
-      games =
-        games.slice(0, 20);
-
-
-      renderGames();
-    }
-
-
-    /*
-     * ============================================================
-     * RENDER GAMES
-     * ============================================================
-     */
-
-    function renderGames() {
-
-      if (!games.length) {
-
-        gamesContainer.className =
-          "empty";
-
-        gamesContainer.innerHTML =
-          "No games are available for this week yet.";
-
-        return;
-      }
-
-
-      gamesContainer.className =
-        "games-grid";
-
-
-      gamesContainer.innerHTML =
-        games.map(
-          (game, index) => {
-
-            const locked =
-              gameIsLocked(game);
-
-            const hasSpread =
-              hasMondaySpread(game);
-
-            const selectedSide =
-              selectedPicks[game.id] ||
-              null;
-
-
-            let status =
-              formatGameTime(
-                game.start_time
-              );
-
-            let statusClass = "";
-
-
-            if (
-              game.status ===
-              "in_progress"
-            ) {
-
-              status =
-                "LIVE";
-
-              statusClass =
-                "live";
-
-            } else if (
-              game.status ===
-              "final"
-            ) {
-
-              status =
-                "FINAL";
-
-            } else if (
-              game.status ===
-              "postponed"
-            ) {
-
-              status =
-                "POSTPONED";
-
-            } else if (
-              game.status ===
-              "cancelled"
-            ) {
-
-              status =
-                "CANCELLED";
-            }
-
-
-            let note = "";
-
-
-            if (!hasSpread) {
-
-              note = `
-                <div class="game-note">
-                  Monday spread has not been locked for this game yet.
-                  Picks are unavailable until the official Monday line
-                  is stored.
-                </div>
-              `;
-
-            } else if (locked) {
-
-              note = `
-                <div class="game-note locked">
-                  Picks are locked.
-                </div>
-              `;
-
-            } else {
-
-              note = `
-                <div class="game-note ready">
-                  Monday line locked.
-                </div>
-              `;
-            }
-
-
-            return `
-              <article
-                class="game-card ${
-                  selectedSide
-                    ? "has-pick"
-                    : ""
-                }"
-              >
-
-                <div class="game-top">
-
-                  <div class="game-number">
-                    GAME ${String(index + 1).padStart(2, "0")}
-                  </div>
-
-                  <div
-                    class="game-status ${statusClass}"
-                  >
-                    ${escapeHtml(status)}
-                  </div>
-
-                </div>
-
-
-                <div class="team-row">
-
-                  <div class="team-name">
-                    ${escapeHtml(game.away_team)}
-                  </div>
-
-                  <div class="team-score">
-                    ${
-                      game.away_score !== null &&
-                      game.away_score !== undefined
-                        ? escapeHtml(
-                            game.away_score
-                          )
-                        : ""
-                    }
-                  </div>
-
-                </div>
-
-
-                <div class="team-row">
-
-                  <div class="team-name">
-                    ${escapeHtml(game.home_team)}
-                  </div>
-
-                  <div class="team-score">
-                    ${
-                      game.home_score !== null &&
-                      game.home_score !== undefined
-                        ? escapeHtml(
-                            game.home_score
-                          )
-                        : ""
-                    }
-                  </div>
-
-                </div>
-
-
-                <div class="pick-grid">
-
-                  <button
-                    type="button"
-                    class="pick-button ${
-                      selectedSide === "away"
-                        ? "selected"
-                        : ""
-                    }"
-                    onclick="selectPick(
-                      ${Number(game.id)},
-                      'away'
-                    )"
-                    ${
-                      locked || !hasSpread
-                        ? "disabled"
-                        : ""
-                    }
-                  >
-
-                    ${escapeHtml(
-                      game.away_team
-                    )}
-
-                    <span class="spread">
-                      ${escapeHtml(
-                        formatSpread(
-                          game.away_spread
-                        )
-                      )}
-                    </span>
-
-                  </button>
-
-
-                  <button
-                    type="button"
-                    class="pick-button ${
-                      selectedSide === "home"
-                        ? "selected"
-                        : ""
-                    }"
-                    onclick="selectPick(
-                      ${Number(game.id)},
-                      'home'
-                    )"
-                    ${
-                      locked || !hasSpread
-                        ? "disabled"
-                        : ""
-                    }
-                  >
-
-                    ${escapeHtml(
-                      game.home_team
-                    )}
-
-                    <span class="spread">
-                      ${escapeHtml(
-                        formatSpread(
-                          game.home_spread
-                        )
-                      )}
-                    </span>
-
-                  </button>
-
-                </div>
-
-
-                ${note}
-
-              </article>
-            `;
-          }
-        )
-        .join("");
-    }
-
-
-    /*
-     * ============================================================
-     * PICK SELECTION
-     * ============================================================
-     */
-
-    window.selectPick =
-      function(gameId, side) {
-
-        const game =
-          games.find(
-            item =>
-              Number(item.id) ===
-              Number(gameId)
-          );
-
-
-        if (!game) {
-          return;
-        }
-
-
-        if (gameIsLocked(game)) {
-
-          return;
-        }
-
-
-        if (!hasMondaySpread(game)) {
-
-          alert(
-            "This game does not have a locked Monday spread yet."
-          );
-
-          return;
-        }
-
-
-        const currentPick =
-          selectedPicks[gameId];
-
-
-        /*
-         * Clicking the same selection removes it.
-         */
-        if (currentPick === side) {
-
-          delete selectedPicks[gameId];
-
-        } else {
-
-          const numberOfPicks =
-            Object.keys(
-              selectedPicks
-            ).length;
-
-
-          /*
-           * Do not allow an 11th game.
-           */
-          if (
-            !currentPick &&
-            numberOfPicks >= 10
-          ) {
-
-            alert(
-              "You can only select exactly 10 games."
-            );
-
-            return;
-          }
-
-
-          selectedPicks[gameId] =
-            side;
-        }
-
-
-        updatePickCounter();
-
-        renderGames();
-      };
-
-
-    /*
-     * ============================================================
-     * BUY-IN
-     * ============================================================
-     */
-
-    document
-      .querySelectorAll(
-        'input[name="buyin"]'
-      )
-      .forEach(
-        input => {
-
-          input.addEventListener(
-            "change",
-            () => {
-
-              selectedBuyIn =
-                Number(
-                  input.value
-                );
-
-              updateBuyInDisplay();
-            }
-          );
-
-        }
-      );
-
-
-    /*
-     * ============================================================
-     * LOAD EXISTING ENTRY / PICKS
-     * ============================================================
-     */
-
-    async function loadExistingPicks() {
-
-      if (
-        !currentUser ||
-        !currentWeek
-      ) {
-        return;
-      }
-
-
-      selectedPicks = {};
-
-
-      const {
-        data: entry,
-        error: entryError
-      } =
+      const { data, error } =
         await supabaseClient
           .from("entries")
           .select("*")
-          .eq(
-            "user_id",
-            currentUser.id
-          )
-          .eq(
-            "week_id",
-            currentWeek.id
-          )
+          .eq("user_id", currentUser.id)
+          .eq("week_id", currentWeek.id)
           .maybeSingle();
 
-
-      if (entryError) {
-        throw entryError;
+      if (error) {
+        showMessage(
+          "Could not load your entry: " +
+          error.message,
+          "error"
+        );
+        return;
       }
 
-
-      if (entry) {
-
-        selectedBuyIn =
-          Number(entry.buy_in);
-
-      } else {
-
-        selectedBuyIn =
-          null;
+      if (!data) {
+        selectedBuyIn = null;
+        return;
       }
 
+      selectedBuyIn =
+        Number(data.buy_in);
 
-      updateBuyInDisplay();
+      buyin10.classList.toggle(
+        "selected",
+        selectedBuyIn === 10
+      );
+
+      buyin20.classList.toggle(
+        "selected",
+        selectedBuyIn === 20
+      );
+    }
 
 
-      const {
-        data: picks,
-        error: picksError
-      } =
+    // ============================================================
+    // LOAD EXISTING PICKS
+    // ============================================================
+
+    async function loadPicks() {
+
+      const { data, error } =
         await supabaseClient
           .from("picks")
           .select("*")
-          .eq(
-            "user_id",
-            currentUser.id
-          )
-          .eq(
-            "week_id",
-            currentWeek.id
-          );
+          .eq("user_id", currentUser.id)
+          .eq("week_id", currentWeek.id);
 
-
-      if (picksError) {
-        throw picksError;
+      if (error) {
+        showMessage(
+          "Could not load your picks: " +
+          error.message,
+          "error"
+        );
+        return;
       }
 
+      selectedPicks = {};
 
-      for (
-        const pick
-        of picks || []
-      ) {
+      (data || []).forEach((pick) => {
 
-        selectedPicks[
-          pick.game_id
-        ] =
-          pick.pick_side;
-      }
+        selectedPicks[pick.game_id] = {
+          side: pick.pick_side,
+          team: pick.pick_team,
+          spread: pick.pick_spread
+        };
+      });
 
-
-      updatePickCounter();
-
-      renderGames();
+      updatePickDisplay();
     }
 
 
-    /*
-     * ============================================================
-     * SAVE PICKS
-     * ============================================================
-     */
+    // ============================================================
+    // SUBMISSION STATUS
+    // ============================================================
+
+    async function loadSubmissionStatus() {
+
+      const { data, error } =
+        await supabaseClient.rpc(
+          "get_my_submission_status",
+          {
+            target_week_id: currentWeek.id
+          }
+        );
+
+      if (error) {
+        showMessage(
+          "Could not check submission status: " +
+          error.message,
+          "error"
+        );
+        return;
+      }
+
+      submitted =
+        data?.submitted === true;
+
+      if (submitted) {
+
+        submittedBox.classList.remove(
+          "hidden"
+        );
+
+        submitBtn.disabled = true;
+
+        buyin10.classList.add("locked");
+        buyin20.classList.add("locked");
+
+      } else {
+
+        submittedBox.classList.add(
+          "hidden"
+        );
+
+      }
+
+      await loadPicks();
+
+      updatePickDisplay();
+    }
+
+
+    // ============================================================
+    // SAVE ENTRY
+    // ============================================================
+
+    async function saveEntry() {
+
+      if (!selectedBuyIn) {
+        throw new Error(
+          "Please select a buy-in."
+        );
+      }
+
+      const { data: existing, error: existingError } =
+        await supabaseClient
+          .from("entries")
+          .select("id, submitted")
+          .eq("user_id", currentUser.id)
+          .eq("week_id", currentWeek.id)
+          .maybeSingle();
+
+      if (existingError) {
+        throw existingError;
+      }
+
+      if (existing?.submitted) {
+        throw new Error(
+          "Your entry has already been submitted."
+        );
+      }
+
+      if (existing) {
+
+        const { error } =
+          await supabaseClient
+            .from("entries")
+            .update({
+              buy_in: selectedBuyIn
+            })
+            .eq("id", existing.id);
+
+        if (error) {
+          throw error;
+        }
+
+      } else {
+
+        const { error } =
+          await supabaseClient
+            .from("entries")
+            .insert({
+              user_id: currentUser.id,
+              week_id: currentWeek.id,
+              buy_in: selectedBuyIn
+            });
+
+        if (error) {
+          throw error;
+        }
+      }
+    }
+
+
+    // ============================================================
+    // SAVE PICKS
+    // ============================================================
 
     async function savePicks() {
 
-      if (!currentUser) {
+      const picks =
+        Object.entries(selectedPicks)
+          .map(([gameId, pick]) => ({
+            user_id: currentUser.id,
+            week_id: currentWeek.id,
+            game_id: Number(gameId),
+            pick_side: pick.side,
+            pick_team: pick.team,
+            pick_spread: pick.spread,
+            result: "pending",
+            points: 0
+          }));
 
-        alert(
-          "Please sign in first."
-        );
-
-        return;
-      }
-
-
-      if (!currentWeek) {
-
-        alert(
-          "No active week is available."
-        );
-
-        return;
-      }
-
-
-      if (
-        selectedBuyIn !== 10 &&
-        selectedBuyIn !== 20
-      ) {
-
-        alert(
-          "Choose a $10 or $20 buy-in first."
-        );
-
-        return;
-      }
-
-
-      const selectedGameIds =
-        Object.keys(
-          selectedPicks
-        );
-
-
-      if (
-        selectedGameIds.length !== 10
-      ) {
-
-        alert(
+      if (picks.length !== 10) {
+        throw new Error(
           "You must select exactly 10 games."
         );
-
-        return;
       }
 
+      for (const pick of picks) {
 
-      /*
-       * Verify the games one more time
-       * immediately before saving.
-       */
-
-      for (
-        const gameId
-        of selectedGameIds
-      ) {
-
-        const game =
-          games.find(
-            item =>
-              Number(item.id) ===
-              Number(gameId)
-          );
-
-
-        if (!game) {
-
-          alert(
-            "One of your selected games is no longer available."
-          );
-
-          return;
-        }
-
-
-        if (
-          gameIsLocked(game)
-        ) {
-
-          alert(
-            `${game.away_team} vs ${game.home_team} is locked.`
-          );
-
-          return;
-        }
-
-
-        if (
-          !hasMondaySpread(game)
-        ) {
-
-          alert(
-            `${game.away_team} vs ${game.home_team} does not have a locked Monday spread.`
-          );
-
-          return;
-        }
-      }
-
-
-      savePicksButton.disabled =
-        true;
-
-      savePicksButton.textContent =
-        "Saving...";
-
-
-      try {
-
-        /*
-         * Create or update the player's entry.
-         */
-
-        const {
-          error: entryError
-        } =
+        const { error } =
           await supabaseClient
-            .from("entries")
+            .from("picks")
             .upsert(
-              {
-                user_id:
-                  currentUser.id,
-
-                week_id:
-                  currentWeek.id,
-
-                buy_in:
-                  selectedBuyIn
-              },
+              pick,
               {
                 onConflict:
-                  "user_id,week_id"
+                  "user_id,week_id,game_id"
               }
             );
 
-
-        if (entryError) {
-          throw entryError;
+        if (error) {
+          throw error;
         }
-
-
-        /*
-         * Remove any old picks that
-         * are not currently selected.
-         */
-
-        const {
-          data: oldPicks,
-          error: oldPicksError
-        } =
-          await supabaseClient
-            .from("picks")
-            .select(
-              "id,game_id"
-            )
-            .eq(
-              "user_id",
-              currentUser.id
-            )
-            .eq(
-              "week_id",
-              currentWeek.id
-            );
-
-
-        if (oldPicksError) {
-          throw oldPicksError;
-        }
-
-
-        const selectedIds =
-          new Set(
-            selectedGameIds.map(
-              Number
-            )
-          );
-
-
-        const deleteIds =
-          (oldPicks || [])
-            .filter(
-              pick =>
-                !selectedIds.has(
-                  Number(
-                    pick.game_id
-                  )
-                )
-            )
-            .map(
-              pick =>
-                pick.id
-            );
-
-
-        if (deleteIds.length > 0) {
-
-          const {
-            error
-          } =
-            await supabaseClient
-              .from("picks")
-              .delete()
-              .in(
-                "id",
-                deleteIds
-              );
-
-
-          if (error) {
-            throw error;
-          }
-        }
-
-
-        /*
-         * Save each of the 10 picks.
-         *
-         * The spread stored here is the exact
-         * spread currently locked in the database.
-         */
-
-        for (
-          const gameId
-          of selectedGameIds
-        ) {
-
-          const game =
-            games.find(
-              item =>
-                Number(item.id) ===
-                Number(gameId)
-            );
-
-
-          const side =
-            selectedPicks[
-              gameId
-            ];
-
-
-          const pickedTeam =
-            side === "away"
-              ? game.away_team
-              : game.home_team;
-
-
-          const pickedSpread =
-            side === "away"
-              ? game.away_spread
-              : game.home_spread;
-
-
-          const {
-            error
-          } =
-            await supabaseClient
-              .from("picks")
-              .upsert(
-                {
-                  user_id:
-                    currentUser.id,
-
-                  week_id:
-                    currentWeek.id,
-
-                  game_id:
-                    game.id,
-
-                  pick_side:
-                    side,
-
-                  pick_team:
-                    pickedTeam,
-
-                  pick_spread:
-                    pickedSpread,
-
-                  result:
-                    "pending",
-
-                  points:
-                    0
-                },
-                {
-                  onConflict:
-                    "user_id,week_id,game_id"
-                }
-              );
-
-
-          if (error) {
-            throw error;
-          }
-        }
-
-
-        await loadExistingPicks();
-
-        await loadPot();
-
-        await loadLeaderboard();
-
-
-        alert(
-          "Your 10 picks have been saved."
-        );
-
-
-      } catch (error) {
-
-        console.error(
-          "Save picks error:",
-          error
-        );
-
-
-        alert(
-          error.message ||
-          "Unable to save your picks."
-        );
-
-      } finally {
-
-        updatePickCounter();
       }
     }
 
 
-    /*
-     * ============================================================
-     * POT
-     * ============================================================
-     */
+    // ============================================================
+    // SUBMIT PICKS
+    // ============================================================
+
+    async function submitPicks() {
+
+      if (submitted) {
+        return;
+      }
+
+      const count =
+        Object.keys(selectedPicks).length;
+
+      if (count !== 10) {
+        showMessage(
+          "You must select exactly 10 games.",
+          "error"
+        );
+        return;
+      }
+
+      if (!selectedBuyIn) {
+        showMessage(
+          "Please select a $10 or $20 buy-in.",
+          "error"
+        );
+        return;
+      }
+
+      const confirmed =
+        window.confirm(
+          "Are you sure you want to submit your picks?\n\n" +
+          "You selected 10 games and chose a $" +
+          selectedBuyIn +
+          " entry.\n\n" +
+          "Once submitted, your picks CANNOT be changed."
+        );
+
+      if (!confirmed) {
+        return;
+      }
+
+      submitBtn.disabled = true;
+
+      try {
+
+        // Save the entry first.
+        await saveEntry();
+
+        // Save all 10 picks.
+        await savePicks();
+
+        // Permanently lock the entry.
+        const { data, error } =
+          await supabaseClient.rpc(
+            "submit_entry",
+            {
+              target_week_id:
+                currentWeek.id
+            }
+          );
+
+        if (error) {
+          throw error;
+        }
+
+        if (!data?.success) {
+          throw new Error(
+            "The submission could not be completed."
+          );
+        }
+
+        submitted = true;
+
+        submittedBox.classList.remove(
+          "hidden"
+        );
+
+        buyin10.classList.add("locked");
+        buyin20.classList.add("locked");
+
+        showMessage(
+          "Your 10 picks have been submitted and permanently locked.",
+          "success"
+        );
+
+        updatePickDisplay();
+
+        await loadPot();
+        await loadLeaderboard();
+
+      } catch (error) {
+
+        console.error(error);
+
+        showMessage(
+          error.message ||
+          "Something went wrong submitting your picks.",
+          "error"
+        );
+
+        submitBtn.disabled = false;
+      }
+    }
+
+
+    submitBtn.addEventListener(
+      "click",
+      submitPicks
+    );
+
+
+    // ============================================================
+    // POT
+    // ============================================================
 
     async function loadPot() {
 
@@ -2526,11 +1831,7 @@
         return;
       }
 
-
-      const {
-        data,
-        error
-      } =
+      const { data, error } =
         await supabaseClient.rpc(
           "get_week_pot",
           {
@@ -2539,67 +1840,34 @@
           }
         );
 
-
       if (error) {
-
-        console.error(
-          "Pot error:",
-          error
-        );
-
+        console.error(error);
         return;
       }
 
-
-      const result =
-        Array.isArray(data)
-          ? data[0]
-          : data;
-
-
-      if (!result) {
-
-        potAmount.textContent =
-          "$0";
-
-        potDetail.textContent =
-          "0 players entered";
-
+      if (!data) {
+        potValue.textContent = "$0";
+        playerCount.textContent = "0";
         return;
       }
-
 
       const pot =
-        Number(
-          result.pot || 0
-        );
-
+        Number(data.pot || 0);
 
       const players =
-        Number(
-          result.players || 0
-        );
+        Number(data.players || 0);
 
+      potValue.textContent =
+        `$${pot}`;
 
-      potAmount.textContent =
-        "$" +
-        pot.toLocaleString();
-
-
-      potDetail.textContent =
-        `${players} ${
-          players === 1
-            ? "player"
-            : "players"
-        } entered`;
+      playerCount.textContent =
+        players;
     }
 
 
-    /*
-     * ============================================================
-     * LEADERBOARD
-     * ============================================================
-     */
+    // ============================================================
+    // LEADERBOARD
+    // ============================================================
 
     async function loadLeaderboard() {
 
@@ -2607,11 +1875,7 @@
         return;
       }
 
-
-      const {
-        data,
-        error
-      } =
+      const { data, error } =
         await supabaseClient.rpc(
           "get_week_leaderboard",
           {
@@ -2620,336 +1884,210 @@
           }
         );
 
-
       if (error) {
+        console.error(error);
+        return;
+      }
 
-        console.error(
-          "Leaderboard error:",
-          error
-        );
+      leaderboardRows.innerHTML = "";
 
+      const rows =
+        data || [];
 
-        leaderboard.innerHTML = `
-          <div class="empty">
-            Unable to load the leaderboard.
+      if (!rows.length) {
+
+        leaderboardRows.innerHTML = `
+          <div class="leaderboard-row">
+            <div></div>
+            <div>No players yet.</div>
+            <div></div>
+            <div class="points">0</div>
           </div>
         `;
 
         return;
       }
 
+      rows.sort(
+        (a, b) =>
+          Number(b.points || 0) -
+          Number(a.points || 0)
+      );
 
-      if (
-        !data ||
-        data.length === 0
-      ) {
+      rows.forEach((row, index) => {
 
-        leaderboard.innerHTML = `
-          <div class="empty">
-            No players have entered this week yet.
+        const element =
+          document.createElement("div");
+
+        element.className =
+          "leaderboard-row";
+
+        element.innerHTML = `
+          <div class="place">
+            ${index + 1}
+          </div>
+
+          <div class="player-name">
+            ${escapeHtml(
+              row.display_name ||
+              "Player"
+            )}
+          </div>
+
+          <div class="entry">
+            $${escapeHtml(row.buy_in)}
+          </div>
+
+          <div class="points">
+            ${escapeHtml(row.points || 0)}
           </div>
         `;
 
-        return;
-      }
-
-
-      const sorted =
-        [...data].sort(
-          (a, b) => {
-
-            const pointsDifference =
-              Number(
-                b.points || 0
-              ) -
-              Number(
-                a.points || 0
-              );
-
-
-            if (
-              pointsDifference !== 0
-            ) {
-
-              return pointsDifference;
-            }
-
-
-            return String(
-              a.display_name || ""
-            ).localeCompare(
-              String(
-                b.display_name || ""
-              )
-            );
-          }
+        leaderboardRows.appendChild(
+          element
         );
-
-
-      leaderboard.innerHTML = `
-
-        <div class="leader-row leader-header">
-
-          <div>
-            #
-          </div>
-
-          <div>
-            Player
-          </div>
-
-          <div style="text-align:right">
-            Points
-          </div>
-
-          <div style="text-align:right">
-            Entry
-          </div>
-
-        </div>
-
-
-        ${sorted.map(
-          (player, index) => `
-
-            <div class="leader-row">
-
-              <div class="rank">
-                ${index + 1}
-              </div>
-
-              <div class="leader-name">
-                ${escapeHtml(
-                  player.display_name ||
-                  "Player"
-                )}
-              </div>
-
-              <div class="leader-points">
-                ${Number(
-                  player.points || 0
-                )}
-              </div>
-
-              <div class="leader-entry">
-                $${Number(
-                  player.buy_in || 0
-                )}
-              </div>
-
-            </div>
-
-          `
-        ).join("")}
-
-      `;
+      });
     }
 
 
-    /*
-     * ============================================================
-     * LOAD EVERYTHING
-     * ============================================================
-     */
+    // ============================================================
+    // AUTH STATE
+    // ============================================================
 
-    async function loadApplication() {
+    async function showLoggedIn(user) {
 
-      gamesContainer.className =
-        "loading";
+      currentUser = user;
 
-      gamesContainer.textContent =
-        "Loading this week's games...";
+      authSection.classList.add(
+        "hidden"
+      );
 
+      mainContent.classList.remove(
+        "hidden"
+      );
 
-      try {
+      logoutBtn.classList.remove(
+        "hidden"
+      );
 
-        await loadCurrentWeek();
+      userEmail.textContent =
+        user.email || "";
 
-        await loadGames();
-
-        await loadExistingPicks();
-
-        await loadPot();
-
-        await loadLeaderboard();
-
-      } catch (error) {
-
-        console.error(
-          "Application load error:",
-          error
-        );
-
-
-        gamesContainer.className =
-          "empty";
-
-
-        gamesContainer.innerHTML = `
-          <strong>
-            Unable to load Saturday Lines.
-          </strong>
-          <br><br>
-          ${escapeHtml(
-            error.message ||
-            "Unknown error"
-          )}
-        `;
-      }
+      await loadWeek();
     }
 
 
-    /*
-     * ============================================================
-     * EVENT LISTENERS
-     * ============================================================
-     */
+    function showLoggedOut() {
 
-    signInButton.addEventListener(
+      currentUser = null;
+      currentWeek = null;
+      games = [];
+      selectedPicks = {};
+      selectedBuyIn = null;
+      submitted = false;
+
+      authSection.classList.remove(
+        "hidden"
+      );
+
+      mainContent.classList.add(
+        "hidden"
+      );
+
+      logoutBtn.classList.add(
+        "hidden"
+      );
+
+      userEmail.textContent = "";
+    }
+
+
+    // ============================================================
+    // AUTH BUTTONS
+    // ============================================================
+
+    document
+      .getElementById("loginBtn")
+      .addEventListener(
+        "click",
+        login
+      );
+
+    document
+      .getElementById("signupBtn")
+      .addEventListener(
+        "click",
+        signup
+      );
+
+    logoutBtn.addEventListener(
       "click",
-      signIn
+      logout
     );
 
 
-    signUpButton.addEventListener(
-      "click",
-      signUp
-    );
+    // ============================================================
+    // AUTH INITIALIZATION
+    // ============================================================
 
+    supabaseClient.auth.onAuthStateChange(
+      async (_event, session) => {
 
-    logoutButton.addEventListener(
-      "click",
-      signOut
-    );
-
-
-    savePicksButton.addEventListener(
-      "click",
-      savePicks
-    );
-
-
-    /*
-     * Allow Enter to submit the login form.
-     */
-
-    passwordInput.addEventListener(
-      "keydown",
-      event => {
-
-        if (
-          event.key === "Enter"
-        ) {
-
-          signIn();
+        if (session?.user) {
+          await showLoggedIn(
+            session.user
+          );
+        } else {
+          showLoggedOut();
         }
       }
     );
 
 
-    /*
-     * ============================================================
-     * AUTOMATIC PAGE REFRESH
-     * ============================================================
-     *
-     * This refreshes scores and game status.
-     *
-     * It does NOT change stored spreads.
-     */
+    // ============================================================
+    // INITIAL SESSION CHECK
+    // ============================================================
+
+    async function initialize() {
+
+      const {
+        data: {
+          session
+        }
+      } =
+        await supabaseClient.auth.getSession();
+
+      if (session?.user) {
+        await showLoggedIn(
+          session.user
+        );
+      } else {
+        showLoggedOut();
+      }
+    }
+
+
+    initialize();
+
+
+    // ============================================================
+    // REFRESH DATA EVERY 60 SECONDS
+    // ============================================================
 
     setInterval(
       async () => {
 
-        if (
-          !currentUser ||
-          !currentWeek
-        ) {
+        if (!currentUser || !currentWeek) {
           return;
         }
 
-
-        try {
-
-          await loadGames();
-
-          await loadPot();
-
-          await loadLeaderboard();
-
-        } catch (error) {
-
-          console.error(
-            "Refresh error:",
-            error
-          );
-        }
+        await loadGames();
+        await loadPot();
+        await loadLeaderboard();
 
       },
       60000
     );
-
-
-    /*
-     * ============================================================
-     * SUPABASE AUTH STATE
-     * ============================================================
-     */
-
-    supabaseClient.auth.onAuthStateChange(
-      (_event, session) => {
-
-        setTimeout(
-          () => {
-
-            handleSession(
-              session
-            );
-
-          },
-          0
-        );
-      }
-    );
-
-
-    /*
-     * ============================================================
-     * INITIALIZE
-     * ============================================================
-     */
-
-    (async function initialize() {
-
-      try {
-
-        const {
-          data: {
-            session
-          }
-        } =
-          await supabaseClient.auth.getSession();
-
-
-        await handleSession(
-          session
-        );
-
-
-      } catch (error) {
-
-        console.error(
-          "Initialization error:",
-          error
-        );
-
-
-        setAuthMessage(
-          "Unable to connect to Saturday Lines.",
-          "error"
-        );
-      }
-
-    })();
 
   </script>
 
